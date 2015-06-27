@@ -4,6 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include "aed2.h"
+#include "dicc_trie.h"
 
 using namespace std;
 
@@ -12,7 +13,7 @@ int main()
 {
 	cout << "hola mundo";
 	int variable;
-	//Lista<int> abc = Lista<int>();
+	
 	int valor = 2;
 	Lista<Nat> lista;
 	lista.AgregarAtras(2);
@@ -21,7 +22,7 @@ int main()
 
 	Dicc<Nat,String> dicc;
 	dicc.Definir(1,"Uno");
-	bool estaDef = dicc.Definido(1);
+	bool estaDef = dicc.Definido(5);
 	cout<<"Clave definida: "<<estaDef<<endl;
 	cin >> variable;
 	return 0;
