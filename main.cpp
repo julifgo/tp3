@@ -18,9 +18,11 @@ int main()
 	lista.AgregarAtras(2);
 	Nat primero = lista.Primero();
 	cout<<primero<<endl;
-	//abc.AgregarAdelante(valor);
-	//int test = abc.Primero();
-	//cout << test;
+
+	Dicc<Nat,String> dicc;
+	dicc.Definir(1,"Uno");
+	bool estaDef = dicc.Definido(1);
+	cout<<"Clave definida: "<<estaDef<<endl;
 	cin >> variable;
 	return 0;
 }
