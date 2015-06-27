@@ -1,0 +1,15 @@
+*.tlog
+*.ilk
+*.lastbuildstate
+Tp3/Debug/Tp3.log
+*.obj
+*.pdb
+Tp3/Debug/vc110.idb
+Tp3/ReadMe.txt
+*.opensdf
+Tp3/Tp3.sdf
+*.sln
+Tp3/Tp3.vcxproj
+*.suo
+Tp3/Tp3.vcxproj.filters
+*.exe
