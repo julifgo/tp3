@@ -5,6 +5,7 @@
 #include <fstream>
 #include "aed2.h"
 #include "dicc_trie.h"
+#include "dcnet/compu.h" 
 
 using namespace std;
 
