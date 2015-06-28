@@ -1,0 +1,26 @@
+CC=g++
+LDFLAGS=
+CFLAGS=-g -std=c++11 -Wall -Werror
+EXECUTABLE=main
+SOURCES=aed2/ConjAcotado.cpp \
+		nuestros/compu.cpp \
+		nuestros/paquete.cpp \
+		nuestros/dcnet.cpp \
+		nuestros/red.cpp \
+		main.cpp
+OBJECTS=$(SOURCES:.cpp=.o)
+
+all: $(SOURCES) $(EXECUTABLE)
+    
+$(EXECUTABLE): $(OBJECTS) 
+	$(CC) $(LDFLAGS) $(OBJECTS) -o $@
+
+.cpp.o:
+	$(CC) $(CFLAGS) -c $< -o $@
+
+clean:
+	rm -rf *.o
+	rm -rf nuestros/*.o
+	rm -rf aed2/*.o
+
+#TODO: Agregar rutinas para valgrind y tests uniterios

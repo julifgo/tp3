@@ -14,3 +14,5 @@ Tp3/Tp3.vcxproj
 Tp3/Tp3.vcxproj.filters
 *.exe
 *.unsuccessfulbuild
+*.o
+main
