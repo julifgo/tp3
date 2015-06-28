@@ -18,9 +18,13 @@ $(EXECUTABLE): $(OBJECTS)
 .cpp.o:
 	$(CC) $(CFLAGS) -c $< -o $@
 
+#http://valgrind.org/docs/manual/quick-start.html
+valgrind: $(EXECUTABLE)
+	valgrind --leak-check=full -v ./$(EXECUTABLE)
+
 clean:
 	rm -rf *.o
 	rm -rf nuestros/*.o
 	rm -rf aed2/*.o
 
-#TODO: Agregar rutinas para valgrind y tests uniterios
+#TODO: Agregar rutinas tests uniterios y checkear si la rutina para valgrind es correcta
