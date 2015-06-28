@@ -2,8 +2,8 @@
 #include <iostream>
 #include <fstream>
 #include "aed2.h"
-#include "dicc_trie.h"
-#include "dcnet/compu.h" 
+//#include "dicc_trie.h"
+#include "nuestros/compu.h" 
 
 using namespace std;
 
