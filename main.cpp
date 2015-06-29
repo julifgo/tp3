@@ -6,7 +6,7 @@
 #include "dcnet/compu.h" 
 
 using namespace std;
-
+using namespace dcnet;
 
 int main()
 {
@@ -23,6 +23,10 @@ int main()
 	dicc.Definir(1,"Uno");
 	bool estaDef = dicc.Definido(5);
 	cout<<"Clave definida: "<<estaDef<<endl;
+
+	Compu comp("192.168.50.137");
+	cout<<"Ip creada "<<comp.Ip()<<endl;
+
 	cin >> variable;
 	return 0;
 }
