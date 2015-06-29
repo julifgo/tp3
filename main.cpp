@@ -13,7 +13,6 @@ int main()
 	cout << "hola mundo";
 	int variable;
 	
-	//int valor = 2;
 	Lista<Nat> lista;
 	lista.AgregarAtras(2);
 	Nat primero = lista.Primero();
