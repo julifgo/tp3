@@ -1,1 +1,2 @@
 1) Para representar tuplas podemos usar struct? (Julian)
+2) Las implementaciones van directamente en el .h y en la firma del metodo? (ver DiccString)(Julian)
