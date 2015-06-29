@@ -1,8 +1,7 @@
-#include <stdio.h>
 #include <iostream>
-#include <fstream>
+#include <string>
+#include <cassert>
 #include "aed2.h"
-//#include "dicc_trie.h"
 #include "nuestros/compu.h" 
 
 using namespace std;

@@ -4,8 +4,8 @@
 /
 */
 
-#ifndef AED2_CONJ_H_
-#define AED2_CONJ_H_
+#ifndef DC_COMPU_H_
+#define DC_COMPU_H_
 
 #include <ostream>
 #include "../aed2/TiposBasicos.h"
