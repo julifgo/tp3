@@ -8,8 +8,6 @@
 #define DC_COMPU_H_
 
 #include <ostream>
-#include "../aed2/TiposBasicos.h"
-#include "../aed2/Conj.h"
 using namespace aed2;
 namespace dcnet{
 	typedef Nat Interfaz;

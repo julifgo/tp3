@@ -3,6 +3,7 @@
 #include <cassert>
 #include "aed2.h"
 #include "nuestros/compu.h" 
+#include "nuestros/red.h"
 
 using namespace std;
 using namespace dcnet;
