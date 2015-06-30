@@ -2,7 +2,7 @@
 / Desc: Clase para representar una computadora
 / Author: Grupo 17, AED2, 1C, 2015
 /
-*/
+
 
 #ifndef DC_COMPU_H_
 #define DC_COMPU_H_
@@ -56,3 +56,46 @@ namespace dcnet{
 	};
 }
 #endif
+*/
+
+#ifndef COMPU_H
+#define COMPU_H
+
+#include "../aed2/TiposBasicos.h"
+#include "../aed2/Conj.h"
+
+namespace aed2 {
+
+	class Compu {
+
+		public:
+
+			//Miembros definidos en el módulo
+
+			Nat ip() const;
+
+			const Conj<Nat>& interfaces() const;
+
+			Compu(Nat const& ip);
+
+			~Compu();
+
+			void agInterfaz(Nat const& interfaz);
+
+            bool operator==(const Compu& otro) const;
+
+            Compu& operator=(const Compu& compu);
+
+            //Miembros faltantes
+
+		private:
+
+			Nat _ip;
+			
+			Conj<Nat>* _interfaces;
+
+	};
+
+}
+
+#endif //COMPU_H
