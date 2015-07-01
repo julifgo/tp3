@@ -27,6 +27,7 @@ namespace dcnet{
 		Red(const Red& otra);
 		~Red();
   		bool operator==(const Red& otra);
+  		void AgCompu(const Compu compu);
 	};
 }
 #endif
