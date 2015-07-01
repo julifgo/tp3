@@ -1,20 +1,20 @@
 #include "paquete.h"
 
-namespace aed2 {
+namespace dcnet {
 
-    Nat Paquete::id() const {
+    Nat Paquete::Id() const {
     	return this->_id;
     }
 
-   	Nat Paquete::prioridad() const {
+   	Nat Paquete::Prioridad() const {
     	return this->_prioridad;
     }
 
-    const Compu& Paquete::origen() const {
+    const Compu& Paquete::Origen() const {
     	return *this->_origen;
     }
 
-    const Compu& Paquete::destino() const {
+    const Compu& Paquete::Destino() const {
     	return *this->_destino;
     }
 
@@ -30,19 +30,19 @@ namespace aed2 {
     }
 
     bool Paquete::operator<(const Paquete& otro) const {
-    	return this->_prioridad < otro.prioridad() || this->_id < otro.id();
+    	return this->_prioridad < otro.Prioridad() || this->_id < otro.Id();
     }
 
 	Paquete& Paquete::operator=(const Paquete& paquete) {
-		this->_id = paquete.id();
-		this->_prioridad = paquete.prioridad();
-		*this->_origen = paquete.origen();
-		*this->_destino = paquete.destino(); 
+		this->_id = paquete.Id();
+		this->_prioridad = paquete.Prioridad();
+		*this->_origen = paquete.Origen();
+		*this->_destino = paquete.Destino(); 
 		return *this;
 	}
 
 	bool Paquete::operator==(const Paquete& otro) const {
-		return this->_id == otro.id();
+		return this->_id == otro.Id();
 	}
 
 }

@@ -9,13 +9,13 @@
 
 using namespace aed2;
 
-//using namespace std;
-//using namespace dcnet;
+using namespace std;
+using namespace dcnet;
 
 int main()
 {
 
-	/*
+
 	cout << "hola mundo";
 	int variable;
 	
@@ -39,7 +39,7 @@ int main()
 	r1.AgCompu(comp);
 	cin >> variable;
 
-	*/
+
 
 	/*
 
@@ -54,6 +54,7 @@ int main()
 
 	*/
 
+/*
 	Compu c1 = Compu(1);
 	Compu c2 = Compu(2);
 
@@ -62,7 +63,6 @@ int main()
 
 	cout << p1.prioridad() << endl;
 
-/*
 	if(p1 == p2) {
 		cout << "iguales";
 	} else {

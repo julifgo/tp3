@@ -1,10 +1,10 @@
 #ifndef PAQUETE_H
 #define PAQUETE_H
 
-#include "../aed2/TiposBasicos.h"
+#include "../aed2.h"
 #include "compu.h"
 
-namespace aed2 {
+namespace dcnet {
 
     class Paquete {
         
@@ -12,13 +12,13 @@ namespace aed2 {
 
             //Miembros definidos en el módulo
 
-            Nat id() const;
+            Nat Id() const;
 
-            Nat prioridad() const;
+            Nat Prioridad() const;
 
-            const Compu& origen() const;
+            const Compu& Origen() const;
 
-            const Compu& destino() const;
+            const Compu& Destino() const;
 
             Paquete(Nat id, Nat prioridad, const Compu& origen, const Compu& destino);
 
