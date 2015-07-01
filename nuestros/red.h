@@ -14,9 +14,10 @@ namespace dcnet{
 	private:
 		struct estr{
 			Lista<Compu> computadoras;
+			DiccString<int > vecinos2;
 			DiccString<Conj<Compu> > vecinos;
 			DiccString<DiccString<Conj<Lista<Compu> > > > caminosMasCortos;
-			DiccString<Vector<bool> > usaInterfaz;
+			DiccString<Arreglo<bool> > usaInterfaz;
 			DiccString<DiccString<Nat> > interfaz;
 			Conj<Lista<Compu> > caminos;
 		};
@@ -25,7 +26,7 @@ namespace dcnet{
 	public:
 		Red();
 		Red(const Red& otra);
-		~Red();
+		//TODO ~Red();
   		bool operator==(const Red& otra);
   		void AgCompu(const Compu compu);
 	};

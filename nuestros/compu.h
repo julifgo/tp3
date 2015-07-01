@@ -4,6 +4,8 @@
 /
 */
 
+//PASAR IMPLEMENTACIONES A CPP
+
 #ifndef DC_COMPU_H_
 #define DC_COMPU_H_
 
@@ -34,13 +36,13 @@ namespace dcnet{
   			this->estr.interfaces = Conj<Interfaz>(otra.estr.interfaces);
   		}
 		~Compu(){
-			//TODO. Implementar
+			//Nada?
 		}
 		const IP Ip() const{
 			return this->estr.ip;
 		}
 		const Conj<Interfaz>& Interfaces() const{ //Se devuelve res como referencia a las interfaces pero no son modificables
-			return this->estr.interfaces; //TODO. Chequear que se este devolviendo referencia
+			return this->estr.interfaces;
 		} 
 		void AgInterfaz(const Interfaz interfaz){
 			this->estr.interfaces.AgregarRapido(interfaz);

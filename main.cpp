@@ -29,6 +29,8 @@ int main()
 	cout<<"Ip creada "<<comp.Ip()<<endl;
 	cout<<"Interfaz creada "<<comp.Interfaces()<<endl;
 
+	Red r1;
+	r1.AgCompu(comp);
 	cin >> variable;
 	return 0;
 }
