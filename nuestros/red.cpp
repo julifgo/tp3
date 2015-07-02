@@ -7,12 +7,12 @@ using namespace std;
 
 namespace dcnet{
 	Red::Red(){
-		estr.computadoras;
+		/*estr.computadoras;
 		estr.vecinos;
 		estr.usaInterfaz;
 		estr.interfaz;
 		estr.caminos;
-		estr.caminosMasCortos;
+		estr.caminosMasCortos;*/ //TODO. LEA, SOLUCIONA ESTO.
 	}
 	Red::Red(const Red& otra){
 		estr.caminos=otra.estr.caminos;
@@ -42,7 +42,9 @@ namespace dcnet{
 		return conjVecinos.Pertenece(c2);
 
 	}
-
+	const Red& Red::operator=(const Red& otra){
+		return otra;
+	}
 	
 
 
