@@ -37,8 +37,8 @@ namespace dcnet{
 	}
 
 	bool Red::Conectadas(const Compu& c1,const Compu& c2){
-		//return estr.vecinos.obtener(c1.Ip())->Pertenece(c2);
-		return true;
+		Conj<Compu> conjVecinos = *estr.vecinos.obtener(c1.Ip());
+		return conjVecinos.Pertenece(c2);
 	}
 
 

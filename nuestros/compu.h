@@ -31,7 +31,8 @@ namespace dcnet{
 		const IP Ip() const;
 		const Conj<Interfaz>& Interfaces() const;
 		void AgInterfaz(const Interfaz interfaz);
-		bool operator==(const Compu& otra);/// Operacion de igualdad entre dos compus
+		bool operator==(const Compu& otra) const;/// Operacion de igualdad entre dos compus
+		bool operator!=(const Compu& otra) const;/// Operacion de !igualdad entre dos compus
 
   	
 	};

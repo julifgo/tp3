@@ -28,7 +28,11 @@ namespace dcnet{
 			this->estr.interfaces.AgregarRapido(interfaz);
 		}
 		/// Operacion de igualdad entre dos compus
-  		bool Compu::operator==(const Compu& otra){
+  		bool Compu::operator==(const Compu& otra) const{
   			return this->estr.ip == otra.estr.ip;
+  		}
+
+  		bool Compu::operator!=(const Compu& otra) const{
+  		  	return !(this->estr.ip == otra.estr.ip);
   		}
 }
