@@ -25,11 +25,12 @@ namespace dcnet{
 	public:
 		Red();
 		Red(const Red& otra);
-		//TODO ~Red();
-  		bool operator==(const Red& otra);
+		//~Red();
+		bool operator==(const Red& otra);
   		void AgCompu(const Compu& compu);
   		Lista<Compu> Computadoras();
   		bool Conectadas(const Compu& c1,const Compu& c2);
+
 	};
 }
 #endif

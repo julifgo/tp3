@@ -16,7 +16,7 @@ namespace dcnet{
   			this->estr.interfaces = Conj<Interfaz>(otra.estr.interfaces);
   		}
 		Compu::~Compu(){
-			
+			//Nada?
 		}
 		const IP Compu::Ip() const{
 			return this->estr.ip;
