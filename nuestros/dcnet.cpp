@@ -1,4 +1,5 @@
 #include <ostream>
+#include <string>
 #include "../aed2.h"
 #include "paquete.h"
 #include "dcnet.h"
@@ -11,6 +12,7 @@ namespace dcnet{
 	DCNet::DCNet(const Red& red){
 		estr.red = red;
 		estr.laQueMasEnvio = estr.red.Computadoras().CrearIt();
+		//estr.cantPaquetesEnviados = DiccString<Nat>(); //TODO. Revisar esto con profe.
 	}
 	DCNet::~DCNet(){
 			//TODO. IMPLEMENTAR.
@@ -20,8 +22,9 @@ namespace dcnet{
 		return estr.red;
 	}
 
-	Nat DCNet::CantidadEnviados(const Compu& c) const{
-		return 5; //TODO. Implementar!
+	Nat DCNet::CantidadEnviados(const Compu& c){
+		Nat res = *estr.cantPaquetesEnviados.obtener(c.Ip());
+		return res;
 	}
 
 	const Lista<Compu> DCNet::CaminoRecorrido(const Paquete& p) const{

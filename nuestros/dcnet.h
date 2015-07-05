@@ -20,7 +20,7 @@ namespace dcnet{
 		private:
 			struct estr{
 				Red red;
-				//DiccString<int> cantPaquetesEnviados;
+				DiccString<Nat> cantPaquetesEnviados;
 				Lista<Compu>::Iterador laQueMasEnvio;
 				//TODO. Faltan elementos aun no definidos
 			};
@@ -29,7 +29,7 @@ namespace dcnet{
 			DCNet(const Red& red);//Equivalente a IniciarDCNEt
 			~DCNet();
 			Red red() const;
-			Nat CantidadEnviados(const Compu& c) const;
+			Nat CantidadEnviados(const Compu& c) /*const*/; //TODO. El acceso a Dicc trie no nos deja poner const
 			const Lista<Compu> CaminoRecorrido(const Paquete& p) const;
 			const Conj<Paquete> EnEspera(const Compu& c) const;
 			void CrearPaquete(const Paquete& p);
