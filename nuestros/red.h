@@ -29,8 +29,10 @@ namespace dcnet{
 		bool operator==(const Red& otra);
 		const Red& operator=(const Red& otra); //TODO. Revisar la necesidad de esto. (Por ahora solo se usa en el constructor de dcnet. Tal vez bastaria con guardar solo referencias)
   		void AgCompu(const Compu& compu);
-  		Lista<Compu> Computadoras();
+  		Lista<Compu> Computadoras() const;
   		bool Conectadas(const Compu& c1,const Compu& c2);
+  		Interfaz InterfazUsada(const Compu& c1,const Compu& c2);
+  		Conj<Compu> Vecinos(const Compu& c1);
 
 	};
 }

@@ -7,12 +7,12 @@ using namespace std;
 
 namespace dcnet{
 	Red::Red(){
-		/*estr.computadoras;
-		estr.vecinos;
-		estr.usaInterfaz;
+	//	estr.computadoras = Lista<Compu>();
+	//	estr.vecinos = DiccString<Conj<Compu> >();
+	/*	estr.usaInterfaz;
 		estr.interfaz;
 		estr.caminos;
-		estr.caminosMasCortos;*/ //TODO. LEA, SOLUCIONA ESTO.
+		estr.caminosMasCortos;*/ //TODO. LEA, SOLUCIONA ESTO.// SOLUCIONADO ASI?
 	}
 	Red::Red(const Red& otra){
 		estr.caminos=otra.estr.caminos;
@@ -22,7 +22,7 @@ namespace dcnet{
 		it.AgregarComoSiguiente(compu);
 		Conj<Interfaz> conjInter = compu.Interfaces();
 		//HACER MAX
-		Arreglo<bool> arr(3);
+		Arreglo<bool> arr(4);
 		estr.usaInterfaz.definir(compu.Ip(),arr);
 		DiccString<Nat> diccInterfaz;
 		estr.interfaz.definir(compu.Ip(),diccInterfaz);
@@ -32,7 +32,7 @@ namespace dcnet{
 		estr.caminosMasCortos.definir(compu.Ip(),caminosCortos);
 	}
 
-	Lista<Compu> Red::Computadoras(){
+	Lista<Compu> Red::Computadoras() const{
 		return estr.computadoras;
 	}
 
@@ -46,6 +46,17 @@ namespace dcnet{
 		return otra;
 	}
 	
+	Interfaz Red::InterfazUsada(const Compu& c1,const Compu& c2){
+		Interfaz res = *estr.interfaz.obtener(c1.Ip())->obtener(c2.Ip());
+		return res;
+	}
+
+	Conj<Compu> Red::Vecinos(const Compu& c1){
+		Conj<Compu> res = *estr.vecinos.obtener(c1.Ip());
+		return res;
+	}
+
+
 
 
 

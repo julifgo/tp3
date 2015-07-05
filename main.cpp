@@ -34,7 +34,9 @@ int main()
 	comp.AgInterfaz(36);
 	cout<<"Ip creada "<<comp.Ip()<<endl;
 	cout<<"Interfaz creada "<<comp.Interfaces()<<endl;
-
+	Red r1;
+	r1.AgCompu(comp);
+	r1.Computadoras();
 	
 	cin >> variable;
 
