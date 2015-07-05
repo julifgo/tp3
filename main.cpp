@@ -37,6 +37,7 @@ int main()
 	Red r1;
 	r1.AgCompu(comp);
 	r1.Computadoras();
+	cout<< r1.UsaInterfaz(comp,0);
 	
 	cin >> variable;
 

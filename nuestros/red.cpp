@@ -55,6 +55,11 @@ namespace dcnet{
 		return res;
 	}
 
+	bool Red::UsaInterfaz(const Compu& c1,Nat i){
+		bool res = estr.usaInterfaz.obtener(c1.Ip())->operator [](i);
+		return res;
+	}
+
 	Interfaz Red::Max(const Conj<Interfaz>& conj) const{
 		Conj<Interfaz>::const_Iterador it = conj.CrearIt();
 		Interfaz max = it.Siguiente();
@@ -70,6 +75,11 @@ namespace dcnet{
 	Arreglo<bool> Red::ArmarArreglo(const Conj<Interfaz>& conj) const{
 		Interfaz max = Max(conj);
 		Arreglo<bool> arr(max+1);
+		Nat i = 0;
+		while (i<=max){
+			arr.Definir(i,false);
+			i++;
+		}
 		Conj<Interfaz>::const_Iterador it = conj.CrearIt();
 		while (it.HaySiguiente()){
 			arr.Definir(it.Siguiente(),true);
