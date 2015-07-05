@@ -104,4 +104,65 @@ namespace dcnet{
 		}
 		return arr;
 	}
+
+	//operaciones privadas de caminos auxiliares (Luis) ---------
+	//dejo todos los tipos que se devuelven sin const porque no estoy seguro en que momento se pueden llegar a utilizar
+
+	//actualizarCaminos
+	/*void Red::ActualizarCaminos(const Compu& pc1, const Compu& pc2) {
+
+	}
+
+	//actualizarCaminosMasCortos
+	Conj<Lista<Compu>> Red::ActualizarCaminosMasCortos(const Compu& pc1, const Compu& pc2) const {
+
+	}
+
+	//caminosQueEmpiezanConPcx
+	Conj<Lista<Compu>> Red::CaminosQueEmpiezanConPcx(const Conj<Lista<Compu>>& caminos, const Nat& pcx) const {
+
+	}
+	
+	//caminosQueTerminanConPcx
+	Conj<Lista<Compu>> Red::CaminosQueTerminanConPcx(const Conj<Lista<Compu>>& caminos, const Nat& pcx) const {
+
+	}*/
+	
+	//hayInterseccionDeCaminos
+	bool Red::HayInterseccionDeCaminos(const Lista<Compu>& camino1,const Lista<Compu>& camino2) const {
+		bool hay = false;
+		Lista<Compu>::const_Iterador it1 = camino1.CrearIt();
+		Lista<Compu>::const_Iterador it2 = camino2.CrearIt();
+		while( it1.HaySiguiente() && !hay ) {
+			while( it2.HaySiguiente() && !hay ) {
+				hay = (it1.Siguiente() == it2.Siguiente());
+				it2.Avanzar();
+			}
+			it1.Avanzar();
+		}
+		return hay;
+	}
+	
+	//concatenar
+	void Red::Concatenar(Lista<Compu>& camino1, const Lista<Compu>& camino2) const {
+		Lista<Compu>::const_Iterador it = camino2.CrearIt();
+		while( it.HaySiguiente() ) {
+			camino1.AgregarAtras(it.Siguiente());
+			it.Avanzar();
+		}
+	}
+	/*
+	//reverso
+	Lista<Compu>& Red::Reverso(const Lista<Compu>& camino) const {
+		Lista<Compu>* arr = new Lista<Compu>();
+		Lista<Compu>::const_Iterador it = camino.CrearItUlt();
+		while( it.HayAnterior() ) {
+			arr->AgregarAdelante(it.Anterior());
+			it.Retroceder();
+		}
+		return arr;
+	}
+
+*/
+
 }
