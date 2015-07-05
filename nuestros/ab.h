@@ -1,5 +1,5 @@
-#ifndef PAQUETE_H
-#define PAQUETE_H
+#ifndef AB_H
+#define AB_H
 
 #include "../aed2.h"
 
@@ -78,4 +78,4 @@ namespace dcnet {
     };
 
 }
-#endif //PAQUETE_H
+#endif //AB_H
