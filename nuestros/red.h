@@ -21,6 +21,7 @@ namespace dcnet{
 			Conj<Lista<Compu> > caminos;
 		};
 		estr estr;
+		Interfaz Max(const Conj<Interfaz> conj) const;
 
 	public:
 		Red();
