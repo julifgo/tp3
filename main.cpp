@@ -38,12 +38,12 @@ int main()
 	cout<<"Interfaz creada "<<comp.Interfaces()<<endl;
 	Red r1;
 	r1.AgCompu(comp);
-	cout << r1.Computadoras().Primero().Ip() << endl;
+	cout << "Primera Ip de Lista:" << r1.Computadoras().Primero().Ip() << endl;
 	r1.AgCompu(comp2);
-	cout<< r1.UsaInterfaz(comp,36) << endl;
+	cout<< "UsaInterfaz?:" << r1.UsaInterfaz(comp,36) << endl;
 	r1.Conectar(comp,comp2,36,2);
-	cout<< r1.UsaInterfaz(comp,36) << endl;
-	cout<< r1.Vecinos(comp).CrearIt().Siguiente().Ip() << endl;
+	cout<< "UsaInterfaz ahora que conecte?:" << r1.UsaInterfaz(comp,36) << endl;
+	cout<< "La Ip a la que esta conectada comp:" << r1.Vecinos(comp).CrearIt().Siguiente().Ip() << endl;
 	
 	cin >> variable;
 
