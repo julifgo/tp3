@@ -30,7 +30,7 @@ int main()
 	cout<<"Clave definida: "<<estaDef<<endl;
 
 	Compu comp("192.168.50.137");
-	comp.AgInterfaz(35);
+	comp.AgInterfaz(0);
 	comp.AgInterfaz(36);
 	cout<<"Ip creada "<<comp.Ip()<<endl;
 	cout<<"Interfaz creada "<<comp.Interfaces()<<endl;

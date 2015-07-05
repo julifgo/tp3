@@ -21,8 +21,7 @@ namespace dcnet{
 		Lista<Compu>::Iterador it = estr.computadoras.CrearIt();
 		it.AgregarComoSiguiente(compu);
 		Conj<Interfaz> conjInter = compu.Interfaces();
-		Interfaz max = Max(conjInter);
-		Arreglo<bool> arr(max);
+		Arreglo<bool> arr = ArmarArreglo(conjInter);
 		estr.usaInterfaz.definir(compu.Ip(),arr);
 		DiccString<Nat> diccInterfaz;
 		estr.interfaz.definir(compu.Ip(),diccInterfaz);
@@ -56,8 +55,8 @@ namespace dcnet{
 		return res;
 	}
 
-	Interfaz Red::Max(Conj<Interfaz> conj) const{
-		Conj<Interfaz>::Iterador it = conj.CrearIt();
+	Interfaz Red::Max(const Conj<Interfaz>& conj) const{
+		Conj<Interfaz>::const_Iterador it = conj.CrearIt();
 		Interfaz max = it.Siguiente();
 		while (it.HaySiguiente()){
 			if(max <= it.Siguiente()){
@@ -68,6 +67,16 @@ namespace dcnet{
 		return max;
 	}
 
+	Arreglo<bool> Red::ArmarArreglo(const Conj<Interfaz>& conj) const{
+		Interfaz max = Max(conj);
+		Arreglo<bool> arr(max+1);
+		Conj<Interfaz>::const_Iterador it = conj.CrearIt();
+		while (it.HaySiguiente()){
+			arr.Definir(it.Siguiente(),true);
+			it.Avanzar();
+		}
+		return arr;
+	}
 
 
 }
