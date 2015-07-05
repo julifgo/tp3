@@ -36,8 +36,8 @@ int main()
 	cout<<"Interfaz creada "<<comp.Interfaces()<<endl;
 	Red r1;
 	r1.AgCompu(comp);
-	r1.Computadoras();
-	cout<< r1.UsaInterfaz(comp,0);
+	cout << r1.Computadoras().Primero().Ip() << endl;
+	cout<< r1.UsaInterfaz(comp,0) << endl;
 	
 	cin >> variable;
 

@@ -60,6 +60,16 @@ namespace dcnet{
 		return res;
 	}
 
+	bool Red::HayCamino(const Compu& c1,const Compu& c2){
+		bool res = estr.caminosMasCortos.obtener(c2.Ip())->obtener(c1.Ip())->EsVacio();
+		return res;
+	}
+
+	Conj<Lista<Compu> > Red::CaminosMin(const Compu& c1,const Compu& c2){
+		Conj<Lista<Compu> > res = *estr.caminosMasCortos.obtener(c2.Ip())->obtener(c1.Ip());
+		return res;
+	}
+
 	Interfaz Red::Max(const Conj<Interfaz>& conj) const{
 		Conj<Interfaz>::const_Iterador it = conj.CrearIt();
 		Interfaz max = it.Siguiente();
