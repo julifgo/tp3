@@ -38,7 +38,7 @@ namespace dcnet{
   		bool UsaInterfaz(const Compu& c1,Nat i);
   		bool HayCamino(const Compu& c1, const Compu& c2);
   		Conj<Lista<Compu> > CaminosMin(const Compu& c1, const Compu& c2);
-
+  		void Conectar(const Compu& c1, const Compu& c2,Nat i1,Nat i2);
 	};
 }
 #endif

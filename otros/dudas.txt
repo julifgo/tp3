@@ -1,2 +1,4 @@
 1) Para representar tuplas podemos usar struct? (Julian)
-2) Las implementaciones van directamente en el .h y en la firma del metodo? (ver DiccString)(Julian)
+2) esta bien tener el mismo namespace para todos nuestros modulos?
+3) Posible bug en implementacion de operator = de diccTrie. Caso: Asignar un DiccString vacio a otro. Ver DCNet.cpp
+4) Posible bug en diccTrie al querer obtener puede que no sea const. Ver cantPaquetesEnviados de Dcnet, Lea tambien tiene ejemplos
