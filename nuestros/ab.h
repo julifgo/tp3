@@ -5,32 +5,75 @@
 
 namespace dcnet {
 
-    template<class T>
+    //NOTA este Ab va a tener que sufrir cambios a medida que avancemos
+
+    template<typename T>
     class Ab {
         
         public:
 
             //Miembros definidos en el módulo
 
-            Ab<T>();
+            //nil
+            Ab<T>() : raiz(NULL), cardinal(0) {}
 
-            ~Ab<T>();
+            //bin (el const que precede puede limitar operaciones: reconsiderar)
+            Ab<T>(const Ab<T>& i, const T& e, const Ab<T>& d) {
+                Nodo* n = new Nodo; //creo un nuevo nodo en el heap
+                n->valor = &e; //el puntero apunta a la referencia e pasada
+                n->izq = i.raiz; //el puntero es igual al puntero raiz de la referencia i
+                n->der = d.raiz; //el puntero es igual al puntero raiz de la referencia d
+                this->raiz = n; //el puntero es igual al puntero de n
+                this->cardinal = i.Tamano() + d.Tamano() + 1; //actualizo el tamaño
+            }
+            
+            //destructor
+            ~Ab<T>() {
+                delete this->raiz; //este destructor destruye el contenido de toda las referencias hijas (recursivo)
+            }
 
-            static const Ab<T>& Bin(const Ab<T>& i,const T e ,const Ab<T> d);
+            //tamaño
+            Nat Tamano() const {
+                return this->cardinal;
+            }
 
-            Nat Tamano() const;
+            //nil?
+            bool IsNil() const {
+                return this->raiz == NULL;
+            }
 
-            bool IsNil() const;
+            //raiz
+            T& Raiz() const {
+                return this->raiz->valor;
+            }
 
-            T& Raiz() const;
+            //izq (el const que precede puede limitar operaciones: reconsiderar)
+            const Ab& Izq() const {
+                return this->raiz->izq;
+            }
 
-            const Ab& Izq() const;
-
-            const Ab& Der() const;
+            //der (el const que precede puede limitar operaciones: reconsiderar)
+            const Ab& Der() const {
+                return this->raiz->der;
+            }
 
         private:
 
-            
+            struct Nodo {
+                //dejo const el valor que se guarda, si molesta avisar para sacar después
+                const T* valor;
+                Nodo* izq;
+                Nodo* der;
+
+                ~Nodo() {
+                    delete izq;
+                    delete der;
+                    delete valor;
+                }
+            };
+
+            Nodo* raiz;
+            Nat cardinal;     
 
     };
 
