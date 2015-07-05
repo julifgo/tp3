@@ -1,5 +1,6 @@
 #include <ostream>
 #include "../aed2.h"
+#include "paquete.h"
 #include "dcnet.h"
 
 using namespace aed2;
@@ -9,9 +10,41 @@ namespace dcnet{
 
 	DCNet::DCNet(const Red& red){
 		estr.red = red;
-
+		estr.laQueMasEnvio = estr.red.Computadoras().CrearIt();
 	}
 	DCNet::~DCNet(){
 			//TODO. IMPLEMENTAR.
+	}
+
+	Red DCNet::red() const{
+		return estr.red;
+	}
+
+	Nat DCNet::CantidadEnviados(const Compu& c) const{
+		return 5; //TODO. Implementar!
+	}
+
+	const Lista<Compu> DCNet::CaminoRecorrido(const Paquete& p) const{
+		return Lista<Compu>(); //TODO. Implementar!
+	}
+
+	const Conj<Paquete> DCNet::EnEspera(const Compu& c) const{
+		return Conj<Paquete>(); //TODO. Implementar!
+	}
+
+	void DCNet::CrearPaquete(const Paquete& p){
+
+	}
+
+	void DCNet::AvanzarSegundo(){
+
+	}
+
+	bool DCNet::IsPaqueteEnTransito(const Paquete& p) const{
+		return true;
+	}
+
+	const Compu DCNet::LaQueMasEnvio() const{
+		return estr.laQueMasEnvio.Siguiente();
 	}
 }

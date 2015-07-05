@@ -7,26 +7,35 @@
 
 #ifndef DC_DCNET_H_
 #define DC_DCNET_H_
-//#include "../aed2.h"
+#include "../aed2.h"
 #include "red.h"
+#include "paquete.h"
 #include <ostream>
 
 using namespace aed2;
 
 namespace dcnet{
 
-	class DCNet{
+	class DCNet{ //TODO. Ver diferencia entre in dcnet e inout dcnet
 		private:
 			struct estr{
 				Red red;
 				//DiccString<int> cantPaquetesEnviados;
-				//Lista<Compu>::Iterador it;
+				Lista<Compu>::Iterador laQueMasEnvio;
 				//TODO. Faltan elementos aun no definidos
 			};
 			estr estr;
 		public:
 			DCNet(const Red& red);//Equivalente a IniciarDCNEt
 			~DCNet();
+			Red red() const;
+			Nat CantidadEnviados(const Compu& c) const;
+			const Lista<Compu> CaminoRecorrido(const Paquete& p) const;
+			const Conj<Paquete> EnEspera(const Compu& c) const;
+			void CrearPaquete(const Paquete& p);
+			void AvanzarSegundo();
+			bool IsPaqueteEnTransito(const Paquete& p) const;
+			const Compu LaQueMasEnvio() const;
 	};
 }
 #endif
