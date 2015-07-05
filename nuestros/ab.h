@@ -19,8 +19,8 @@ namespace dcnet {
 
             //bin (el const que precede puede limitar operaciones: reconsiderar)
             Ab<T>(const Ab<T>& i, const T& e, const Ab<T>& d) {
-                Nodo* n = new Nodo; //creo un nuevo nodo en el heap
-                n->valor = &e; //el puntero apunta a la referencia e pasada
+                Nodo* n = new Nodo; //creo un nuevo nodo en el arbol
+                n->valor = e; //el valor es la referencia pasada
                 n->izq = i.raiz; //el puntero es igual al puntero raiz de la referencia i
                 n->der = d.raiz; //el puntero es igual al puntero raiz de la referencia d
                 this->raiz = n; //el puntero es igual al puntero de n
@@ -60,15 +60,14 @@ namespace dcnet {
         private:
 
             struct Nodo {
-                //dejo const el valor que se guarda, si molesta avisar para sacar después
-                const T* valor;
+                T valor;
                 Nodo* izq;
                 Nodo* der;
 
                 ~Nodo() {
                     delete izq;
                     delete der;
-                    delete valor;
+               //   delete valor;
                 }
             };
 
