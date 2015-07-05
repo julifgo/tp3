@@ -7,6 +7,8 @@
 #include "nuestros/red.h"
 #include "nuestros/paquete.h"
 
+#include "nuestros/ab.h"
+
 using namespace aed2;
 
 using namespace std;
@@ -77,6 +79,14 @@ int main()
 	} else {
 		cout << "distintos";
 	}*/
+
+	Ab<int>* anil = new Ab<int>(); 
+
+	int ble = 5;
+
+	Ab<int>* bla = new Ab<int>(*anil, ble ,*anil);
+
+	cout<< bla->Raiz() <<endl;
 
 	return 0;
 }

@@ -18,7 +18,7 @@ namespace dcnet {
             Ab<T>() : raiz(NULL), cardinal(0) {}
 
             //bin (el const que precede puede limitar operaciones: reconsiderar)
-            Ab<T>(const Ab<T>& i, const T& e, const Ab<T>& d) {
+            Ab<T>(const Ab<T>& i, T& e, const Ab<T>& d) {
                 Nodo* n = new Nodo; //creo un nuevo nodo en el heap
                 n->valor = &e; //el puntero apunta a la referencia e pasada
                 n->izq = i.raiz; //el puntero es igual al puntero raiz de la referencia i
@@ -44,7 +44,7 @@ namespace dcnet {
 
             //raiz
             T& Raiz() const {
-                return this->raiz->valor;
+                return *this->raiz->valor;
             }
 
             //izq (el const que precede puede limitar operaciones: reconsiderar)
@@ -61,7 +61,7 @@ namespace dcnet {
 
             struct Nodo {
                 //dejo const el valor que se guarda, si molesta avisar para sacar después
-                const T* valor;
+                T* valor;
                 Nodo* izq;
                 Nodo* der;
 
