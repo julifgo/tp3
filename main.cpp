@@ -30,14 +30,20 @@ int main()
 	cout<<"Clave definida: "<<estaDef<<endl;
 
 	Compu comp("192.168.50.137");
+	Compu comp2("192.168.0.1");
 	comp.AgInterfaz(0);
 	comp.AgInterfaz(36);
+	comp2.AgInterfaz(2);
 	cout<<"Ip creada "<<comp.Ip()<<endl;
 	cout<<"Interfaz creada "<<comp.Interfaces()<<endl;
 	Red r1;
 	r1.AgCompu(comp);
 	cout << r1.Computadoras().Primero().Ip() << endl;
-	cout<< r1.UsaInterfaz(comp,0) << endl;
+	r1.AgCompu(comp2);
+	cout<< r1.UsaInterfaz(comp,36) << endl;
+	r1.Conectar(comp,comp2,36,2);
+	cout<< r1.UsaInterfaz(comp,36) << endl;
+	cout<< r1.Vecinos(comp).CrearIt().Siguiente().Ip() << endl;
 	
 	cin >> variable;
 

@@ -70,6 +70,18 @@ namespace dcnet{
 		return res;
 	}
 
+	void Red::Conectar(const Compu& c1,const Compu& c2,Nat i1, Nat i2){
+		estr.vecinos.obtener(c1.Ip())->AgregarRapido(c2);
+		estr.vecinos.obtener(c2.Ip())->AgregarRapido(c1);
+		estr.usaInterfaz.obtener(c1.Ip())->operator [](i1) = true;
+		estr.usaInterfaz.obtener(c2.Ip())->operator [](i2) = true;
+		DiccString<Nat> interfaz1 = *estr.interfaz.obtener(c1.Ip());
+		interfaz1.definir(c2.Ip(),i1);
+		DiccString<Nat> interfaz2 = *estr.interfaz.obtener(c2.Ip());
+		interfaz2.definir(c1.Ip(),i2);
+		//TODO: @Luis: llamar a las funciones de actualizarCaminos
+	}
+
 	Interfaz Red::Max(const Conj<Interfaz>& conj) const{
 		Conj<Interfaz>::const_Iterador it = conj.CrearIt();
 		Interfaz max = it.Siguiente();
@@ -90,13 +102,6 @@ namespace dcnet{
 			arr.Definir(i,false);
 			i++;
 		}
-		Conj<Interfaz>::const_Iterador it = conj.CrearIt();
-		while (it.HaySiguiente()){
-			arr.Definir(it.Siguiente(),true);
-			it.Avanzar();
-		}
 		return arr;
 	}
-
-
 }
