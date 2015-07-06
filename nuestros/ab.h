@@ -19,7 +19,6 @@ namespace dcnet {
             
 
             //bin (el const que precede puede limitar operaciones: reconsiderar)
-
             Ab<T>(const Ab<T>& i, const T& e, const Ab<T>& d) {
             	Nodo* n = new Nodo; //creo un nuevo nodo en el arbol
             	n->valor = e; //el valor es la referencia pasada

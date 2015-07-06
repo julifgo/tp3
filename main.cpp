@@ -3,12 +3,12 @@
 #include <cassert>
 #include "aed2.h"
 
-//#include "nuestros/compu.h" 
-//#include "nuestros/red.h"
-//#include "nuestros/paquete.h"
+#include "nuestros/compu.h"
+#include "nuestros/red.h"
+#include "nuestros/paquete.h"
 #include "nuestros/ab.h"
 
-#include "nuestros/diccLog.h"
+//#include "nuestros/diccLog.h"
 
 using namespace aed2;
 
@@ -20,7 +20,7 @@ int main()
 
 
 	cout << "hola mundo";
-	/*int variable;
+	//int variable;
 	
 	Lista<Nat> lista;
 	lista.AgregarAtras(2);
@@ -34,9 +34,10 @@ int main()
 
 	Compu comp("192.168.50.137");
 	Compu comp2("192.168.0.1");
-	comp.AgInterfaz(0);
+	comp.AgInterfaz(1);
 	comp.AgInterfaz(36);
 	comp2.AgInterfaz(2);
+	comp2.AgInterfaz(1);
 	cout<<"Ip creada "<<comp.Ip()<<endl;
 	cout<<"Interfaz creada "<<comp.Interfaces()<<endl;
 	Red r1;
@@ -44,16 +45,16 @@ int main()
 	cout << "Primera Ip de Lista:" << r1.Computadoras().Primero().Ip() << endl;
 	r1.AgCompu(comp2);
 	cout<< "UsaInterfaz?:" << r1.UsaInterfaz(comp,36) << endl;
-	r1.Conectar(comp,comp2,36,2);
-	cout<< "UsaInterfaz ahora que conecte?:" << r1.UsaInterfaz(comp,36) << endl;
-	cout<< "La Ip a la que esta conectada comp:" << r1.Vecinos(comp).CrearIt().Siguiente().Ip() << endl;*/
+	r1.Conectar(comp,comp2,1,1);
+	cout<< "UsaInterfaz ahora que conecte?:" << r1.UsaInterfaz(comp,1) << endl;
+	cout<< "La Ip a la que esta conectada comp:" << r1.Vecinos(comp).CrearIt().Siguiente().Ip() << endl;
 	/*DiccLog<int,int> diccionario;
 	diccionario.Definir(1,10);*/
-	Ab<int> arbolIzq(Ab<int>(),10,Ab<int>());
+	/*Ab<int> arbolIzq(Ab<int>(),10,Ab<int>());
 	Ab<int> arbolDer(Ab<int>(),20,Ab<int>());
 	Ab<int> arbol(arbolIzq,5,arbolDer);
 	Ab<int> izq = arbol.Izq();
-	cout<<"raiz: "<<izq.Raiz()<<endl;
+	cout<<"raiz: "<<izq.Raiz()<<endl;*/
 	//cout<<"cardinal arbol: "<<arbol.Tamano()<<endl;
 	//cout<<"cardinal arbol izquiwerdo: "<<arbol.Izq().Tamano()<<endl;
 	//cin >> variable;
