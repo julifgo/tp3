@@ -35,4 +35,10 @@ namespace dcnet{
   		bool Compu::operator!=(const Compu& otra) const{
   		  	return !(this->estr.ip == otra.estr.ip);
   		}
+
+		ostream& Compu::operator<<(ostream& out) const{
+			out << this->estr.ip;
+			return out;
+		}
+
 }

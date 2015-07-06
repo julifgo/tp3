@@ -107,7 +107,7 @@ class Lista
 
       bool operator == (const typename Lista<T>::Iterador& otro) const;
 
-  private:
+    private:
 
       Lista<T>* lista_;
 
@@ -150,7 +150,7 @@ class Lista
 
       bool operator == (const typename Lista<T>::const_Iterador& otro) const;
 
-  private:
+    private:
 
       const Lista<T>* lista_;
 
@@ -166,7 +166,7 @@ class Lista
       const typename Lista<T>::Nodo* SiguienteReal() const;
   };
 
-private:
+  private:
 
   struct Nodo
   {
@@ -181,11 +181,14 @@ private:
   Nat longitud_;
 };
 
-template<class T>
-std::ostream& operator << (std::ostream& os, const Lista<T>& l);
+//template<class T>
+//std::ostream& operator << (std::ostream& os, const Lista<T>& l);
 
 template<class T>
 bool operator == (const Lista<T>& l1, const Lista<T>& k2);
+
+template<class T>
+bool operator != (const Lista<T>& l1, const Lista<T>& k2);
 
   //  Implementacion de Lista
 
@@ -654,12 +657,17 @@ const typename Lista<T>::Nodo* Lista<T>::const_Iterador::SiguienteReal() const
   return nodo_siguiente_ == NULL ? lista_->primero_ : nodo_siguiente_;
 }
 
-  // Otros
+//Otros
 
 template <typename T>
 std::ostream& operator<<(std::ostream& os, const Lista<T>& lista)
 {
-  return Mostrar(os, lista, '<', '>');
+  typename Lista<T>::const_Iterador it = lista.CrearIt();
+  while(it.HaySiguiente()) {
+    os << " ";//it.Siguiente();
+    it.Avanzar();
+  }
+  return os;
 }
 
 template <typename T>
@@ -673,6 +681,19 @@ bool operator == (const Lista<T>& l1, const Lista<T>& l2)
   }
 
   return not it1.HaySiguiente() and not it2.HaySiguiente();
+}
+
+template <typename T>
+bool operator != (const Lista<T>& l1, const Lista<T>& l2)
+{
+  typename Lista<T>::const_Iterador it1 = l1.CrearIt();
+  typename Lista<T>::const_Iterador it2 = l2.CrearIt();
+
+  while(it1.HaySiguiente() and it2.HaySiguiente() and it1.Siguiente() == it2.Siguiente()) {
+    it1.Avanzar(); it2.Avanzar();
+  }
+
+  return it1.HaySiguiente() or it2.HaySiguiente();
 }
 
 }

@@ -80,6 +80,9 @@ namespace dcnet{
 		DiccString<Nat> interfaz2 = *estr.interfaz.obtener(c2.Ip());
 		interfaz2.definir(c1.Ip(),i2);
 		//TODO: @Luis: llamar a las funciones de actualizarCaminos
+		ActualizarCaminos(c1, c2);
+		//estr.caminosMasCortos = ActualizarCaminosMasCortos(c1, c2);
+		cout << estr.caminos << endl;
 	}
 
 	Interfaz Red::Max(const Conj<Interfaz>& conj) const{
@@ -109,27 +112,93 @@ namespace dcnet{
 	//dejo todos los tipos que se devuelven sin const porque no estoy seguro en que momento se pueden llegar a utilizar
 
 	//actualizarCaminos
-	/*void Red::ActualizarCaminos(const Compu& pc1, const Compu& pc2) {
+	void Red::ActualizarCaminos(const Compu pc1, const Compu pc2) {
+		Conj<Lista<Compu>> caminos = this->estr.caminos;
+
+		if(CaminosQueEmpiezanConPcx(caminos, pc1).EsVacio()) {
+			Lista<Compu>* aux = new Lista<Compu>();
+			aux->AgregarAtras(pc1);
+			caminos.AgregarRapido( *aux );
+		}
+
+		if(CaminosQueEmpiezanConPcx(caminos, pc2).EsVacio()) {
+			Lista<Compu>* aux = new Lista<Compu>();
+			aux->AgregarAtras(pc2);
+			caminos.AgregarRapido( *aux );
+		}
+
+		Conj<Lista<Compu>> caminosQueTerminanConpc1 = CaminosQueTerminanConPcx(caminos, pc1);
+		Conj<Lista<Compu>> caminosQueEmpiezanConpc2 = CaminosQueEmpiezanConPcx(caminos, pc2);
+
+		Conj<Lista<Compu>>::Iterador itCaminosQueEmpiezanConpc2 = caminosQueEmpiezanConpc2.CrearIt();
+		Conj<Lista<Compu>>::Iterador itCaminosQueTerminanConpc1 = caminosQueTerminanConpc1.CrearIt();
+
+		while(itCaminosQueTerminanConpc1.HaySiguiente()) {
+			while(itCaminosQueEmpiezanConpc2.HaySiguiente()) {
+				if(HayInterseccionDeCaminos(itCaminosQueTerminanConpc1.Siguiente(), itCaminosQueEmpiezanConpc2.Siguiente())) {
+					Lista<Compu> nuevoCamino = Lista<Compu>();
+					Concatenar( itCaminosQueTerminanConpc1.Siguiente(), itCaminosQueEmpiezanConpc2.Siguiente() );
+					Concatenar(nuevoCamino, itCaminosQueTerminanConpc1.Siguiente() );
+					caminos.AgregarRapido(nuevoCamino);
+					caminos.AgregarRapido(Reverso( *(new Lista<Compu>(nuevoCamino)) ));
+				}
+				itCaminosQueEmpiezanConpc2.Avanzar();
+			}
+			itCaminosQueTerminanConpc1.Avanzar();
+		}
 
 	}
 
 	//actualizarCaminosMasCortos
-	Conj<Lista<Compu>> Red::ActualizarCaminosMasCortos(const Compu& pc1, const Compu& pc2) const {
+	Conj<Lista<Compu>> Red::ActualizarCaminosMasCortos(const Compu pc1, const Compu pc2) const {
+		Conj<Lista<Compu>> caminosRes = CaminosQueEmpiezanConPcx(CaminosQueTerminanConPcx(this->estr.caminos, pc2), pc1);
+		Conj<Lista<Compu>>::Iterador itConjCamino = caminosRes.CrearIt();
+		Nat cantidadDeComputadorasEnCaminoMinimo = itConjCamino.Siguiente().Longitud();
+		while(itConjCamino.HaySiguiente()) {
+			if(cantidadDeComputadorasEnCaminoMinimo > itConjCamino.Siguiente().Longitud()) {
+				cantidadDeComputadorasEnCaminoMinimo = itConjCamino.Siguiente().Longitud();
+			}
+			itConjCamino.Avanzar();
+		}
 
+		while(itConjCamino.HayAnterior()) {
+			if(cantidadDeComputadorasEnCaminoMinimo != itConjCamino.Anterior().Longitud()) {
+				itConjCamino.EliminarAnterior();
+			}
+			itConjCamino.Retroceder();
+		}
+		return caminosRes;
 	}
 
 	//caminosQueEmpiezanConPcx
-	Conj<Lista<Compu>> Red::CaminosQueEmpiezanConPcx(const Conj<Lista<Compu>>& caminos, const Nat& pcx) const {
-
+	Conj<Lista<Compu>> Red::CaminosQueEmpiezanConPcx(const Conj<Lista<Compu>> caminos, const Compu pcx) const {
+		Conj<Lista<Compu>>* res = new Conj<Lista<Compu>>();
+		Conj<Lista<Compu>>::const_Iterador it = caminos.CrearIt();
+		while(it.HaySiguiente()) {
+			if(it.Siguiente()[0] == pcx) {
+				res->AgregarRapido(it.Siguiente());
+			}
+			it.Avanzar();
+		}
+		return *res;
 	}
 	
 	//caminosQueTerminanConPcx
-	Conj<Lista<Compu>> Red::CaminosQueTerminanConPcx(const Conj<Lista<Compu>>& caminos, const Nat& pcx) const {
-
-	}*/
+	Conj<Lista<Compu>> Red::CaminosQueTerminanConPcx(const Conj<Lista<Compu>> caminos, const Compu pcx) const {
+		Conj<Lista<Compu>>* res = new Conj<Lista<Compu>>(); //creo una lista de compus en el heap
+		Conj<Lista<Compu>>::const_Iterador it = caminos.CrearIt();
+		while(it.HaySiguiente()) {
+			Lista<Compu>::const_Iterador itUlt = it.Siguiente().CrearItUlt();
+			if(itUlt.Siguiente() == pcx) {
+				res->AgregarRapido(it.Siguiente());
+			}
+			it.Avanzar();
+		}
+		return *res;
+	}
 	
 	//hayInterseccionDeCaminos
-	bool Red::HayInterseccionDeCaminos(const Lista<Compu>& camino1,const Lista<Compu>& camino2) const {
+	bool Red::HayInterseccionDeCaminos(const Lista<Compu> camino1,const Lista<Compu> camino2) const {
 		bool hay = false;
 		Lista<Compu>::const_Iterador it1 = camino1.CrearIt();
 		Lista<Compu>::const_Iterador it2 = camino2.CrearIt();
@@ -144,25 +213,25 @@ namespace dcnet{
 	}
 	
 	//concatenar
-	void Red::Concatenar(Lista<Compu>& camino1, const Lista<Compu>& camino2) const {
-		Lista<Compu>::const_Iterador it = camino2.CrearIt();
+	void Red::Concatenar(Lista<Compu> camino1, const Lista<Compu> camino2) const {
+		Lista<Compu>::const_Iterador it = camino2.CrearIt(); //voy a iterar camino2
 		while( it.HaySiguiente() ) {
-			camino1.AgregarAtras(it.Siguiente());
-			it.Avanzar();
+			camino1.AgregarAtras(it.Siguiente()); //agrego la referencia a camino1 (es it.Siguiente() es una referencia porque camino2 es una lista de tipos no primitivos)
+			it.Avanzar(); //avanzo
 		}
 	}
-	/*
+	
 	//reverso
-	Lista<Compu>& Red::Reverso(const Lista<Compu>& camino) const {
-		Lista<Compu>* arr = new Lista<Compu>();
-		Lista<Compu>::const_Iterador it = camino.CrearItUlt();
+	Lista<Compu> Red::Reverso(const Lista<Compu> camino) const {
+		Lista<Compu>* arr = new Lista<Compu>();	//se crea una lista de computadoras en el heap
+		Lista<Compu>::const_Iterador it = camino.CrearItUlt(); //voy a iterar camino del último al primero
 		while( it.HayAnterior() ) {
-			arr->AgregarAdelante(it.Anterior());
-			it.Retroceder();
+			arr->AgregarAdelante(it.Anterior()); //como camino es una lista de compus, cada compu es un tipo no primitivo, por lo que it.Anterior es una referencia
+			it.Retroceder(); //retrocedo
 		}
-		return arr;
+		return *arr; //devuelvo la lista que tengo en el heap (se devuelve una referencia porque es un tipo no primitivo)
 	}
 
-*/
+
 
 }
