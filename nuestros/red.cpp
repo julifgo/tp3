@@ -82,8 +82,8 @@ namespace dcnet{
 		//TODO: @Luis: llamar a las funciones de actualizarCaminos
 		ActualizarCaminos(c1, c2);
 		//estr.caminosMasCortos = ActualizarCaminosMasCortos(c1, c2);
-		
-		cout << estr.caminos << endl;
+		//cout << "Cardinal de caminos: " << estr.caminos.Cardinal() << endl;
+		//cout << estr.caminos << endl;
 	}
 
 	Interfaz Red::Max(const Conj<Interfaz>& conj) const{
@@ -136,17 +136,20 @@ namespace dcnet{
 
 		while(itCaminosQueTerminanConpc1.HaySiguiente()) {
 			while(itCaminosQueEmpiezanConpc2.HaySiguiente()) {
-				if(HayInterseccionDeCaminos(itCaminosQueTerminanConpc1.Siguiente(), itCaminosQueEmpiezanConpc2.Siguiente())) {
-					Lista<Compu> nuevoCamino = Lista<Compu>();
+				if(!HayInterseccionDeCaminos(itCaminosQueTerminanConpc1.Siguiente(), itCaminosQueEmpiezanConpc2.Siguiente())) {
+					/*Lista<Compu> nuevoCamino = new Lista<Compu>();
 					Concatenar( itCaminosQueTerminanConpc1.Siguiente(), itCaminosQueEmpiezanConpc2.Siguiente() );
 					Concatenar(nuevoCamino, itCaminosQueTerminanConpc1.Siguiente() );
 					caminos.AgregarRapido(nuevoCamino);
 					caminos.AgregarRapido(Reverso( *(new Lista<Compu>(nuevoCamino)) ));
+					cout <<"esta entrando"<<endl;*/
 				}
 				itCaminosQueEmpiezanConpc2.Avanzar();
 			}
 			itCaminosQueTerminanConpc1.Avanzar();
 		}
+
+		cout << "Caminos: " << caminos << endl;
 
 	}
 
