@@ -6,6 +6,7 @@
 #include "nuestros/compu.h" 
 #include "nuestros/red.h"
 #include "nuestros/paquete.h"
+#include "nuestros/ab.h"
 
 #include "nuestros/ab.h"
 
@@ -46,7 +47,9 @@ int main()
 	r1.Conectar(comp,comp2,36,2);
 	cout<< "UsaInterfaz ahora que conecte?:" << r1.UsaInterfaz(comp,36) << endl;
 	cout<< "La Ip a la que esta conectada comp:" << r1.Vecinos(comp).CrearIt().Siguiente().Ip() << endl;
-	
+	Ab<int> bla(Ab<int>(),5,Ab<int>());
+	int ble = bla.Raiz();
+	cout<<ble<<endl;
 	cin >> variable;
 
 
@@ -85,14 +88,6 @@ int main()
 	} else {
 		cout << "distintos";
 	}*/
-
-	Ab<int>* anil = new Ab<int>(); 
-
-	int ble = 5;
-
-	Ab<int>* bla = new Ab<int>(*anil, ble ,*anil);
-
-	cout<< bla->Raiz() <<endl;
 
 	return 0;
 }
