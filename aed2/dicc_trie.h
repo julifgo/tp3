@@ -25,6 +25,8 @@ private:
         if(index == clave.size())
         {
             es_final = true;
+            if(significado!=NULL)
+            	delete significado;
             significado = new T(_significado);
         }
         else

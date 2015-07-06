@@ -7,12 +7,6 @@ using namespace std;
 
 namespace dcnet{
 	Red::Red(){
-	//	estr.computadoras = Lista<Compu>();
-	//	estr.vecinos = DiccString<Conj<Compu> >();
-	/*	estr.usaInterfaz;
-		estr.interfaz;
-		estr.caminos;
-		estr.caminosMasCortos;*/ //TODO. LEA, SOLUCIONA ESTO.// SOLUCIONADO ASI?
 	}
 	Red::Red(const Red& otra){
 		estr.caminos=otra.estr.caminos;
