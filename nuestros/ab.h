@@ -36,9 +36,9 @@ namespace dcnet {
             
             //destructor
             ~Ab<T>() {
-                //cout<<"ent dest"<<endl;
+                cout<<"ent dest"<<endl;
                 delete this->raiz; //este destructor destruye el contenido de toda las referencias hijas (recursivo)
-                //cout<<"leaving dest"<<endl;
+                cout<<"leaving dest"<<endl;
                 }
 
             //tamaño
@@ -60,12 +60,12 @@ namespace dcnet {
             //izq (el const que precede puede limitar operaciones: reconsiderar)
             Ab Izq() {
                 //return this->raiz->izq;
-                return Ab<T>(*this->raiz->izq);
+                return Ab<T>(this->raiz->izq);
             }
 
             //der (el const que precede puede limitar operaciones: reconsiderar)
-            const Ab& Der() const {
-                return Ab<T>(*this->raiz->der);
+            Ab Der() {
+                return Ab<T>(this->raiz->der);
             }
 
              Ab<T>& operator = (const Ab<T>& otro)
@@ -98,14 +98,14 @@ namespace dcnet {
 
             Nodo* raiz;
             //Nat cardinal;     
-            Ab<T>(Nodo n) { //TODO. VER QUE PASA SI n == NULL
-                Nodo* n2 = new Nodo;
+            Ab<T>(Nodo* n) { //TODO. VER QUE PASA SI n == NULL
+                /*Nodo* n2 = new Nodo;
                 n2->valor=n.valor;
                 n2->izq = n.izq;
                 n2->der = n.der;
-                n2->cardinal = n.cardinal;
+                n2->cardinal = n.cardinal;*/
                 cout<<"new constructor"<<endl;
-                this->raiz = n2;
+                this->raiz = n;
                 //this->cardinal = 15;
             }
     };

@@ -3,12 +3,12 @@
 #include <cassert>
 #include "aed2.h"
 
-#include "nuestros/compu.h" 
-#include "nuestros/red.h"
-#include "nuestros/paquete.h"
+//#include "nuestros/compu.h" 
+//#include "nuestros/red.h"
+//#include "nuestros/paquete.h"
 #include "nuestros/ab.h"
 
-#include "nuestros/ab.h"
+#include "nuestros/diccLog.h"
 
 using namespace aed2;
 
@@ -20,7 +20,7 @@ int main()
 
 
 	cout << "hola mundo";
-	int variable;
+	/*int variable;
 	
 	Lista<Nat> lista;
 	lista.AgregarAtras(2);
@@ -46,11 +46,17 @@ int main()
 	cout<< "UsaInterfaz?:" << r1.UsaInterfaz(comp,36) << endl;
 	r1.Conectar(comp,comp2,36,2);
 	cout<< "UsaInterfaz ahora que conecte?:" << r1.UsaInterfaz(comp,36) << endl;
-	cout<< "La Ip a la que esta conectada comp:" << r1.Vecinos(comp).CrearIt().Siguiente().Ip() << endl;
-	Ab<int> bla(Ab<int>(),5,Ab<int>());
-	int ble = bla.Raiz();
-	cout<<ble<<endl;
-	cin >> variable;
+	cout<< "La Ip a la que esta conectada comp:" << r1.Vecinos(comp).CrearIt().Siguiente().Ip() << endl;*/
+	/*DiccLog<int,int> diccionario;
+	diccionario.Definir(1,10);*/
+	Ab<int> arbolIzq(Ab<int>(),10,Ab<int>());
+	Ab<int> arbolDer(Ab<int>(),20,Ab<int>());
+	Ab<int> arbol(arbolIzq,5,arbolDer);
+	Ab<int> izq = arbol.Izq();
+	cout<<"raiz: "<<izq.Raiz()<<endl;
+	//cout<<"cardinal arbol: "<<arbol.Tamano()<<endl;
+	//cout<<"cardinal arbol izquiwerdo: "<<arbol.Izq().Tamano()<<endl;
+	//cin >> variable;
 
 
 
@@ -77,7 +83,7 @@ int main()
 	cout << p1.prioridad() << endl;
 
 	if(p1 == p2) {
-		cout << "iguales";
+		cout << "igualeshttps://www.google.com.ar/search?client=ubuntu&channel=fs&q=c%2B%2B+double+free+or+coruption&ie=utf-8&oe=utf-8&gfe_rd=cr&ei=2ceZVf_MI_Cp8we5o4HQAQ";
 	} else {
 		cout << "distintos";
 	}
