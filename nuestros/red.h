@@ -30,13 +30,13 @@ namespace dcnet{
 		void ActualizarCaminos(const Compu pc1, const Compu pc2); //no lleva const al final porque recibe red como in/out
 
 		//actualizarCaminosMasCortos
-		Conj<Lista<Compu>> ActualizarCaminosMasCortos(const Compu pc1, const Compu pc2) const;
+		Conj<Lista<Compu> > ActualizarCaminosMasCortos(const Compu pc1, const Compu pc2) const;
 
 		//caminosQueEmpiezanConPcx
-		Conj<Lista<Compu>> CaminosQueEmpiezanConPcx(const Conj<Lista<Compu>> caminos, const Compu pcx) const;
+		Conj<Lista<Compu> > CaminosQueEmpiezanConPcx(const Conj<Lista<Compu> > caminos, const Compu pcx) const;
 		
 		//caminosQueTerminanConPcx
-		Conj<Lista<Compu>> CaminosQueTerminanConPcx(const Conj<Lista<Compu>> caminos, const Compu pcx) const;
+		Conj<Lista<Compu> > CaminosQueTerminanConPcx(const Conj<Lista<Compu> > caminos, const Compu pcx) const;
 		
 		//hayInterseccionDeCaminos
 		bool HayInterseccionDeCaminos(const Lista<Compu> camino1,const Lista<Compu> camino2) const;
