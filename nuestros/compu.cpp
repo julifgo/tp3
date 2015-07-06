@@ -3,6 +3,7 @@
 #include "compu.h"
 
 using namespace aed2;
+using namespace std;
 
 namespace dcnet{
 	//Equivalente en TP a operacion Crear(ip: ip)
@@ -36,9 +37,10 @@ namespace dcnet{
   		  	return !(this->estr.ip == otra.estr.ip);
   		}
 
-		ostream& Compu::operator<<(ostream& out) const{
-			out << this->estr.ip;
-			return out;
+		std::ostream& operator<<(std::ostream& os, const Compu& c)
+		{
+			os << c.Ip();
+		  	return os;
 		}
 
 }
