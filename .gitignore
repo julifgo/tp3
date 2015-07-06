@@ -15,4 +15,5 @@ Tp3/Tp3.vcxproj.filters
 *.exe
 *.unsuccessfulbuild
 *.o
+**/.nfs*
 main
