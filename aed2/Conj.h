@@ -400,7 +400,15 @@ bool operator==(const Conj<T>& c1, const Conj<T>& c2)
 template<class T>
 std::ostream& operator<<(std::ostream& os, const Conj<T>& c)
 {
-  return Mostrar(os, c, '{', '}');
+  typename Conj<T>::const_Iterador it = c.CrearIt();
+  os <<"{ ";
+  while(it.HaySiguiente()) {
+    os << it.Siguiente();
+    it.Avanzar();
+    os << ( it.HaySiguiente()? ", " : "" );
+  }
+  os << " }";
+  return os;
 }
 
 }

@@ -33,9 +33,13 @@ namespace dcnet{
 		void AgInterfaz(const Interfaz interfaz);
 		bool operator==(const Compu& otra) const;/// Operacion de igualdad entre dos compus
 		bool operator!=(const Compu& otra) const;/// Operacion de !igualdad entre dos compus
-		ostream& operator<<(ostream& out) const;
+		//ostream& operator<<(ostream& out);
+		//friend ostream& operator<< (ostream &out, Compu &compu);
 
   	
 	};
+
+	std::ostream& operator<<(std::ostream&, const Compu&);
 }
+
 #endif

@@ -181,8 +181,8 @@ class Lista
   Nat longitud_;
 };
 
-//template<class T>
-//std::ostream& operator << (std::ostream& os, const Lista<T>& l);
+template<class T>
+std::ostream& operator << (std::ostream& os, const Lista<T>& l);
 
 template<class T>
 bool operator == (const Lista<T>& l1, const Lista<T>& k2);
@@ -663,10 +663,13 @@ template <typename T>
 std::ostream& operator<<(std::ostream& os, const Lista<T>& lista)
 {
   typename Lista<T>::const_Iterador it = lista.CrearIt();
+  os << "[ ";
   while(it.HaySiguiente()) {
-    os << " ";//it.Siguiente();
+    os << it.Siguiente();
     it.Avanzar();
+    os << (it.HaySiguiente()? ", ": "");
   }
+  os << " ]";
   return os;
 }
 
