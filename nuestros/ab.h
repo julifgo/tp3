@@ -15,7 +15,8 @@ namespace dcnet {
             //Miembros definidos en el módulo
 
             //nil
-            Ab<T>() : raiz(NULL), cardinal(0) {}
+            Ab<T>() : raiz(NULL) {}
+            
 
             //bin (el const que precede puede limitar operaciones: reconsiderar)
             Ab<T>(const Ab<T>& i, const T& e, const Ab<T>& d) {
@@ -23,18 +24,25 @@ namespace dcnet {
             	n->valor = e; //el valor es la referencia pasada
             	n->izq = i.raiz; //el puntero es igual al puntero raiz de la referencia i
                 n->der = d.raiz; //el puntero es igual al puntero raiz de la referencia d
+                
+                Nat cardinalIzq = i.raiz==NULL?0:i.raiz->cardinal;
+                Nat cardinalDer = d.raiz==NULL?0:d.raiz->cardinal;
+                n->cardinal = cardinalIzq + cardinalDer + 1;
+
                 this->raiz = n; //el puntero es igual al puntero de n
-                this->cardinal = i.Tamano() + d.Tamano() + 1; //actualizo el tamaño
+                //this->cardinal = i.Tamano() + d.Tamano() + 1; //actualizo el tamaño
             }
             
             //destructor
             ~Ab<T>() {
+                cout<<"ent dest"<<endl;
                 delete this->raiz; //este destructor destruye el contenido de toda las referencias hijas (recursivo)
-            }
+                cout<<"leaving dest"<<endl;
+                }
 
             //tamaño
             Nat Tamano() const {
-                return this->cardinal;
+                return  this->raiz == NULL ? 0 : this->raiz->cardinal;
             }
 
             //nil?
@@ -47,14 +55,30 @@ namespace dcnet {
                 return this->raiz->valor;
             }
 
+
             //izq (el const que precede puede limitar operaciones: reconsiderar)
-            const Ab& Izq() const {
-                return this->raiz->izq;
+            Ab Izq() {
+                //return this->raiz->izq;
+                return Ab<T>(this->raiz->izq);
             }
 
             //der (el const que precede puede limitar operaciones: reconsiderar)
-            const Ab& Der() const {
-                return this->raiz->der;
+            Ab Der() {
+                return Ab<T>(this->raiz->der);
+            }
+
+             Ab<T>& operator = (const Ab<T>& otro)
+            {
+                //delete this->raiz;
+                cout<<"Entering to equal operator"<<endl;
+                //Nodo* n = new Nodo;
+
+
+             /* this->raiz = otro.raiz;
+              cout<<"After raiz"<<endl;
+              this->cardinal = otro.cardinal;
+              cout<<"After cardinal"<<endl;*/
+              return *this;
             }
 
         private:
@@ -63,7 +87,7 @@ namespace dcnet {
                 T valor;
                 Nodo* izq;
                 Nodo* der;
-
+                Nat cardinal;
                 ~Nodo() {
                     delete izq;
                     delete der;
@@ -72,8 +96,17 @@ namespace dcnet {
             };
 
             Nodo* raiz;
-            Nat cardinal;     
-
+            //Nat cardinal;     
+            Ab<T>(Nodo* n) { //TODO. VER QUE PASA SI n == NULL
+                /*Nodo* n2 = new Nodo;
+                n2->valor=n.valor;
+                n2->izq = n.izq;
+                n2->der = n.der;
+                n2->cardinal = n.cardinal;*/
+                cout<<"new constructor"<<endl;
+                this->raiz = n;
+                //this->cardinal = 15;
+            }
     };
 
 }
