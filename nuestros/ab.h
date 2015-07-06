@@ -22,8 +22,25 @@ namespace dcnet {
             Ab<T>(const Ab<T>& i, const T& e, const Ab<T>& d) {
             	Nodo* n = new Nodo; //creo un nuevo nodo en el arbol
             	n->valor = e; //el valor es la referencia pasada
-            	n->izq = i.raiz; //el puntero es igual al puntero raiz de la referencia i
-                n->der = d.raiz; //el puntero es igual al puntero raiz de la referencia d
+                Nodo* auxIzq = new Nodo;
+                auxIzq->valor = i.raiz->valor;
+                auxIzq->izq = i.raiz->izq;
+                auxIzq->der = i.raiz->der;
+                auxIzq->cardinal = i.raiz->cardinal;
+
+
+                Nodo* auxDer = new Nodo;
+                auxDer->valor = d.raiz->valor;
+                auxDer->izq = d.raiz->izq;
+                auxDer->der = d.raiz->der;
+                auxDer->cardinal = d.raiz->cardinal;
+
+
+                n->izq = auxIzq;
+                n->der = auxDer;
+
+            	/*n->izq = i.raiz; //el puntero es igual al puntero raiz de la referencia i
+                n->der = d.raiz; //el puntero es igual al puntero raiz de la referencia d*/
                 
                 Nat cardinalIzq = i.raiz==NULL?0:i.raiz->cardinal;
                 Nat cardinalDer = d.raiz==NULL?0:d.raiz->cardinal;
@@ -59,7 +76,9 @@ namespace dcnet {
             //izq (el const que precede puede limitar operaciones: reconsiderar)
             Ab Izq() {
                 //return this->raiz->izq;
-                return Ab<T>(this->raiz->izq);
+                //Nodo n = *this->raiz->izq;
+
+                return Ab<T>(*this->raiz->izq);
             }
 
             //der (el const que precede puede limitar operaciones: reconsiderar)
@@ -89,6 +108,7 @@ namespace dcnet {
                 Nodo* der;
                 Nat cardinal;
                 ~Nodo() {
+                    cout<<"nodo Destructor"<<endl;
                     delete izq;
                     delete der;
                //   delete valor;
@@ -97,14 +117,14 @@ namespace dcnet {
 
             Nodo* raiz;
             //Nat cardinal;     
-            Ab<T>(Nodo* n) { //TODO. VER QUE PASA SI n == NULL
-                /*Nodo* n2 = new Nodo;
+            Ab<T>(Nodo n) { //TODO. VER QUE PASA SI n == NULL
+                Nodo* n2 = new Nodo;
                 n2->valor=n.valor;
                 n2->izq = n.izq;
                 n2->der = n.der;
-                n2->cardinal = n.cardinal;*/
+                n2->cardinal = n.cardinal;
                 cout<<"new constructor"<<endl;
-                this->raiz = n;
+                this->raiz = n2;
                 //this->cardinal = 15;
             }
     };

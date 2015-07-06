@@ -57,12 +57,10 @@ int main()
 	Ab<int> arbolDer(Ab<int>(),20,Ab<int>());
 	Ab<int> arbol(arbolIzq,5,arbolDer);
 	Ab<int> izq = arbol.Izq();
-	cout<<"raiz: "<<izq.Raiz()<<endl;
+	cout<<"raiz: "<<izq.Raiz()<<endl;*/
 	//cout<<"cardinal arbol: "<<arbol.Tamano()<<endl;
 	//cout<<"cardinal arbol izquiwerdo: "<<arbol.Izq().Tamano()<<endl;
 	//cin >> variable;
-
-*/
 
 	/*
 
