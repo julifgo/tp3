@@ -82,6 +82,7 @@ namespace dcnet{
 		//TODO: @Luis: llamar a las funciones de actualizarCaminos
 		ActualizarCaminos(c1, c2);
 		//estr.caminosMasCortos = ActualizarCaminosMasCortos(c1, c2);
+		
 		cout << estr.caminos << endl;
 	}
 
@@ -189,7 +190,7 @@ namespace dcnet{
 		Conj<Lista<Compu> >::const_Iterador it = caminos.CrearIt();
 		while(it.HaySiguiente()) {
 			Lista<Compu>::const_Iterador itUlt = it.Siguiente().CrearItUlt();
-			if(itUlt.Siguiente() == pcx) {
+			if(itUlt.Anterior() == pcx) {
 				res->AgregarRapido(it.Siguiente());
 			}
 			it.Avanzar();
