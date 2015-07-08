@@ -67,14 +67,20 @@ int main()
 	r.Conectar(comp0 ,comp1, 0, 0);
 	r.Conectar(comp0 ,comp3, 1, 0);
 	r.Conectar(comp0 ,comp2, 2, 0);*/
-	/*Ab<int> *arbolIzq = new Ab<int>(NULL,10,NULL);
+	Ab<int> *arbolIzq = new Ab<int>(NULL,10,NULL);
 	Ab<int> *arbolDer = new Ab<int>(NULL,20,NULL);
 	Ab<int> arbol(arbolIzq,5,arbolDer);
 	Ab<int> izq = *arbol.izq();
 	cout<<"raiz: "<<izq.raiz()<<endl;
 Red r1;
 Compu c1("abc");
-r1.AgCompu(c1);*/
+c1.AgInterfaz(0);
+Compu c2("bcd");
+c2.AgInterfaz(0);
+r1.AgCompu(c1);
+r1.AgCompu(c2);
+r1.Conectar(c1,c2,0,0);
+Paquete paq(1,2,c1,c2);
 //cout << "Primera Ip de Lista:" << r1.Computadoras().Primero().Ip() << endl;
 
 	//r.Conectar(comp0 ,comp2, 2, 0);

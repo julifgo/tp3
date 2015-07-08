@@ -8,7 +8,10 @@ using namespace std;
 namespace dcnet{
 	Red::Red(){
 	}
+	Red::~Red(){
+	}
 	void Red::AgCompu(const Compu& compu){
+		assert(!estr.vecinos.definido(compu.Ip()));
 		Lista<Compu>::Iterador it = estr.computadoras.CrearIt();
 		it.AgregarComoSiguiente(compu);
 		Conj<Interfaz> conjInter = compu.Interfaces();
@@ -63,6 +66,7 @@ namespace dcnet{
 	}
 
 	void Red::Conectar(const Compu& c1,const Compu& c2,Nat i1, Nat i2){
+		assert(estr.vecinos.definido(c1.Ip()) && estr.vecinos.definido(c2.Ip()) );
 		estr.vecinos.obtener(c1.Ip())->AgregarRapido(c2);
 		estr.vecinos.obtener(c2.Ip())->AgregarRapido(c1);
 		estr.usaInterfaz.obtener(c1.Ip())->operator [](i1) = true;
@@ -72,12 +76,13 @@ namespace dcnet{
 		DiccString<Nat> interfaz2 = *estr.interfaz.obtener(c2.Ip());
 		interfaz2.definir(c1.Ip(),i2);
 
-		ActualizarCaminos(c1, c2);
+		//ActualizarCaminos(c1, c2);
 
 		//cout << estr.caminos << endl;
 	}
 
 	Interfaz Red::Max(const Conj<Interfaz>& conj) const{
+		assert(conj.Cardinal()>0);
 		Conj<Interfaz>::const_Iterador it = conj.CrearIt();
 		Interfaz max = it.Siguiente();
 		while (it.HaySiguiente()){
@@ -90,6 +95,9 @@ namespace dcnet{
 	}
 
 	Arreglo<bool> Red::ArmarArreglo(const Conj<Interfaz>& conj) const{
+		if(conj.Cardinal()==0){
+			return Arreglo<bool>(0);
+		}
 		Interfaz max = Max(conj);
 		Arreglo<bool> arr(max+1);
 		Nat i = 0;
@@ -177,7 +185,7 @@ namespace dcnet{
 		
 		DiccString<DiccString<Conj<Lista<Compu> > > >& caminosMasCortos = estr.caminosMasCortos;
 
-		DiccString<Conj<Lista<Compu>>>* hasta = new DiccString<Conj<Lista<Compu>>>();
+		DiccString<Conj<Lista<Compu> > >* hasta = new DiccString<Conj<Lista<Compu> > >();
 
 		hasta->definir( pc2.Ip(), *caminosAAgregar );
 

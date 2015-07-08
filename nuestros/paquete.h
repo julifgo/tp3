@@ -38,9 +38,9 @@ namespace dcnet {
 
             Nat _prioridad;
 
-            Compu* _origen;
+            const Compu* _origen;
 
-            Compu* _destino;
+            const Compu* _destino;
 
     };
 
