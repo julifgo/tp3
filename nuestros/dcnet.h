@@ -28,7 +28,7 @@ namespace dcnet{
 		public:
 			DCNet(const Red& red);//Equivalente a IniciarDCNEt
 			~DCNet();
-			Red red() const;
+			Red& red();
 			Nat CantidadEnviados(const Compu& c) /*const*/; //TODO. El acceso a Dicc trie no nos deja poner const
 			const Lista<Compu> CaminoRecorrido(const Paquete& p) const;
 			const Conj<Paquete> EnEspera(const Compu& c) const;

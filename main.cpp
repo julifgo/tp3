@@ -31,7 +31,7 @@ int main()
 	bool estaDef = dicc.Definido(5);
 	cout<<"Clave definida: "<<estaDef<<endl; */
 
-	Compu comp0("0");
+/*	Compu comp0("0");
 	comp0.AgInterfaz(0);
 	comp0.AgInterfaz(1);
 	comp0.AgInterfaz(2);
@@ -55,8 +55,16 @@ int main()
 	r.AgCompu(comp3);
 	r.Conectar(comp0 ,comp1, 0, 0);
 	r.Conectar(comp0 ,comp3, 1, 0);
-	r.Conectar(comp0 ,comp2, 2, 0);
-	//cout << "Primera Ip de Lista:" << r1.Computadoras().Primero().Ip() << endl;
+	r.Conectar(comp0 ,comp2, 2, 0);*/
+	Ab<int> *arbolIzq = new Ab<int>(NULL,10,NULL);
+	Ab<int> *arbolDer = new Ab<int>(NULL,20,NULL);
+	Ab<int> arbol(arbolIzq,5,arbolDer);
+	Ab<int> izq = *arbol.izq();
+	cout<<"raiz: "<<izq.raiz()<<endl;
+Red r1;
+Compu c1("abc");
+r1.AgCompu(c1);
+//cout << "Primera Ip de Lista:" << r1.Computadoras().Primero().Ip() << endl;
 	//cout<< "UsaInterfaz?:" << r1.UsaInterfaz(comp,36) << endl;
 	//cout<< "UsaInterfaz ahora que conecte?:" << r1.UsaInterfaz(comp,36) << endl;
 	//cout<< "La Ip a la que esta conectada comp:" << r1.Vecinos(comp).CrearIt().Siguiente().Ip() << endl;
