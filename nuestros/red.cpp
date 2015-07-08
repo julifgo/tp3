@@ -107,7 +107,7 @@ namespace dcnet{
 	//dejo todos los tipos que se devuelven sin const porque no estoy seguro en que momento se pueden llegar a utilizar
 
 	//actualizarCaminos
-	void Red::ActualizarCaminos(const Compu pc1, const Compu pc2) {
+	void Red::ActualizarCaminos(const Compu& pc1, const Compu& pc2) {
 		Conj<Lista<Compu> > caminos = this->estr.caminos;
 
 		if(CaminosQueEmpiezanConPcx(caminos, pc1).EsVacio()) {
@@ -122,8 +122,8 @@ namespace dcnet{
 			caminos.AgregarRapido( *aux );
 		}
 
-		Conj<Lista<Compu> > caminosQueTerminanConpc1 = CaminosQueTerminanConPcx(caminos, pc1);
-		Conj<Lista<Compu> > caminosQueEmpiezanConpc2 = CaminosQueEmpiezanConPcx(caminos, pc2);
+		Conj<Lista<Compu> >& caminosQueTerminanConpc1 = CaminosQueTerminanConPcx(caminos, pc1);
+		Conj<Lista<Compu> >& caminosQueEmpiezanConpc2 = CaminosQueEmpiezanConPcx(caminos, pc2);
 
 		Conj<Lista<Compu> >::Iterador itCaminosQueEmpiezanConpc2 = caminosQueEmpiezanConpc2.CrearIt();
 		Conj<Lista<Compu> >::Iterador itCaminosQueTerminanConpc1 = caminosQueTerminanConpc1.CrearIt();
@@ -131,12 +131,20 @@ namespace dcnet{
 		while(itCaminosQueTerminanConpc1.HaySiguiente()) {
 			while(itCaminosQueEmpiezanConpc2.HaySiguiente()) {
 				if(!HayInterseccionDeCaminos(itCaminosQueTerminanConpc1.Siguiente(), itCaminosQueEmpiezanConpc2.Siguiente())) {
-					/*Lista<Compu> nuevoCamino = new Lista<Compu>();
-					Concatenar( itCaminosQueTerminanConpc1.Siguiente(), itCaminosQueEmpiezanConpc2.Siguiente() );
-					Concatenar(nuevoCamino, itCaminosQueTerminanConpc1.Siguiente() );
-					caminos.AgregarRapido(nuevoCamino);
-					caminos.AgregarRapido(Reverso( *(new Lista<Compu>(nuevoCamino)) ));
-					cout <<"esta entrando"<<endl;*/
+					//Concatenar( itCaminosQueTerminanConpc1.Siguiente(), itCaminosQueEmpiezanConpc2.Siguiente() );
+					//Concatenar( *nuevoCamino, itCaminosQueTerminanConpc1.Siguiente() );
+					
+/*
+					Lista<Compu>::const_Iterador it_ = itCaminosQueEmpiezanConpc2.Siguiente().CrearIt(); //voy a iterar camino2
+					while( it_.HaySiguiente() ) {
+						itCaminosQueTerminanConpc1.Siguiente().AgregarAtras(it_.Siguiente()); //agrego la referencia a camino1 (es it.Siguiente() es una referencia porque camino2 es una lista de tipos no primitivos)
+						it_.Avanzar(); //avanzo
+					}
+					Lista<Compu>* nuevoCamino = new Lista<Compu>( itCaminosQueTerminanConpc1.Siguiente() );*/
+
+					/*caminos.AgregarRapido(nuevoCamino);
+					caminos.AgregarRapido(Reverso( *(new Lista<Compu>(nuevoCamino)) ));*/
+					cout <<"esta entrando"<<endl;
 				}
 				itCaminosQueEmpiezanConpc2.Avanzar();
 			}
@@ -148,8 +156,8 @@ namespace dcnet{
 	}
 
 	//actualizarCaminosMasCortos
-	Conj<Lista<Compu> > Red::ActualizarCaminosMasCortos(const Compu pc1, const Compu pc2) const {
-		Conj<Lista<Compu> > caminosRes = CaminosQueEmpiezanConPcx(CaminosQueTerminanConPcx(this->estr.caminos, pc2), pc1);
+	Conj<Lista<Compu> >& Red::ActualizarCaminosMasCortos(const Compu& pc1, const Compu& pc2) const {
+		Conj<Lista<Compu> >& caminosRes = CaminosQueEmpiezanConPcx(CaminosQueTerminanConPcx(this->estr.caminos, pc2), pc1);
 		Conj<Lista<Compu> >::Iterador itConjCamino = caminosRes.CrearIt();
 		Nat cantidadDeComputadorasEnCaminoMinimo = itConjCamino.Siguiente().Longitud();
 		while(itConjCamino.HaySiguiente()) {
@@ -169,7 +177,7 @@ namespace dcnet{
 	}
 
 	//caminosQueEmpiezanConPcx
-	Conj<Lista<Compu> > Red::CaminosQueEmpiezanConPcx(const Conj<Lista<Compu> > caminos, const Compu pcx) const {
+	Conj<Lista<Compu> >& Red::CaminosQueEmpiezanConPcx(const Conj<Lista<Compu> >& caminos, const Compu& pcx) const {
 		Conj<Lista<Compu> >* res = new Conj<Lista<Compu> >();
 		Conj<Lista<Compu> >::const_Iterador it = caminos.CrearIt();
 		while(it.HaySiguiente()) {
@@ -182,7 +190,7 @@ namespace dcnet{
 	}
 	
 	//caminosQueTerminanConPcx
-	Conj<Lista<Compu> > Red::CaminosQueTerminanConPcx(const Conj<Lista<Compu> > caminos, const Compu pcx) const {
+	Conj<Lista<Compu> >& Red::CaminosQueTerminanConPcx(const Conj<Lista<Compu> >& caminos, const Compu& pcx) const {
 		Conj<Lista<Compu> >* res = new Conj<Lista<Compu> >(); //creo una lista de compus en el heap
 		Conj<Lista<Compu> >::const_Iterador it = caminos.CrearIt();
 		while(it.HaySiguiente()) {
@@ -196,7 +204,7 @@ namespace dcnet{
 	}
 	
 	//hayInterseccionDeCaminos
-	bool Red::HayInterseccionDeCaminos(const Lista<Compu> camino1,const Lista<Compu> camino2) const {
+	bool Red::HayInterseccionDeCaminos(const Lista<Compu>& camino1,const Lista<Compu>& camino2) const {
 		bool hay = false;
 		Lista<Compu>::const_Iterador it1 = camino1.CrearIt();
 		Lista<Compu>::const_Iterador it2 = camino2.CrearIt();
@@ -211,7 +219,7 @@ namespace dcnet{
 	}
 	
 	//concatenar
-	void Red::Concatenar(Lista<Compu> camino1, const Lista<Compu> camino2) const {
+	void Red::Concatenar(Lista<Compu>& camino1, const Lista<Compu>& camino2) const {
 		Lista<Compu>::const_Iterador it = camino2.CrearIt(); //voy a iterar camino2
 		while( it.HaySiguiente() ) {
 			camino1.AgregarAtras(it.Siguiente()); //agrego la referencia a camino1 (es it.Siguiente() es una referencia porque camino2 es una lista de tipos no primitivos)
@@ -220,7 +228,7 @@ namespace dcnet{
 	}
 	
 	//reverso
-	Lista<Compu> Red::Reverso(const Lista<Compu> camino) const {
+	Lista<Compu>& Red::Reverso(const Lista<Compu>& camino) const {
 		Lista<Compu>* arr = new Lista<Compu>();	//se crea una lista de computadoras en el heap
 		Lista<Compu>::const_Iterador it = camino.CrearItUlt(); //voy a iterar camino del último al primero
 		while( it.HayAnterior() ) {
