@@ -31,16 +31,24 @@ int main()
 	bool estaDef = dicc.Definido(5);
 	cout<<"Clave definida: "<<estaDef<<endl; */
 
+	cout << "Creo compu 0 con interfaces 0, 1, 2" << endl;
+
 	Compu comp0("0");
 	comp0.AgInterfaz(0);
 	comp0.AgInterfaz(1);
 	comp0.AgInterfaz(2);
 
+	cout << "Creo compu 1 con interfaces 0" << endl;
+
 	Compu comp1("1");
 	comp1.AgInterfaz(0);
 
+	cout << "Creo compu 2 con interfaces 0" << endl;
+
 	Compu comp2("2");
 	comp2.AgInterfaz(0);
+
+	cout << "Creo compu 3 con interfaces 0" << endl;
 
 	Compu comp3("3");
 	comp3.AgInterfaz(0);
@@ -53,9 +61,25 @@ int main()
 	r.AgCompu(comp1);
 	r.AgCompu(comp2);
 	r.AgCompu(comp3);
+
+	cout << "Conectando..." << endl;
 	r.Conectar(comp0 ,comp1, 0, 0);
 	r.Conectar(comp0 ,comp3, 1, 0);
 	r.Conectar(comp0 ,comp2, 2, 0);
+
+	//Conj<Lista<Compu> > Red::CaminosMin(const Compu& c1,const Compu& c2)
+
+	//cout << r.CaminosMin(comp0, comp3) << endl;
+	//cout << r.CaminosMin(comp0, comp1) << endl;
+	
+	cout << "Algunos caminos minimos" << endl;
+
+	cout << r.CaminosMin(comp1, comp3) << endl;
+	cout << r.CaminosMin(comp0, comp3) << endl;
+	cout << r.CaminosMin(comp1, comp3) << endl;
+	cout << r.CaminosMin(comp2, comp0) << endl;
+
+
 	//cout << "Primera Ip de Lista:" << r1.Computadoras().Primero().Ip() << endl;
 	//cout<< "UsaInterfaz?:" << r1.UsaInterfaz(comp,36) << endl;
 	//cout<< "UsaInterfaz ahora que conecte?:" << r1.UsaInterfaz(comp,36) << endl;
