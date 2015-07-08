@@ -60,7 +60,6 @@ namespace dcnet{
 	}
 
 	Conj<Lista<Compu> > Red::CaminosMin(const Compu& c1,const Compu& c2) {
-		ActualizarCaminosMasCortos(c1, c2);	//Mmmmm no respeta complejidad ! (Es necesario)
 		Conj<Lista<Compu> > res = *estr.caminosMasCortos.obtener(c1.Ip())->obtener(c2.Ip());
 		return res;
 	}
@@ -76,6 +75,22 @@ namespace dcnet{
 		interfaz2.definir(c1.Ip(),i2);
 
 		ActualizarCaminos(c1, c2);
+
+		//groncho mode: Actualiza todos los caminos posibles sobre todas las computadoras en el diccionario de caminos màs cortos
+		Lista<Compu>::const_Iterador it1 = estr.computadoras.CrearIt();
+		Lista<Compu>::const_Iterador it2 = estr.computadoras.CrearIt();
+
+		while(it1.HaySiguiente()) {
+			while(it2.HaySiguiente()) {
+				ActualizarCaminosMasCortos(it1.Siguiente(), it2.Siguiente());
+
+				cout << (estr.caminosMasCortos.definido(it1.Siguiente().Ip()) ? it1.Siguiente().Ip() : "No esta") << endl;
+
+				it2.Avanzar();
+			}
+			it2 = estr.computadoras.CrearIt();
+			it1.Avanzar();
+		}
 
 		//cout << estr.caminos << endl;
 	}
@@ -175,37 +190,42 @@ namespace dcnet{
  		Conj<Lista<Compu> >* caminosAAgregar = new Conj<Lista<Compu> >();
 
 		Conj<Lista<Compu> >::Iterador itConjCamino = caminosRes.CrearIt();
-		Nat cantidadDeComputadorasEnCaminoMinimo = itConjCamino.Siguiente().Longitud();
-		while(itConjCamino.HaySiguiente()) {
-			if(cantidadDeComputadorasEnCaminoMinimo > itConjCamino.Siguiente().Longitud()) {
-				cantidadDeComputadorasEnCaminoMinimo = itConjCamino.Siguiente().Longitud();
+
+		if(itConjCamino.HaySiguiente()) {
+
+			Nat cantidadDeComputadorasEnCaminoMinimo = itConjCamino.Siguiente().Longitud();
+				//cout << "llega" << endl;
+			while(itConjCamino.HaySiguiente()) {
+				if(cantidadDeComputadorasEnCaminoMinimo > itConjCamino.Siguiente().Longitud()) {
+					cantidadDeComputadorasEnCaminoMinimo = itConjCamino.Siguiente().Longitud();
+				}
+				itConjCamino.Avanzar();
 			}
-			itConjCamino.Avanzar();
-		}
 
-		while(itConjCamino.HayAnterior()) {
+			while(itConjCamino.HayAnterior()) {
 
-			//cout << "entra" << endl;
+				//cout << "entra" << endl;
 
-			if(cantidadDeComputadorasEnCaminoMinimo == itConjCamino.Anterior().Longitud()) {
-				//itConjCamino.EliminarAnterior();
-				caminosAAgregar->AgregarRapido(itConjCamino.Anterior());
+				if(cantidadDeComputadorasEnCaminoMinimo == itConjCamino.Anterior().Longitud()) {
+					//itConjCamino.EliminarAnterior();
+					caminosAAgregar->AgregarRapido(itConjCamino.Anterior());
+				}
+				itConjCamino.Retroceder();
 			}
-			itConjCamino.Retroceder();
+			
+			DiccString<DiccString<Conj<Lista<Compu> > > >& caminosMasCortos = estr.caminosMasCortos;
+
+			DiccString<Conj<Lista<Compu>>>* hasta = new DiccString<Conj<Lista<Compu>>>();
+
+			hasta->definir( pc2.Ip(), *caminosAAgregar );
+
+			caminosMasCortos.definir( pc1.Ip(), *hasta );
+
+			delete &caminosRes;
+			delete &aux;
+			delete caminosAAgregar;
+			delete hasta;
 		}
-		
-		DiccString<DiccString<Conj<Lista<Compu> > > >& caminosMasCortos = estr.caminosMasCortos;
-
-		DiccString<Conj<Lista<Compu>>>* hasta = new DiccString<Conj<Lista<Compu>>>();
-
-		hasta->definir( pc2.Ip(), *caminosAAgregar );
-
-		caminosMasCortos.definir( pc1.Ip(), *hasta );
-
-		delete &caminosRes;
-		delete &aux;
-		delete caminosAAgregar;
-		delete hasta;
 		
 		//cout << *caminosAAgregar << endl;
 	}
