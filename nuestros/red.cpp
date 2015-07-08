@@ -109,24 +109,32 @@ namespace dcnet{
 	//actualizarCaminos
 	void Red::ActualizarCaminos(const Compu& pc1, const Compu& pc2) {
 		Conj<Lista<Compu> >& caminos = this->estr.caminos;
+		Conj<Lista<Compu> >& _caminosQueEmpiezanConpc1 = CaminosQueEmpiezanConPcx(caminos, pc1);
+		Conj<Lista<Compu> >& _caminosQueEmpiezanConpc2 = CaminosQueEmpiezanConPcx(caminos, pc2);
 
-		if(CaminosQueEmpiezanConPcx(caminos, pc1).EsVacio()) {
+		if(_caminosQueEmpiezanConpc1.EsVacio()) {
 			Lista<Compu>* aux = new Lista<Compu>();
 			aux->AgregarAtras(pc1);
 			caminos.AgregarRapido( *aux );
+			delete aux;
 			//cout << "entro1" << endl;
 		}
 
-		if(CaminosQueEmpiezanConPcx(caminos, pc2).EsVacio()) {
+		if(_caminosQueEmpiezanConpc2.EsVacio()) {
 			Lista<Compu>* aux = new Lista<Compu>();
 			aux->AgregarAtras(pc2);
 			caminos.AgregarRapido( *aux );
+			delete aux;
 			//cout << "entro2" << endl;
 		}
 
-		Conj<Lista<Compu> >& caminosQueTerminanConpc1 = CaminosQueTerminanConPcx(caminos, pc1);
+		delete &_caminosQueEmpiezanConpc1;
+		delete &_caminosQueEmpiezanConpc2;
+
+		Conj<Lista<Compu> >& caminosQueEmpiezanConpc1 = CaminosQueEmpiezanConPcx(caminos, pc1);
 		Conj<Lista<Compu> >& caminosQueEmpiezanConpc2 = CaminosQueEmpiezanConPcx(caminos, pc2);
 
+		Conj<Lista<Compu> >& caminosQueTerminanConpc1 = CaminosQueTerminanConPcx(caminos, pc1);
 		//cout << caminosQueEmpiezanConpc2 << endl;
 		//cout << caminosQueTerminanConpc1 << endl;
 
@@ -143,6 +151,9 @@ namespace dcnet{
 					Lista<Compu>& nuevoCaminoInvertido = Reverso( *copiaNuevoCamino );
 					//cout << nuevoCaminoInvertido << endl;
 					caminos.AgregarRapido(nuevoCaminoInvertido);
+					delete copiaNuevoCamino;
+					delete &nuevoCaminoInvertido;
+					delete &nuevoCamino;
 				}
 				itCaminosQueEmpiezanConpc2.Avanzar();
 			}
@@ -150,12 +161,17 @@ namespace dcnet{
 			itCaminosQueTerminanConpc1.Avanzar();
 		}
 
+		delete &caminosQueEmpiezanConpc1;
+		delete &caminosQueEmpiezanConpc2;
+		delete &caminosQueTerminanConpc1;
+
 		//cout << "Caminos: " << caminos << endl;
 
 	}
 
 	void Red::ActualizarCaminosMasCortos(const Compu& pc1, const Compu& pc2) {
-		Conj<Lista<Compu> >& caminosRes = CaminosQueEmpiezanConPcx(CaminosQueTerminanConPcx(this->estr.caminos, pc2), pc1);
+		Conj<Lista<Compu> >& aux = CaminosQueTerminanConPcx(this->estr.caminos, pc2);
+		Conj<Lista<Compu> >& caminosRes = CaminosQueEmpiezanConPcx(aux, pc1);
  		Conj<Lista<Compu> >* caminosAAgregar = new Conj<Lista<Compu> >();
 
 		Conj<Lista<Compu> >::Iterador itConjCamino = caminosRes.CrearIt();
@@ -185,8 +201,13 @@ namespace dcnet{
 		hasta->definir( pc2.Ip(), *caminosAAgregar );
 
 		caminosMasCortos.definir( pc1.Ip(), *hasta );
+
+		delete &caminosRes;
+		delete &aux;
+		delete caminosAAgregar;
+		delete hasta;
 		
-		cout << *caminosAAgregar << endl;
+		//cout << *caminosAAgregar << endl;
 	}
 
 	//caminosQueEmpiezanConPcx
