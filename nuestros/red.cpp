@@ -8,9 +8,6 @@ using namespace std;
 namespace dcnet{
 	Red::Red(){
 	}
-	Red::Red(const Red& otra){
-		estr.caminos=otra.estr.caminos;
-	}
 	void Red::AgCompu(const Compu& compu){
 		Lista<Compu>::Iterador it = estr.computadoras.CrearIt();
 		it.AgregarComoSiguiente(compu);
