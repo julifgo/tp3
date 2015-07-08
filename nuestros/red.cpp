@@ -195,9 +195,9 @@ namespace dcnet{
 			itConjCamino.Retroceder();
 		}
 		
-		DiccString<DiccString<Conj<Lista<Compu> > > >& caminosMasCortos = estr.caminosMasCortos;
+		//DiccString<DiccString<Conj<Lista<Compu> > > >& caminosMasCortos = estr.caminosMasCortos;
 
-		caminosMasCortos.definir(pc1.Ip(), *(new DiccString( caminosRes )) );
+		//caminosMasCortos.definir(pc1.Ip(), *(new DiccString( caminosRes )) );
 	}
 
 	//caminosQueEmpiezanConPcx
