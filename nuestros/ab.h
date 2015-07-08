@@ -1,133 +1,148 @@
 #ifndef AB_H
 #define AB_H
 
+#include <iostream>
 #include "../aed2.h"
+
+using namespace aed2;
 
 namespace dcnet {
 
-    //NOTA este Ab va a tener que sufrir cambios a medida que avancemos
+template<typename T>
+class Ab {
+ private:
+    struct nodo {
+        T valor;
+        Ab<T>* _izq;
+        Ab<T>* _der;
 
-    template<typename T>
-    class Ab {
+        nodo(Ab<T>* i, T v, Ab<T>* d) :
+            valor(v), _izq(i), _der(d) {}
+
+        nodo(const nodo& otro) :
+            valor(otro.valor) {
+            _izq = otro._izq == NULL ? NULL : new Ab<T>(*(otro._izq));
+            _der = otro._der == NULL ? NULL : new Ab<T>(*(otro._der));
+        }
         
-        public:
-
-            //Miembros definidos en el módulo
-
-            //nil
-            Ab<T>() : raiz(NULL) {}
-            
-
-            //bin (el const que precede puede limitar operaciones: reconsiderar)
-            Ab<T>(const Ab<T>& i, const T& e, const Ab<T>& d) {
-            	Nodo* n = new Nodo; //creo un nuevo nodo en el arbol
-            	n->valor = e; //el valor es la referencia pasada
-                Nodo* auxIzq = new Nodo;
-                auxIzq->valor = i.raiz->valor;
-                auxIzq->izq = i.raiz->izq;
-                auxIzq->der = i.raiz->der;
-                auxIzq->cardinal = i.raiz->cardinal;
-
-
-                Nodo* auxDer = new Nodo;
-                auxDer->valor = d.raiz->valor;
-                auxDer->izq = d.raiz->izq;
-                auxDer->der = d.raiz->der;
-                auxDer->cardinal = d.raiz->cardinal;
-
-
-                n->izq = auxIzq;
-                n->der = auxDer;
-
-            	/*n->izq = i.raiz; //el puntero es igual al puntero raiz de la referencia i
-                n->der = d.raiz; //el puntero es igual al puntero raiz de la referencia d*/
-                
-                Nat cardinalIzq = i.raiz==NULL?0:i.raiz->cardinal;
-                Nat cardinalDer = d.raiz==NULL?0:d.raiz->cardinal;
-                n->cardinal = cardinalIzq + cardinalDer + 1;
-
-                this->raiz = n; //el puntero es igual al puntero de n
-                //this->cardinal = i.Tamano() + d.Tamano() + 1; //actualizo el tamaño
-            }
-            
-            //destructor
-            ~Ab<T>() {
-                cout<<"ent dest"<<endl;
-                delete this->raiz; //este destructor destruye el contenido de toda las referencias hijas (recursivo)
-                cout<<"leaving dest"<<endl;
-                }
-
-            //tamaño
-            Nat Tamano() const {
-                return  this->raiz == NULL ? 0 : this->raiz->cardinal;
-            }
-
-            //nil?
-            bool IsNil() const {
-                return this->raiz == NULL;
-            }
-
-            //raiz
-            T& Raiz() const {
-                return this->raiz->valor;
-            }
-
-
-            //izq (el const que precede puede limitar operaciones: reconsiderar)
-            Ab Izq() {
-                //return this->raiz->izq;
-                //Nodo n = *this->raiz->izq;
-
-                return Ab<T>(*this->raiz->izq);
-            }
-
-            //der (el const que precede puede limitar operaciones: reconsiderar)
-            Ab Der() {
-                return Ab<T>(this->raiz->der);
-            }
-
-             Ab<T>& operator = (const Ab<T>& otro)
-            {
-                //delete this->raiz;
-                cout<<"Entering to equal operator"<<endl;
-                //Nodo* n = new Nodo;
-
-
-             /* this->raiz = otro.raiz;
-              cout<<"After raiz"<<endl;
-              this->cardinal = otro.cardinal;
-              cout<<"After cardinal"<<endl;*/
-              return *this;
-            }
-
-        private:
-
-            struct Nodo {
-                T valor;
-                Nodo* izq;
-                Nodo* der;
-                Nat cardinal;
-                ~Nodo() {
-                    cout<<"nodo Destructor"<<endl;
-                    delete izq;
-                    delete der;
-               //   delete valor;
-                }
-            };
-
-            Nodo* raiz;
-            //Nat cardinal;     
-            Ab<T>(Nodo n) { //TODO. VER QUE PASA SI n == NULL
-                Nodo* n2 = new Nodo;
-                n2->valor=n.valor;
-                n2->izq = n.izq;
-                n2->der = n.der;
-                n2->cardinal = n.cardinal;
-                cout<<"new constructor"<<endl;
-                this->raiz = n2;
-                //this->cardinal = 15;
-            }
+        ~nodo() {
+            delete _izq;
+            delete _der;
+        }
     };
+    Nat _cardinal;
+    nodo* _raiz;
+
+ public:
+    Ab();                          // Construye un árbol vacío
+    Ab(const Ab<T>&);              // Construye un árbol por copia
+    Ab(Ab<T>*, const T&, Ab<T>*);  // Construye un árbol a partir de su raíz
+                                      // y subárboles izquierdo y derecho
+    ~Ab();                         // Destruye un árbol
+
+    Ab<T>& operator=(const Ab<T>&);  // Operador de asignación por copia
+
+    bool isNil() const;          // Devuelve True si y solo si el árbol
+                                    // no contiene nodos
+    T& raiz() const;             // Devuelve el valor de la raíz del árbol
+   /* Ab<T>* izq() const;          // Devuelve el subárbol izquierdo
+    Ab<T>* der() const;     */     // Devuelve el subárbol derecho
+    Ab<T>* izq();                // Devuelve el subárbol izquierdo
+    Ab<T>* der();   	           // Devuelve el subárbol derecho
+    //void izq(Ab<T>*);            // Reemplaza el subárbol izquierdo
+                                    // (NO libera memoria)
+   // void der(Ab<T>*);            // Reemplaza el subárbol derecho
+                                    // (NO libera memoria)
+    Nat Tamano() const;       // Devuelve la cantidad de nodos del árbol
+};
+
+// Implementación de métodos públicos
+
+template<class T>
+Ab<T>::Ab() : _raiz(NULL), _cardinal(0) {
+}
+
+template<class T>
+Ab<T>::Ab(const Ab<T>& otro) {
+    _raiz = otro._raiz == NULL ? NULL : new nodo(*(otro._raiz));
+    _cardinal = otro._cardinal;
+}
+
+template<class T>
+Ab<T>::Ab(Ab<T>* i, const T& r, Ab<T>* d) {
+    _raiz = new nodo(i, r, d);
+    Nat cardinalIzq = i==NULL?0:i->_cardinal;
+    Nat cardinalDer = d==NULL?0:d->_cardinal;
+    _cardinal = cardinalIzq + cardinalDer + 1;
+}
+
+template<class T>
+Ab<T>::~Ab() {
+    delete _raiz;
+}
+
+template<class T>
+Ab<T>& Ab<T>::operator=(const Ab<T>& otro) {
+    delete _raiz;
+    _raiz = otro._raiz == NULL ? NULL : new nodo(*(otro._raiz));
+    _cardinal = otro._cardinal;
+    return *this;
+}
+
+template<class T>
+bool Ab<T>::isNil() const {
+    return _raiz == NULL;
+}
+
+template<class T>
+T& Ab<T>::raiz() const {
+    assert(!isNil());
+    return _raiz->valor;
+}
+
+/*template<class T>
+Ab<T>* Ab<T>::izq() const {
+    assert(!esNil());
+    return _raiz->_izq;
+}
+
+template<class T>
+Ab<T>* Ab<T>::der() const {
+    assert(!esNil());
+    return _raiz->_der;
+}*/
+
+template<class T>
+Ab<T>* Ab<T>::izq() {
+    assert(!isNil());
+    return _raiz->_izq;
+}
+
+template<class T>
+Ab<T>* Ab<T>::der() {
+    assert(!isNil());
+    return _raiz->_der;
+}
+
+/*template<class T>
+void Ab<T>::izq(Ab<T>* i) {
+    assert(!esNil());
+    // delete _raiz->_izq;
+    _raiz->_izq = i;
+}
+
+template<class T>
+void Ab<T>::der(Ab<T>* d) {
+    assert(!esNil());
+    // delete _raiz->_der;
+    _raiz->_der = d;
+}*/
+
+template<class T>
+Nat Ab<T>::Tamano() const {
+return _cardinal;
+}
 
 }
-#endif //AB_H
+
+#endif  // AB_H

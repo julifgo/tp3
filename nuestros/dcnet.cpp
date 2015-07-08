@@ -18,8 +18,8 @@ namespace dcnet{
 			//TODO. IMPLEMENTAR.
 	}
 
-	Red DCNet::red() const{
-		return estr.red;
+	Red& DCNet::red(){
+		return estr.red; //TODO REVISAR ESTO, ES UN FIX PORQUE TUVE QUE SACAR EL CONSTRUCTOR POR COPIA DE RED (LEA)
 	}
 
 	Nat DCNet::CantidadEnviados(const Compu& c){

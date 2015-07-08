@@ -21,12 +21,11 @@ namespace dcnet {
     Paquete::Paquete(Nat id, Nat prioridad, const Compu& origen, const Compu& destino) {
     	this->_id = id;
     	this->_prioridad = prioridad;
-    	*this->_origen = origen;
-    	*this->_destino = destino;
+    	this->_origen = &origen;
+    	this->_destino = &destino;
     }
 
     Paquete::~Paquete() {
-
     }
 
     bool Paquete::operator<(const Paquete& otro) const {
@@ -36,8 +35,8 @@ namespace dcnet {
 	Paquete& Paquete::operator=(const Paquete& paquete) {
 		this->_id = paquete.Id();
 		this->_prioridad = paquete.Prioridad();
-		*this->_origen = paquete.Origen();
-		*this->_destino = paquete.Destino(); 
+		this->_origen = paquete._origen;
+		this->_destino = paquete._destino;
 		return *this;
 	}
 

@@ -31,9 +31,10 @@ int main()
 	bool estaDef = dicc.Definido(5);
 	cout<<"Clave definida: "<<estaDef<<endl; */
 
+
+/*	Compu comp0("0");
 	cout << "Creo compu 0 con interfaces 0, 1, 2" << endl;
 
-	Compu comp0("0");
 	comp0.AgInterfaz(0);
 	comp0.AgInterfaz(1);
 	comp0.AgInterfaz(2);
@@ -65,20 +66,37 @@ int main()
 	cout << "Conectando..." << endl;
 	r.Conectar(comp0 ,comp1, 0, 0);
 	r.Conectar(comp0 ,comp3, 1, 0);
-	r.Conectar(comp0 ,comp2, 2, 0);
+	r.Conectar(comp0 ,comp2, 2, 0);*/
+	Ab<int> *arbolIzq = new Ab<int>(NULL,10,NULL);
+	Ab<int> *arbolDer = new Ab<int>(NULL,20,NULL);
+	Ab<int> arbol(arbolIzq,5,arbolDer);
+	Ab<int> izq = *arbol.izq();
+	cout<<"raiz: "<<izq.raiz()<<endl;
+Red r1;
+Compu c1("abc");
+c1.AgInterfaz(0);
+Compu c2("bcd");
+c2.AgInterfaz(0);
+r1.AgCompu(c1);
+r1.AgCompu(c2);
+r1.Conectar(c1,c2,0,0);
+Paquete paq(1,2,c1,c2);
+//cout << "Primera Ip de Lista:" << r1.Computadoras().Primero().Ip() << endl;
+
+	//r.Conectar(comp0 ,comp2, 2, 0);
 
 	//Conj<Lista<Compu> > Red::CaminosMin(const Compu& c1,const Compu& c2)
 
 	//cout << r.CaminosMin(comp0, comp3) << endl;
 	//cout << r.CaminosMin(comp0, comp1) << endl;
 	
-	cout << "Algunos caminos minimos" << endl;
+	/*cout << "Algunos caminos minimos" << endl;
 
 	cout << r.CaminosMin(comp1, comp3) << endl;
 	cout << r.CaminosMin(comp0, comp3) << endl;
 	cout << r.CaminosMin(comp1, comp3) << endl;
 	cout << r.CaminosMin(comp2, comp0) << endl;
-
+*/
 
 	//cout << "Primera Ip de Lista:" << r1.Computadoras().Primero().Ip() << endl;
 	//cout<< "UsaInterfaz?:" << r1.UsaInterfaz(comp,36) << endl;
