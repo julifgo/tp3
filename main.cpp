@@ -31,21 +31,31 @@ int main()
 	bool estaDef = dicc.Definido(5);
 	cout<<"Clave definida: "<<estaDef<<endl; */
 
-	Compu comp1("0");
-	comp1.AgInterfaz(0);
-	comp1.AgInterfaz(36);
+	Compu comp0("0");
+	comp0.AgInterfaz(0);
+	comp0.AgInterfaz(1);
+	comp0.AgInterfaz(2);
 
-	Compu comp2("1");
-	comp2.AgInterfaz(2);
+	Compu comp1("1");
+	comp1.AgInterfaz(0);
+
+	Compu comp2("2");
+	comp2.AgInterfaz(0);
+
+	Compu comp3("3");
+	comp3.AgInterfaz(0);
 
 	//cout<<"Ip creada "<<comp1.Ip()<<endl;
 	//cout<<"Interfaz creada "<<comp1.Interfaces()<<endl;
 
 	Red r;
+	r.AgCompu(comp0);
 	r.AgCompu(comp1);
 	r.AgCompu(comp2);
-	r.Conectar(comp1 ,comp2, 36, 2);
-
+	r.AgCompu(comp3);
+	r.Conectar(comp0 ,comp1, 0, 0);
+	r.Conectar(comp0 ,comp3, 1, 0);
+	r.Conectar(comp0 ,comp2, 2, 0);
 	//cout << "Primera Ip de Lista:" << r1.Computadoras().Primero().Ip() << endl;
 	//cout<< "UsaInterfaz?:" << r1.UsaInterfaz(comp,36) << endl;
 	//cout<< "UsaInterfaz ahora que conecte?:" << r1.UsaInterfaz(comp,36) << endl;
