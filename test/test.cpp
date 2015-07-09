@@ -87,7 +87,7 @@ bool Comparar(const T& t, const S& s)
  */
  
 void test_dcnet_ejemplo() {
-	/*Conj<Interfaz> conjIc1;
+	Conj<Interfaz> conjIc1;
 	Conj<Interfaz> conjIc2;
 	Conj<Interfaz> conjIc3;
 	
@@ -111,9 +111,12 @@ void test_dcnet_ejemplo() {
 	dcnet.AgregarComputadora(c1, conjIc1);
 	dcnet.AgregarComputadora(c2, conjIc2);
 	dcnet.AgregarComputadora(c3, conjIc3);
+
+	ASSERT_EQ(dcnet.CantidadComputadoras(),3);
+	ASSERT_EQ(dcnet.IesimaComputadora(2),c3);
 	
 	// ejemplo - Indexado en 0 
-	Interfaz i1 = dcnet.IesimaInterfazDe(c1, 0); 
+	/*Interfaz i1 = dcnet.IesimaInterfazDe(c1, 0); 
 	Interfaz i2 = dcnet.IesimaInterfazDe(c2, 2);
 	
 	dcnet.Conectar(c1, i1, c2, i2);
@@ -121,13 +124,14 @@ void test_dcnet_ejemplo() {
 	dcnet.AvanzarSegundo();	
 
 	ASSERT_EQ(dcnet.laQueMasEnvio(), c1);*/
+	ASSERT_EQ(1,1);
 		
 }
 
 
 int main(int argc, char **argv)
 {
-   //RUN_TEST(test_dcnet_ejemplo);
+   	RUN_TEST(test_dcnet_ejemplo);
 	cout<<"Hello Test World"<<endl;
 
 
