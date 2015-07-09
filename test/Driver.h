@@ -25,10 +25,10 @@ class Driver
         Nat CantidadComputadoras() const;
         const Computadora IesimaComputadora(const Nat i) const ;
         
-        Nat CantidadInterfacesDe(const Computadora& c) const;
+        Nat CantidadInterfacesDe(const Computadora& c);
         const Interfaz& IesimaInterfazDe(const Computadora& c, /*const*/ Nat i) const ;
 
-        const Interfaz IntefazUsada(const Computadora& c1, const Computadora& c2) const;
+        /*const*/ Interfaz IntefazUsada(const Computadora& c1, const Computadora& c2) /*const*/;
 
         bool conectadas(const Computadora& c1, const Computadora& c2) const;
 
@@ -64,8 +64,8 @@ class Driver
         
     private:
 
-        Red red;
-        DCNet dcnet;
+        const Red* red;
+        DCNet* dcnet;
 
         const Compu& dameCompu(const Computadora& c) const;
 

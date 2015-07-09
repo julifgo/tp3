@@ -37,10 +37,10 @@ namespace dcnet{
 		return conjVecinos.Pertenece(c2);
 	}
 
-	const Red& Red::operator=(const Red& otra){
+	/*const Red& Red::operator=(const Red& otra){
 		//delete &this;
 		return otra;
-	}
+	}*/
 	
 	Interfaz Red::InterfazUsada(const Compu& c1,const Compu& c2){
 		assert( Conectadas(c1, c2) );
