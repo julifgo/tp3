@@ -18,23 +18,11 @@ using namespace dcnet;
 int main()
 {
 
-	/*
-	Lista<Nat> lista;
-	lista.AgregarAtras(2);
-	Nat primero = lista.Primero();
-	cout<<primero<<endl;
-	*/
+	/** /
 
-	/*
-	Dicc<Nat,String> dicc;
-	dicc.Definir(1,"Uno");
-	bool estaDef = dicc.Definido(5);
-	cout<<"Clave definida: "<<estaDef<<endl; */
-
-
-/*	Compu comp0("0");
 	cout << "Creo compu 0 con interfaces 0, 1, 2" << endl;
-
+	
+	Compu comp0("0");
 	comp0.AgInterfaz(0);
 	comp0.AgInterfaz(1);
 	comp0.AgInterfaz(2);
@@ -54,9 +42,6 @@ int main()
 	Compu comp3("3");
 	comp3.AgInterfaz(0);
 
-	//cout<<"Ip creada "<<comp1.Ip()<<endl;
-	//cout<<"Interfaz creada "<<comp1.Interfaces()<<endl;
-
 	Red r;
 	r.AgCompu(comp0);
 	r.AgCompu(comp1);
@@ -66,41 +51,45 @@ int main()
 	cout << "Conectando..." << endl;
 	r.Conectar(comp0 ,comp1, 0, 0);
 	r.Conectar(comp0 ,comp3, 1, 0);
-	r.Conectar(comp0 ,comp2, 2, 0);*/
-	Ab<int> *arbolIzq = new Ab<int>(NULL,10,NULL);
-	Ab<int> *arbolDer = new Ab<int>(NULL,20,NULL);
-	Ab<int> arbol(arbolIzq,5,arbolDer);
-	Ab<int> izq = *arbol.izq();
-	cout<<"raiz: "<<izq.raiz()<<endl;
-Red r1;
-Compu c1("1");
-c1.AgInterfaz(0);
-Compu c2("2");
-c2.AgInterfaz(0);
-c2.AgInterfaz(1);
-Compu c3("3");
-c3.AgInterfaz(0);
-r1.AgCompu(c1);
-r1.AgCompu(c2);
-r1.AgCompu(c3);
-r1.Conectar(c1,c2,0,0);
-r1.Conectar(c2,c3,1,0);
-Paquete paq(1,2,c1,c2);
-//cout << "Primera Ip de Lista:" << r1.Computadoras().Primero().Ip() << endl;
+	r.Conectar(comp0 ,comp2, 2, 0);
 
-	//r.Conectar(comp0 ,comp2, 2, 0);
-
-	//Conj<Lista<Compu> > Red::CaminosMin(const Compu& c1,const Compu& c2)
-	cout << r1.CaminosMin(c3, c1) << endl;
-	//cout << r.CaminosMin(comp0, comp1) << endl;
-	
-	/*cout << "Algunos caminos minimos" << endl;
+	cout << "Algunos caminos minimos" << endl;
 
 	cout << r.CaminosMin(comp1, comp3) << endl;
 	cout << r.CaminosMin(comp0, comp3) << endl;
 	cout << r.CaminosMin(comp1, comp3) << endl;
 	cout << r.CaminosMin(comp2, comp0) << endl;
-*/
+
+	/**/
+
+	/**/
+
+	Ab<int> *arbolIzq = new Ab<int>(NULL,10,NULL);
+	Ab<int> *arbolDer = new Ab<int>(NULL,20,NULL);
+	Ab<int> arbol(arbolIzq,5,arbolDer);
+	Ab<int> izq = *arbol.izq();
+	//cout<<"raiz: "<<izq.raiz()<<endl;
+	Red r1;
+	Compu c1("1");
+	c1.AgInterfaz(0);
+	Compu c2("2");
+	c2.AgInterfaz(0);
+	c2.AgInterfaz(1);
+	Compu c3("3");
+	c3.AgInterfaz(0);
+	r1.AgCompu(c1);
+	r1.AgCompu(c2);
+	r1.AgCompu(c3);
+	r1.Conectar(c1,c2,0,0);
+	r1.Conectar(c2,c3,1,0);
+	Paquete paq(1,2,c1,c2);
+	//cout << "Primera Ip de Lista:" << r1.Computadoras().Primero().Ip() << endl;
+
+	//r.Conectar(comp0 ,comp2, 2, 0);
+
+	//Conj<Lista<Compu> > Red::CaminosMin(const Compu& c1,const Compu& c2)
+	//cout << r1.CaminosMin(c3, c1) << endl;
+	//cout << r.CaminosMin(comp0, comp1) << endl;
 
 	//cout << "Primera Ip de Lista:" << r1.Computadoras().Primero().Ip() << endl;
 	//cout<< "UsaInterfaz?:" << r1.UsaInterfaz(comp,36) << endl;
@@ -118,40 +107,7 @@ Paquete paq(1,2,c1,c2);
 	//cout<<"cardinal arbol izquiwerdo: "<<arbol.Izq().Tamano()<<endl;
 	//cin >> variable;
 
-	/*
-
-	Paquete p1 = Paquete(2, 1);
-
-	Paquete p2 = Paquete(2, 2);
-
-	if( p2 < p1 )
-		cout << "true" << endl;
-	else 
-		cout << "false" << endl;
-
-	*/
-
-/*
-	Compu c1 = Compu(1);
-	Compu c2 = Compu(2);
-
-	Paquete p1 = Paquete(1,2,c1,c2);
-	//Paquete p2 = Paquete(2,1,c2,c1);
-
-	cout << p1.prioridad() << endl;
-
-	if(p1 == p2) {
-		cout << "igualeshttps://www.google.com.ar/search?client=ubuntu&channel=fs&q=c%2B%2B+double+free+or+coruption&ie=utf-8&oe=utf-8&gfe_rd=cr&ei=2ceZVf_MI_Cp8we5o4HQAQ";
-	} else {
-		cout << "distintos";
-	}
-	p1 = p2;
-
-	if(p1 == p2) {
-		cout << "iguales";
-	} else {
-		cout << "distintos";
-	}*/
+	/**/
 
 	return 0;
 }
