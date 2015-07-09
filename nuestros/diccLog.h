@@ -10,28 +10,30 @@ namespace dcnet {
     class DiccLog {
         
         public:
-    	DiccLog<K,S>():diccLog(Ab<Nodo2>()){}//Equivalente a Vacio()
-
-        ~DiccLog<K,S>(){
-            cout<<"destructor"<<endl;
-        } //TODO!
-
-        bool IsDefinido(const K& p) const;
-
-        void Definir(const K& p, const S& s){
-            if(diccLog.IsNil()){
-                cout<<"Entering Nodo Init"<<endl;
-                Nodo2 nodo;
-                nodo.clave = p;
-                nodo.significado = s;
-                nodo.altura =1;
-                cout<<"done nodo init"<<endl;
-                diccLog = Ab<Nodo2>(Ab<Nodo2>(),nodo,Ab<Nodo2>());
-                cout<<"done bin()"<<endl;
+    	DiccLog<K,S>(){
+            diccLog = new Ab<Nodo>(); //TODO. try equal this to NULL
+        }//Equivalente a Vacio()                    
+        ~DiccLog<K,S>(){                            
+            cout<<"destructor"<<endl;               
+            delete this->diccLog;                   
+        }                                           
+                                                    
+        bool IsDefinido(const K& p) const;          
+                                                    
+        void Definir(const K& p, const S& s){       
+            if(diccLog->isNil()){                   
+                delete diccLog;//TODO. OJO CON ESTA LINEA! Esta asi porque si estoy parado, vengo de haber sido construido sin parametros
+                Nodo *nodo = new Nodo;
+                nodo->clave = p;
+                nodo->significado = s;
+                nodo->altura =1;
+                diccLog = new Ab<Nodo>(NULL,*nodo,NULL);
+                delete nodo;
             }
             else{
-                cout<<"No Soy nil"<<endl;   
+               cout<<"No Soy nil"<<endl;   
             }
+                
         }
 
         S& Significado(const K& clave) const;
@@ -45,13 +47,16 @@ namespace dcnet {
         DiccLog<K,S> RotarDerecha(DiccLog<K,S> d); //d es subarbol de DiccLog
         int FactorDeBalanceo(const DiccLog<K,S> d); //d es subarbol de DiccLog
 
-        struct Nodo2{
+        struct Nodo{
         	K clave;
         	S significado;
         	Nat altura;
+                ~Nodo(){
+                    cout<<"No deberia haber entrada aca"<<endl;
+                }
         };
 
-        Ab<Nodo2> diccLog;
+        Ab<Nodo> *diccLog;
             
 
     };
