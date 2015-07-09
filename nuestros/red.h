@@ -55,7 +55,7 @@ namespace dcnet{
 		Red();
 		~Red();
 		bool operator==(const Red& otra);
-		const Red& operator=(const Red& otra); //TODO. Revisar la necesidad de esto. (Por ahora solo se usa en el constructor de dcnet. Tal vez bastaria con guardar solo referencias)
+		//const Red& operator=(const Red& otra); //TODO. Revisar la necesidad de esto. (Por ahora solo se usa en el constructor de dcnet. Tal vez bastaria con guardar solo referencias)
   		void AgCompu(const Compu& compu);
   		Lista<Compu> Computadoras() const;
   		bool Conectadas(const Compu& c1,const Compu& c2);

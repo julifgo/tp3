@@ -87,7 +87,7 @@ bool Comparar(const T& t, const S& s)
  */
  
 void test_dcnet_ejemplo() {
-	Conj<Interfaz> conjIc1;
+	/*Conj<Interfaz> conjIc1;
 	Conj<Interfaz> conjIc2;
 	Conj<Interfaz> conjIc3;
 	
@@ -120,7 +120,7 @@ void test_dcnet_ejemplo() {
 	dcnet.CrearPaquete(c1, c2, 3);
 	dcnet.AvanzarSegundo();	
 
-	ASSERT_EQ(dcnet.laQueMasEnvio(), c1);
+	ASSERT_EQ(dcnet.laQueMasEnvio(), c1);*/
 		
 }
 

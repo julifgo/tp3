@@ -11,7 +11,7 @@ SOURCES=aed2/ConjAcotado.cpp \
 OBJECTS=$(SOURCES:.cpp=.o)
 
 #TODO. REVISAR ESTE TEST2
-EXECUTABLETEST=test2 
+EXECUTABLETEST=testing
 SOURCESTEST=aed2/ConjAcotado.cpp \
 		nuestros/compu.cpp \
 		nuestros/paquete.cpp \
@@ -26,7 +26,8 @@ test: $(SOURCESTEST) $(EXECUTABLETEST)
 
 all: $(SOURCES) $(EXECUTABLE)
 
-$(EXECUTABLETEST): $(OBJECTSTEST) $(CC) $(LDFLAGS) $(OBJECTSTEST) -o $@
+$(EXECUTABLETEST): $(OBJECTSTEST)
+	$(CC) $(LDFLAGS) $(OBJECTSTEST) -o $@
     
 $(EXECUTABLE): $(OBJECTS) 
 	$(CC) $(LDFLAGS) $(OBJECTS) -o $@
@@ -37,6 +38,9 @@ $(EXECUTABLE): $(OBJECTS)
 #http://valgrind.org/docs/manual/quick-start.html
 valgrind: $(EXECUTABLE)
 	valgrind --leak-check=full -v ./$(EXECUTABLE)
+
+valgrindTest: $(EXECUTABLETEST)
+	valgrind --leak-check=full -v ./$(EXECUTABLETEST)
 
 clean:
 	rm -rf *.o

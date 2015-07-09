@@ -11,16 +11,16 @@ namespace dcnet{
 
 	DCNet::DCNet(){}
 	DCNet::DCNet(const Red& red){
-		estr.red = red;
-		estr.laQueMasEnvio = estr.red.Computadoras().CrearIt();
+		estr.red = &red;
+		estr.laQueMasEnvio = estr.red->Computadoras().CrearIt();
 		//estr.cantPaquetesEnviados = DiccString<Nat>(); //TODO. Revisar esto con profe.
 	}
 	DCNet::~DCNet(){
 			//TODO. IMPLEMENTAR.
 	}
 
-	Red& DCNet::red(){
-		return estr.red; //TODO REVISAR ESTO, ES UN FIX PORQUE TUVE QUE SACAR EL CONSTRUCTOR POR COPIA DE RED (LEA)
+	const Red& DCNet::red() const{
+		return *estr.red; 
 	}
 
 	Nat DCNet::CantidadEnviados(const Compu& c){
