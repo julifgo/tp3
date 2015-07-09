@@ -105,7 +105,7 @@ int main()
 	//cout<< "UsaInterfaz ahora que conecte?:" << r1.UsaInterfaz(comp,36) << endl;
 	//cout<< "La Ip a la que esta conectada comp:" << r1.Vecinos(comp).CrearIt().Siguiente().Ip() << endl;
 	//cout<<comp<<endl;
-	/*DiccLog<int,int> diccionario;
+	DiccLog<int,int> diccionario;
 	diccionario.Definir(1,10);
 	Ab<int> arbolIzq(Ab<int>(),10,Ab<int>());
 	Ab<int> arbolDer(Ab<int>(),20,Ab<int>());
