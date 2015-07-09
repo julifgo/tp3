@@ -24,7 +24,7 @@ namespace dcnet{
 		Interfaz Max(const Conj<Interfaz>& conj) const;
 		Arreglo<bool> ArmarArreglo(const Conj<Interfaz>& conj) const;
 		
-		//operaciones privadas de caminos auxiliares (Luis) ---------
+		//operaciones privadas de caminos auxiliares
 
 		//actualizarCaminos
 		void ActualizarCaminos(const Compu&, const Compu&); //no lleva const al final porque recibe red como in/out
@@ -46,6 +46,10 @@ namespace dcnet{
 		
 		//reverso
 		Lista<Compu>& Reverso(const Lista<Compu>&) const;
+
+		//otras operaciones privadas
+
+		bool Esta (const Lista<Compu>&, const Compu&) const;
 
 	public:
 		Red();
