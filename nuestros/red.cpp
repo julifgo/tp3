@@ -75,7 +75,7 @@ namespace dcnet{
 		DiccString<Nat> interfaz2 = *estr.interfaz.obtener(c2.Ip());
 		interfaz2.definir(c1.Ip(),i2);
 
-		//ActualizarCaminos(c1, c2);
+		ActualizarCaminos(c1, c2);
 
 		//groncho mode: Actualiza todos los caminos posibles sobre todas las computadoras en el diccionario de caminos màs cortos
 		Lista<Compu>::const_Iterador it1 = estr.computadoras.CrearIt();
@@ -85,7 +85,10 @@ namespace dcnet{
 			while(it2.HaySiguiente()) {
 				ActualizarCaminosMasCortos(it1.Siguiente(), it2.Siguiente());
 
-				cout << (estr.caminosMasCortos.definido(it1.Siguiente().Ip()) ? it1.Siguiente().Ip() : "No esta") << endl;
+				//cout << (estr.caminosMasCortos.definido(it1.Siguiente().Ip()) ? it1.Siguiente().Ip() : "No esta");
+				if(estr.caminosMasCortos.obtener(it1.Siguiente().Ip())->definido(it2.Siguiente().Ip()))
+					cout << it1.Siguiente()<<" - "<<it2.Siguiente()<<endl;
+				//cout << (estr.caminosMasCortos.definido(it2.Siguiente().Ip()) ? it2.Siguiente().Ip() : "No esta") << endl;
 
 				it2.Avanzar();
 			}
@@ -226,13 +229,21 @@ namespace dcnet{
 
 			caminosMasCortos.definir( pc1.Ip(), *hasta );
 
+			if(caminosAAgregar->Cardinal()==0)
+					cout<<"Soy vacio, lea"<<endl;
+				else
+					cout << *caminosAAgregar << endl;
+
+
 			delete &caminosRes;
 			delete &aux;
 			delete caminosAAgregar;
 			delete hasta;
 		}
-		
-		//cout << *caminosAAgregar << endl;
+		if(pc1.Ip() == "1" && pc2.Ip() == "2")
+				{
+					Conj<Lista<Compu> > res = *estr.caminosMasCortos.obtener(pc1.Ip())->obtener(pc2.Ip());
+				}
 	}
 
 	//caminosQueEmpiezanConPcx

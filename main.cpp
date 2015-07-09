@@ -73,21 +73,25 @@ int main()
 	Ab<int> izq = *arbol.izq();
 	cout<<"raiz: "<<izq.raiz()<<endl;
 Red r1;
-Compu c1("abc");
+Compu c1("1");
 c1.AgInterfaz(0);
-Compu c2("bcd");
+Compu c2("2");
 c2.AgInterfaz(0);
+c2.AgInterfaz(1);
+Compu c3("3");
+c3.AgInterfaz(0);
 r1.AgCompu(c1);
 r1.AgCompu(c2);
+r1.AgCompu(c3);
 r1.Conectar(c1,c2,0,0);
+r1.Conectar(c2,c3,1,0);
 Paquete paq(1,2,c1,c2);
 //cout << "Primera Ip de Lista:" << r1.Computadoras().Primero().Ip() << endl;
 
 	//r.Conectar(comp0 ,comp2, 2, 0);
 
 	//Conj<Lista<Compu> > Red::CaminosMin(const Compu& c1,const Compu& c2)
-
-	//cout << r.CaminosMin(comp0, comp3) << endl;
+	cout << r1.CaminosMin(c1, c2) << endl;
 	//cout << r.CaminosMin(comp0, comp1) << endl;
 	
 	/*cout << "Algunos caminos minimos" << endl;
