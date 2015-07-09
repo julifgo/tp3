@@ -51,7 +51,7 @@ class Ab {
     Ab<T>* Der();   	           // Devuelve el subárbol derecho
     void Izq(Ab<T>&);            // Reemplaza el subárbol izquierdo
                                     // (NO libera memoria)
-    void Der(Ab<T>*);            // Reemplaza el subárbol derecho
+    void Der(Ab<T>&);            // Reemplaza el subárbol derecho
                                     // (NO libera memoria)
     Nat Tamano() const;       // Devuelve la cantidad de nodos del árbol
 };
@@ -132,10 +132,10 @@ void Ab<T>::Izq(Ab<T>& i) {
 }
 
 template<typename T>
-void Ab<T>::Der(Ab<T>* d) {
+void Ab<T>::Der(Ab<T>& d) {
     assert(!IsNil());
     // delete _raiz->_der;
-    _raiz->_der = d;
+    _raiz->_der = &d;
 }
 
 template<typename T>

@@ -42,23 +42,23 @@ namespace dcnet {
              cout<<"No deberia haber entrada aca"<<endl;//@JULIAN:ME PARECE QUE SI DEBERIA
              }
         };
-        Ab<Nodo>* RotarIzquierda(Ab<Nodo>& diccLog){
-      		Ab<Nodo>* aux1 = diccLog.Der();
+        Ab<Nodo>* RotarIzquierda(Ab<Nodo>* diccLog){
+      		Ab<Nodo>* aux1 = diccLog->Der();
         	Ab<Nodo>* aux2 = aux1->Izq();
-        	aux1->Izq(diccLog);
-        	diccLog.Der(aux2);
-        	diccLog.Raiz().altura =1 + max(Altura(diccLog.Izq()),Altura(diccLog.Der()));
+        	aux1->Izq(*new Ab<Nodo>(*diccLog));
+        	diccLog->Der(*aux2);
+        	diccLog->Raiz().altura =1 + max(Altura(diccLog->Izq()),Altura(diccLog->Der()));
         	aux1->Raiz().altura = 1 + max(Altura(aux1->Izq()),Altura(aux1->Der()));
         	return aux1;
         };
-        Ab<Nodo>& RotarDerecha(Ab<Nodo>& diccLog){
-        	Ab<Nodo>* aux1 = diccLog.Izq();
+        Ab<Nodo>* RotarDerecha(Ab<Nodo>* diccLog){
+        	Ab<Nodo>* aux1 = diccLog->Izq();
         	Ab<Nodo>* aux2 = aux1->Der();
-        	aux1->Der(&diccLog);
-        	diccLog.Izq(*aux2);
-        	diccLog.Raiz().altura = 1 + max(Altura(diccLog.Izq()),Altura(diccLog.Der()));
+        	aux1->Der(*new Ab<Nodo>(*diccLog));
+        	diccLog->Izq(*aux2);
+        	diccLog->Raiz().altura = 1 + max(Altura(diccLog->Izq()),Altura(diccLog->Der()));
         	aux1->Raiz().altura = 1 + max(Altura(aux1->Izq()),Altura(aux1->Der()));
-        	return *aux1;
+        	return aux1;
         };
         int FactorDeBalanceo(Ab<Nodo> *diccLog);
 
@@ -97,16 +97,16 @@ namespace dcnet {
 				diccLog.Raiz().altura = 1 + max(Altura(diccLog.Izq()),Altura(diccLog.Der()));
 				int fdb = FactorDeBalanceo(&diccLog);
 				if(fdb>1 && p<diccLog.Izq()->Raiz().clave)
-					diccLog = RotarDerecha(diccLog);
+					diccLog = *RotarDerecha(&diccLog);
 				if(fdb<-1 && p>diccLog.Der()->Raiz().clave)
-					diccLog = *RotarIzquierda(diccLog);
+					diccLog = *RotarIzquierda(&diccLog);
 				if(fdb>1 && p>diccLog.Izq()->Raiz().clave){
-					diccLog = *RotarIzquierda(*diccLog.Izq());
-					diccLog = RotarDerecha(diccLog);
+					diccLog = *RotarIzquierda(diccLog.Izq());
+					diccLog = *RotarDerecha(&diccLog);
 				}
 				if(fdb<-1 && p<diccLog.Der()->Raiz().clave){
-					diccLog = RotarDerecha(*diccLog.Der());
-					diccLog = *RotarIzquierda(diccLog);
+					diccLog = *RotarDerecha(diccLog.Der());
+					diccLog = *RotarIzquierda(&diccLog);
 				}
 				cout<<"No Soy nil"<<endl;
 			}
