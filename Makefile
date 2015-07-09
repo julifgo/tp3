@@ -39,6 +39,9 @@ $(EXECUTABLE): $(OBJECTS)
 valgrind: $(EXECUTABLE)
 	valgrind --leak-check=full -v ./$(EXECUTABLE)
 
+valgrindTest: $(EXECUTABLETEST)
+	valgrind --leak-check=full -v ./$(EXECUTABLETEST)
+
 clean:
 	rm -rf *.o
 	rm -rf nuestros/*.o
