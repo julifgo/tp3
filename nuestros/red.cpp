@@ -38,6 +38,7 @@ namespace dcnet{
 	}
 
 	const Red& Red::operator=(const Red& otra){
+		//delete &this;
 		return otra;
 	}
 	
@@ -93,10 +94,8 @@ namespace dcnet{
 		estr.vecinos.obtener(c2.Ip())->AgregarRapido(c1);
 		estr.usaInterfaz.obtener(c1.Ip())->operator [](i1) = true;
 		estr.usaInterfaz.obtener(c2.Ip())->operator [](i2) = true;
-		DiccString<Nat> interfaz1 = *estr.interfaz.obtener(c1.Ip());
-		interfaz1.definir(c2.Ip(),i1);
-		DiccString<Nat> interfaz2 = *estr.interfaz.obtener(c2.Ip());
-		interfaz2.definir(c1.Ip(),i2);
+		estr.interfaz.obtener(c1.Ip())->definir(c2.Ip(),i1);
+		estr.interfaz.obtener(c2.Ip())->definir(c1.Ip(),i2);
 
 		ActualizarCaminos(c1, c2);
 

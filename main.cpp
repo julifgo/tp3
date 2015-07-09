@@ -21,61 +21,63 @@ int main()
 	DCNet dcnet;
 	/**/
 
-	cout << "Creo compu 0 con interfaces 0, 1, 2" << endl;
+	cout << "Creo compu 0 con interfaces 0" << endl;
 	
 	Compu comp0("0");
 	comp0.AgInterfaz(0);
-	comp0.AgInterfaz(1);
-	comp0.AgInterfaz(2);
-	comp0.AgInterfaz(4);
+	//comp0.AgInterfaz(1);
+	//comp0.AgInterfaz(2);
+	//comp0.AgInterfaz(4);
 
 	cout << "Creo compu 1 con interfaces 0" << endl;
 
 	Compu comp1("1");
 	comp1.AgInterfaz(0);
-	comp1.AgInterfaz(1);
-	comp1.AgInterfaz(2);
+	//comp1.AgInterfaz(1);
+	//comp1.AgInterfaz(2);
 
-	cout << "Creo compu 2 con interfaces 0" << endl;
+	//cout << "Creo compu 2 con interfaces 0" << endl;
 
-	Compu comp2("2");
-	comp2.AgInterfaz(0);
-	comp2.AgInterfaz(1);
+	//Compu comp2("2");
+	//comp2.AgInterfaz(0);
+	//comp2.AgInterfaz(1);
 
-	cout << "Creo compu 3 con interfaces 0" << endl;
+	//cout << "Creo compu 3 con interfaces 0" << endl;
 
-	Compu comp3("3");
-	comp3.AgInterfaz(0);
-	comp3.AgInterfaz(1);
+	//Compu comp3("3");
+	//comp3.AgInterfaz(0);
+	//comp3.AgInterfaz(1);
 
 	Red r;
 	r.AgCompu(comp0);
 	r.AgCompu(comp1);
-	r.AgCompu(comp2);
-	r.AgCompu(comp3);
+	//r.AgCompu(comp2);
+	//r.AgCompu(comp3);
 
 	cout << "Conectando..." << endl;
 	r.Conectar(comp0 ,comp1, 0, 0);
-	r.Conectar(comp0 ,comp3, 1, 0);
+	/*r.Conectar(comp0 ,comp3, 1, 0);
 	r.Conectar(comp0 ,comp2, 2, 0);
 	r.Conectar(comp1 ,comp2, 1, 1);
 	r.Conectar(comp3 ,comp1, 1, 2);
-	cout << "Conectado !" << endl;
+	cout << "Conectado !" << endl;*/
 
-	cout << "Algunos caminos minimos" << endl;
+	/*cout << "Algunos caminos minimos" << endl;
 
 	cout << r.CaminosMin(comp1, comp3) << endl;
 	cout << r.CaminosMin(comp0, comp3) << endl;
 	cout << r.CaminosMin(comp1, comp3) << endl;
 	cout << r.CaminosMin(comp2, comp0) << endl;
 	cout << r.CaminosMin(comp1, comp2) << endl;
-	cout << r.CaminosMin(comp3, comp2) << endl;
+	cout << r.CaminosMin(comp3, comp2) << endl;*/
 
 
-	/*Interfaz inter = r.InterfazUsada(comp0,comp1);
-	cout<<"Interfaz usada entre 0 y 1: "<<inter<<endl;*/
+	Interfaz inter = r.InterfazUsada(comp0,comp1);
+	cout<<"Interfaz usada entre 0 y 1: "<<inter<<endl;
 
-	Red r2;
+	r = *new Red();
+
+	/*Red r2;
 	r2 = r;
 
 	cout << "Algunos caminos minimos de r2" << endl;
@@ -85,7 +87,7 @@ int main()
 	cout << r.CaminosMin(comp1, comp3) << endl;
 	cout << r.CaminosMin(comp2, comp0) << endl;
 	cout << r.CaminosMin(comp1, comp2) << endl;
-	cout << r.CaminosMin(comp3, comp2) << endl;
+	cout << r.CaminosMin(comp3, comp2) << endl;*/
 	/**/
 
 	/** /
