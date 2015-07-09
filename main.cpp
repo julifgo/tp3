@@ -75,7 +75,7 @@ int main()
 	Interfaz inter = r.InterfazUsada(comp0,comp1);
 	cout<<"Interfaz usada entre 0 y 1: "<<inter<<endl;
 
-	r = *new Red();
+	//r = *new Red();
 
 	/*Red r2;
 	r2 = r;

@@ -4,10 +4,14 @@
 //#include "../aed2/Conj.h"
 //#include "../aed2/Dicc.h"
 
+#include "../nuestros/paquete.h"
+#include "../nuestros/compu.h"
+
 #include <string>
 #include <iostream>
 
 using namespace aed2;
+using namespace dcnet;
 
 /** 
  * Imprime un elemento a un string, en vez de a una pantalla, 
@@ -128,14 +132,146 @@ void test_dcnet_ejemplo() {
 		
 }
 
+//
+//TESTS PAQUETE
+
+
+
+
+void test_paquete_id() {
+
+	ID id = 1;
+	Prioridad prioridad = 1;
+	Compu c1("192.168.0.1");
+	Compu c2("192.168.0.2");
+
+	Paquete p(id, prioridad, c1, c2);
+
+	ASSERT_EQ(to_str(p.Id()), to_str(id));
+
+}
+
+void test_paquete_prioridad() {
+
+	ID id = 1;
+	Prioridad prioridad = 1;
+	Compu c1("192.168.0.1");
+	Compu c2("192.168.0.2");
+
+	Paquete p(id, prioridad, c1, c2);
+
+	ASSERT_EQ(to_str(p.Prioridad()), to_str(prioridad));
+
+}
+
+void test_paquete_origen() {
+
+	ID id = 1;
+	Prioridad prioridad = 1;
+	Compu c1("192.168.0.1");
+	Compu c2("192.168.0.2");
+
+	Paquete p(id, prioridad, c1, c2);
+
+	ASSERT_EQ(to_str(p.Origen()), to_str(c1));
+
+}
+
+void test_paquete_destino() {
+
+	ID id = 1;
+	Prioridad prioridad = 1;
+	Compu c1("192.168.0.1");
+	Compu c2("192.168.0.2");
+
+	Paquete p(id, prioridad, c1, c2);
+
+	ASSERT_EQ(to_str(p.Destino()), to_str(c2));
+
+}
+
+void test_paquete_equal() {
+
+
+	ID id = 1;
+	Prioridad prioridad = 1;
+	Compu c1("192.168.0.1");
+	Compu c2("192.168.0.2");
+
+	Paquete p1(id, prioridad, c1, c2);
+	Paquete p2(id, prioridad, c1, c2);
+
+	ASSERT_EQ(to_str(p1 == p2), to_str(true));
+
+}
+
+void test_paquete_assign() {
+
+	ID id = 1;
+	Prioridad prioridad = 1;
+	Compu c1("192.168.0.1");
+	Compu c2("192.168.0.2");
+
+	Paquete p1(id, prioridad, c1, c2);
+	Paquete p2 = p1;
+
+	ASSERT_EQ(to_str(p2), to_str(p1));
+
+}
+
+void test_paquete_lower_by_prioridad() {
+
+	ID id1 = 0;
+	ID id2 = 1;
+	Prioridad prioridad1 = 0;
+	Prioridad prioridad2 = 1;
+	Compu c1("192.168.0.1");
+	Compu c2("192.168.0.2");
+
+	Paquete p1(id1, prioridad1, c1, c2);
+	Paquete p2(id2, prioridad2, c1, c2);
+
+	ASSERT_EQ(to_str(p1 < p2), to_str(true));
+	ASSERT_EQ(to_str(p2 < p1), to_str(false));
+
+}
+
+void test_paquete_lower_by_id() {
+
+	ID id1 = 0;
+	ID id2 = 1;
+	Prioridad prioridad1 = 1;
+	Prioridad prioridad2 = 1;
+	Compu c1("192.168.0.1");
+	Compu c2("192.168.0.2");
+
+	Paquete p1(id1, prioridad1, c1, c2);
+	Paquete p2(id2, prioridad2, c1, c2);
+
+	ASSERT_EQ(to_str(p1.Prioridad() == p2.Prioridad()), to_str(true));
+	ASSERT_EQ(to_str(p1 < p2), to_str(true));
+	ASSERT_EQ(to_str(p2 < p1), to_str(false));
+
+}
+
+//
+//TESTS COMPU
+
 
 int main(int argc, char **argv)
 {
-   	RUN_TEST(test_dcnet_ejemplo);
-	cout<<"Hello Test World"<<endl;
+	cout <<"Hello Test World"<<endl;
+	RUN_TEST(test_dcnet_ejemplo);
 
-
-
+	//test paquete
+	RUN_TEST(test_paquete_id);
+	RUN_TEST(test_paquete_prioridad);
+	RUN_TEST(test_paquete_origen);
+	RUN_TEST(test_paquete_destino);
+	RUN_TEST(test_paquete_equal);
+	RUN_TEST(test_paquete_assign);
+	RUN_TEST(test_paquete_lower_by_prioridad);
+	RUN_TEST(test_paquete_lower_by_id);
 
 
 	/******************************************************************

@@ -44,4 +44,9 @@ namespace dcnet {
 		return this->_id == otro.Id();
 	}
 
+    std::ostream& operator<<(std::ostream& os, const Paquete& p) {
+        os << p.Id() << " " << p.Prioridad() << " " << p.Origen() << " " << p.Destino(); 
+        return os;
+    }
+
 }

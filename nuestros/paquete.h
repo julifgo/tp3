@@ -44,5 +44,7 @@ namespace dcnet {
 
     };
 
+    std::ostream& operator<<(std::ostream&, const Paquete&);
+
 }
 #endif //PAQUETE_H
