@@ -73,6 +73,8 @@ private:
                 delete siguiente[clave[index]];
                 siguiente.erase(clave[index]);
             }
+            else
+                _borrar(clave,index+1); //FIX LEOPOLDO TARAVILSE 08/07/2015
         }
     }
 
@@ -182,13 +184,13 @@ public:
 
         void irAlFondo()
         {
-            while(!dicc->siguiente.empty())
+            while(!dicc->siguiente.empty() && !dicc->es_final) //FIX. LEOPOLDO TARAVILSE 08/07/2015
                 dicc = (*(dicc->siguiente.begin())).second;
         }
 
         void irAlFondoUltimo()
         {
-            while(!dicc->siguiente.empty())
+            while(!dicc->siguiente.empty() && !dicc->es_final) //FIX. LEOPOLDO TARAVILSE 08/07/2015
                 dicc = (*(dicc->siguiente.rbegin())).second;
         }
 
