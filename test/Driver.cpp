@@ -1,49 +1,44 @@
-/*#include "Driver.h"
+#include "Driver.h"
 #include "ArbolSintactico.h"
 
 namespace aed2 {
 
-Driver::Driver() {
-    // TODO
-}
+Driver::Driver(): red(Red()), dcnet(DCNet()) {}
 
 Driver::~Driver() {
     // TODO
+    //acá iria el destructor de red y/o dcnet entre otras cosas
 }
 
 // TAD RED
 Nat Driver::CantidadComputadoras() const {
-    // TODO
-    return 0;
-
+    return red.Computadoras().Longitud();
 }
 
 const Computadora& Driver::IesimaComputadora(const Nat i) const {
-    // TODO
-	return 0;
+    assert( i < CantidadComputadoras() );
+    return red.Computadoras()[i].Ip();
 }
         
 Nat Driver::CantidadInterfacesDe(const Computadora& c) const {
-    // TODO
-    return 0;
-
+    return dameCompu(c).Interfaces().Cardinal();
 }
 
 const Interfaz& Driver::IesimaInterfazDe(const Computadora& c, const Nat i) const{
-    // TODO
-    return 0;
-
+    assert(i < dameCompu(c).Interfaces().Cardinal());
+    Conj<Compu>::const_Iterador it = dameCompu(c).Interfaces().CrearIt();
+    while(i-- > 0) {
+        it.Avanzar();
+    }
+    return it.Siguiente();
 } 
 
 const Interfaz& Driver::IntefazUsada(const Computadora& c1, const Computadora& c2) const {
-    // TODO
-    return 0;
-
+    return red.InterfazUsada(dameCompu(c1), dameCompu(c2));
 }
 
 bool Driver::conectadas(const Computadora& c1, const Computadora& c2) const {
-    // TODO
-    return 0;
+    return red.Conectadas(dameCompu(c1), dameCompu(c2));
 }
 
 // TAD DCNET
@@ -61,7 +56,7 @@ Nat Driver::CantidadNodosRecorridosPor(const Paquete& p) const {
     return 0;
 }
 
-const Computadora& Driver::IesimoNodoRecorridoPor(const Paquete& p) const {
+const Computadora& Driver::IesimoNodoRecorridoPor(const Paquete& p, const Nat i) const {
     // TODO
 }
 
@@ -75,7 +70,7 @@ Nat Driver::CantidadEnEsperaEn(const Computadora& c) const {
     return 0;
 }
 
-const Paquete& Driver::IesimoEnEsperaEn(const Computadora& c) const {
+const Paquete& Driver::IesimoEnEsperaEn(const Computadora& c, const Nat i) const {
     // TODO
     return 0;
 }
@@ -108,7 +103,13 @@ Nat Driver::prioridad(const Paquete& p) const {
     return 0;
 }
 		
-
+const Compu& Driver::dameCompu(const Computadora& c) const {
+    Conj<Compu>::const_Iterador it = red.Computadoras().CrearIt();
+    while(it.Siguiente().Ip() != c) {
+        it.Avanzar();
+    }
+    return it.Siguiente();
+}
 
 } // namespace aed2
-*/
+

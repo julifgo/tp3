@@ -1,8 +1,8 @@
-/*#ifndef DRIVER_H_
+#ifndef DRIVER_H_
 #define DRIVER_H_
 
 #include "Tipos.h"
-#include "../aed2/TiposBasicos.h"
+#include "aed2/TiposBasicos.h"
 
 //#include ...
 
@@ -38,12 +38,12 @@ class Driver
        /// Observadores DCNet //////////////////////////////////////////////////////////////
     
         Nat CantidadNodosRecorridosPor(const Paquete& p) const;
-        const Computadora& IesimoNodoRecorridoPor(const Paquete& p) const;
+        const Computadora& IesimoNodoRecorridoPor(const Paquete& p, const Nat i) const;
 
         Nat CantidadEnviadosPor(const Computadora& c) const;
     
         Nat CantidadEnEsperaEn(const Computadora& c) const;
-        const Paquete& IesimoEnEsperaEn(const Computadora& c) const;
+        const Paquete& IesimoEnEsperaEn(const Computadora& c, const Nat i) const;
 
         /// Acciones DCNet ////////////////////////////////////////////////////////////
 
@@ -60,6 +60,11 @@ class Driver
         
     private:
 
+        Red red;
+        DCNet dcnet;
+
+        const Compu& Driver::dameCompu(const Computadora& c) const
+
     /*********************************************************************
      * TODO: Va a ser necesario instanciar privadamente un Modulo DCNet *
      * con el cuál interactuar. Además, pueden declarar todas las        *
@@ -71,4 +76,4 @@ class Driver
 
 } // namespace aed2
 
-//#endif // DRIVER_H_
+#endif // DRIVER_H_
