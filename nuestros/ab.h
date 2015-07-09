@@ -30,8 +30,8 @@ class Ab {
             delete _der;
         }
     };
-    Nat _cardinal;
     Nodo* _raiz;
+    Nat _cardinal;
 
  public:
     Ab();                          // Construye un árbol vacío
@@ -49,7 +49,7 @@ class Ab {
     Ab<T>* Der() const;     */     // Devuelve el subárbol derecho
     Ab<T>* Izq();                // Devuelve el subárbol izquierdo
     Ab<T>* Der();   	           // Devuelve el subárbol derecho
-    void Izq(Ab<T>*);            // Reemplaza el subárbol izquierdo
+    void Izq(Ab<T>&);            // Reemplaza el subárbol izquierdo
                                     // (NO libera memoria)
     void Der(Ab<T>*);            // Reemplaza el subárbol derecho
                                     // (NO libera memoria)
@@ -102,13 +102,13 @@ T& Ab<T>::Raiz() const {
 
 /*template<typename T>
 Ab<T>* Ab<T>::Izq() const {
-    assert(!esNil());
+    assert(!IsNil());
     return _raiz->_izq;
 }
 
 template<typename T>
 Ab<T>* Ab<T>::Der() const {
-    assert(!esNil());
+    assert(!IsNil());
     return _raiz->_der;
 }*/
 
@@ -125,10 +125,10 @@ Ab<T>* Ab<T>::Der() {
 }
 
 template<typename T>
-void Ab<T>::Izq(Ab<T>* i) {
+void Ab<T>::Izq(Ab<T>& i) {
     assert(!IsNil());
     // delete _raiz->_izq;
-    _raiz->_izq = i;
+    _raiz->_izq = &i;
 }
 
 template<typename T>
