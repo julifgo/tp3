@@ -9,6 +9,7 @@ using namespace std;
 
 namespace dcnet{
 
+	DCNet::DCNet(){}
 	DCNet::DCNet(const Red& red){
 		estr.red = red;
 		estr.laQueMasEnvio = estr.red.Computadoras().CrearIt();

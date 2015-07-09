@@ -26,6 +26,7 @@ namespace dcnet{
 			};
 			estr estr;
 		public:
+			DCNet();
 			DCNet(const Red& red);//Equivalente a IniciarDCNEt
 			~DCNet();
 			Red& red();

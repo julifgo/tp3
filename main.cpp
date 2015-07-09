@@ -7,6 +7,7 @@
 #include "nuestros/red.h"
 #include "nuestros/paquete.h"
 #include "nuestros/ab.h"
+#include "nuestros/dcnet.h"
 
 //#include "nuestros/diccLog.h"
 
@@ -17,7 +18,7 @@ using namespace dcnet;
 
 int main()
 {
-
+	DCNet dcnet;
 	/**/
 
 	cout << "Creo compu 0 con interfaces 0, 1, 2" << endl;
@@ -59,6 +60,7 @@ int main()
 	r.Conectar(comp0 ,comp2, 2, 0);
 	r.Conectar(comp1 ,comp2, 1, 1);
 	r.Conectar(comp3 ,comp1, 1, 2);
+	cout << "Conectado !" << endl;
 
 	cout << "Algunos caminos minimos" << endl;
 
@@ -69,6 +71,21 @@ int main()
 	cout << r.CaminosMin(comp1, comp2) << endl;
 	cout << r.CaminosMin(comp3, comp2) << endl;
 
+
+	/*Interfaz inter = r.InterfazUsada(comp0,comp1);
+	cout<<"Interfaz usada entre 0 y 1: "<<inter<<endl;*/
+
+	Red r2;
+	r2 = r;
+
+	cout << "Algunos caminos minimos de r2" << endl;
+
+	cout << r.CaminosMin(comp1, comp3) << endl;
+	cout << r.CaminosMin(comp0, comp3) << endl;
+	cout << r.CaminosMin(comp1, comp3) << endl;
+	cout << r.CaminosMin(comp2, comp0) << endl;
+	cout << r.CaminosMin(comp1, comp2) << endl;
+	cout << r.CaminosMin(comp3, comp2) << endl;
 	/**/
 
 	/** /
