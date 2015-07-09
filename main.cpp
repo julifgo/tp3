@@ -91,7 +91,7 @@ Paquete paq(1,2,c1,c2);
 	//r.Conectar(comp0 ,comp2, 2, 0);
 
 	//Conj<Lista<Compu> > Red::CaminosMin(const Compu& c1,const Compu& c2)
-	cout << r1.CaminosMin(c1, c2) << endl;
+	cout << r1.CaminosMin(c3, c1) << endl;
 	//cout << r.CaminosMin(comp0, comp1) << endl;
 	
 	/*cout << "Algunos caminos minimos" << endl;

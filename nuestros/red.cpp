@@ -60,7 +60,7 @@ namespace dcnet{
 	}
 
 	Conj<Lista<Compu> > Red::CaminosMin(const Compu& c1,const Compu& c2) {
-		Conj<Lista<Compu> > res = *estr.caminosMasCortos.obtener(c1.Ip())->obtener(c2.Ip());
+		Conj<Lista<Compu> > res = *(estr.caminosMasCortos.obtener(c1.Ip()))->obtener(c2.Ip());
 		return res;
 	}
 
@@ -86,16 +86,23 @@ namespace dcnet{
 				ActualizarCaminosMasCortos(it1.Siguiente(), it2.Siguiente());
 
 				//cout << (estr.caminosMasCortos.definido(it1.Siguiente().Ip()) ? it1.Siguiente().Ip() : "No esta");
-				if(estr.caminosMasCortos.obtener(it1.Siguiente().Ip())->definido(it2.Siguiente().Ip()))
-					cout << it1.Siguiente()<<" - "<<it2.Siguiente()<<endl;
+				/*if(estr.caminosMasCortos.obtener(it1.Siguiente().Ip())->definido(it2.Siguiente().Ip()))
+					cout << it1.Siguiente()<<" - "<<it2.Siguiente()<<": "<<*estr.caminosMasCortos.obtener(it1.Siguiente().Ip())->obtener(it2.Siguiente().Ip())<<endl;*/
 				//cout << (estr.caminosMasCortos.definido(it2.Siguiente().Ip()) ? it2.Siguiente().Ip() : "No esta") << endl;
-
+				/*if(it1.Siguiente().Ip() == "1" && it2.Siguiente().Ip() == "2")
+				{
+					//cout<<"while. Voy obtener el dicc de adentro con la ip "<<c1.Ip()<<endl;
+					estr.caminosMasCortos.obtener("1")->obtener("2");
+					//cout<<"Obtenido !"<<endl;
+				}*/
 				it2.Avanzar();
 			}
 			it2 = estr.computadoras.CrearIt();
 			it1.Avanzar();
 		}
-
+		//cout<<"Bla. Voy obtener el dicc de adentro con la ip "<<c1.Ip()<<endl;
+		//estr.caminosMasCortos.obtener("1")->obtener("2");
+		//cout<<"Obtenido !"<<endl;
 		//cout << estr.caminos << endl;
 	}
 
@@ -212,8 +219,6 @@ namespace dcnet{
 
 			while(itConjCamino.HayAnterior()) {
 
-				//cout << "entra" << endl;
-
 				if(cantidadDeComputadorasEnCaminoMinimo == itConjCamino.Anterior().Longitud()) {
 					//itConjCamino.EliminarAnterior();
 					caminosAAgregar->AgregarRapido(itConjCamino.Anterior());
@@ -221,29 +226,22 @@ namespace dcnet{
 				itConjCamino.Retroceder();
 			}
 			
-			DiccString<DiccString<Conj<Lista<Compu> > > >& caminosMasCortos = estr.caminosMasCortos;
-
-			DiccString<Conj<Lista<Compu> > >* hasta = new DiccString<Conj<Lista<Compu> > >();
-
-			hasta->definir( pc2.Ip(), *caminosAAgregar );
-
-			caminosMasCortos.definir( pc1.Ip(), *hasta );
-
-			if(caminosAAgregar->Cardinal()==0)
-					cout<<"Soy vacio, lea"<<endl;
-				else
-					cout << *caminosAAgregar << endl;
-
-
+			
+			
+			if(estr.caminosMasCortos.definido(pc1.Ip())){
+				estr.caminosMasCortos.obtener(pc1.Ip())->definir(pc2.Ip(),*caminosAAgregar);
+			}
+			else{
+				DiccString<Conj<Lista<Compu> > > hasta;	
+				hasta.definir( pc2.Ip(), *caminosAAgregar );
+				estr.caminosMasCortos.definir( pc1.Ip(), hasta );
+			}
 			delete &caminosRes;
 			delete &aux;
 			delete caminosAAgregar;
-			delete hasta;
+			//delete hasta;
 		}
-		if(pc1.Ip() == "1" && pc2.Ip() == "2")
-				{
-					Conj<Lista<Compu> > res = *estr.caminosMasCortos.obtener(pc1.Ip())->obtener(pc2.Ip());
-				}
+		
 	}
 
 	//caminosQueEmpiezanConPcx
