@@ -26,5 +26,11 @@ clean:
 	rm -rf *.o
 	rm -rf nuestros/*.o
 	rm -rf aed2/*.o
+reset:
+	reset
+	rm -rf *.o
+	rm -rf nuestros/*.o
+	rm -rf aed2/*.o
+	make
 
 #TODO: Agregar rutinas tests uniterios y checkear si la rutina para valgrind es correcta
