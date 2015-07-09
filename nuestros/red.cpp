@@ -84,25 +84,12 @@ namespace dcnet{
 		while(it1.HaySiguiente()) {
 			while(it2.HaySiguiente()) {
 				ActualizarCaminosMasCortos(it1.Siguiente(), it2.Siguiente());
-
-				//cout << (estr.caminosMasCortos.definido(it1.Siguiente().Ip()) ? it1.Siguiente().Ip() : "No esta");
-				/*if(estr.caminosMasCortos.obtener(it1.Siguiente().Ip())->definido(it2.Siguiente().Ip()))
-					cout << it1.Siguiente()<<" - "<<it2.Siguiente()<<": "<<*estr.caminosMasCortos.obtener(it1.Siguiente().Ip())->obtener(it2.Siguiente().Ip())<<endl;*/
-				//cout << (estr.caminosMasCortos.definido(it2.Siguiente().Ip()) ? it2.Siguiente().Ip() : "No esta") << endl;
-				/*if(it1.Siguiente().Ip() == "1" && it2.Siguiente().Ip() == "2")
-				{
-					//cout<<"while. Voy obtener el dicc de adentro con la ip "<<c1.Ip()<<endl;
-					estr.caminosMasCortos.obtener("1")->obtener("2");
-					//cout<<"Obtenido !"<<endl;
-				}*/
 				it2.Avanzar();
 			}
 			it2 = estr.computadoras.CrearIt();
 			it1.Avanzar();
 		}
-		//cout<<"Bla. Voy obtener el dicc de adentro con la ip "<<c1.Ip()<<endl;
-		//estr.caminosMasCortos.obtener("1")->obtener("2");
-		//cout<<"Obtenido !"<<endl;
+
 		//cout << estr.caminos << endl;
 	}
 
@@ -226,8 +213,6 @@ namespace dcnet{
 				itConjCamino.Retroceder();
 			}
 			
-			
-			
 			if(estr.caminosMasCortos.definido(pc1.Ip())){
 				estr.caminosMasCortos.obtener(pc1.Ip())->definir(pc2.Ip(),*caminosAAgregar);
 			}
@@ -236,12 +221,11 @@ namespace dcnet{
 				hasta.definir( pc2.Ip(), *caminosAAgregar );
 				estr.caminosMasCortos.definir( pc1.Ip(), hasta );
 			}
-			delete &caminosRes;
-			delete &aux;
-			delete caminosAAgregar;
-			//delete hasta;
 		}
 		
+		delete &caminosRes;
+		delete &aux;
+		delete caminosAAgregar;
 	}
 
 	//caminosQueEmpiezanConPcx
@@ -312,7 +296,5 @@ namespace dcnet{
 		}
 		return *arr;
 	}
-
-
 
 }
