@@ -21,10 +21,10 @@ namespace dcnet {
         bool IsDefinido(const K& p) const;          
                                                     
         void Definir(const K& p, const S& s){
-        	if(_diccLog->IsNil())
-        		_diccLog = NULL;//TODO. OJO CON ESTA LINEA! Esta asi porque si estoy parado, vengo de haber sido construido sin parametros
+      //  	if(&_diccLog==NULL)
+        //		delete _diccLog;//TODO. OJO CON ESTA LINEA! Esta asi porque si estoy parado, vengo de haber sido construido sin parametros
 
-        	DefinirPrivate(_diccLog,p,s);
+        	DefinirPrivate(*_diccLog,p,s);
         }
 
         S& Significado(const K& clave) const;
@@ -45,57 +45,74 @@ namespace dcnet {
         Ab<Nodo>* RotarIzquierda(Ab<Nodo>* diccLog){
       		Ab<Nodo>* aux1 = diccLog->Der();
         	Ab<Nodo>* aux2 = aux1->Izq();
-        	aux1->Izq(diccLog);
-        	diccLog->Der(aux2);
-        	diccLog->Raiz().altura = 1 + (diccLog->Izq()->Raiz().altura > diccLog->Izq()->Raiz().altura)?diccLog->Izq()->Raiz().altura:diccLog->Der()->Raiz().altura;
-        	aux1->Raiz().altura = 1 + (aux1->Izq()->Raiz().altura > aux1->Izq()->Raiz().altura)?aux1->Izq()->Raiz().altura:aux1->Der()->Raiz().altura;
+        	aux1->Izq(*new Ab<Nodo>(*diccLog));
+        	diccLog->Der(*aux2);
+        	diccLog->Raiz().altura =1 + max(Altura(diccLog->Izq()),Altura(diccLog->Der()));
+        	aux1->Raiz().altura = 1 + max(Altura(aux1->Izq()),Altura(aux1->Der()));
         	return aux1;
         };
         Ab<Nodo>* RotarDerecha(Ab<Nodo>* diccLog){
         	Ab<Nodo>* aux1 = diccLog->Izq();
         	Ab<Nodo>* aux2 = aux1->Der();
-        	aux1->Der(diccLog);
-        	diccLog->Izq(aux2);
-        	diccLog->Raiz().altura = 1 + (diccLog->Izq()->Raiz().altura > diccLog->Izq()->Raiz().altura)?diccLog->Izq()->Raiz().altura:diccLog->Der()->Raiz().altura;
-        	aux1->Raiz().altura = 1 + (aux1->Izq()->Raiz().altura > aux1->Izq()->Raiz().altura)?aux1->Izq()->Raiz().altura:aux1->Der()->Raiz().altura;
+        	aux1->Der(*new Ab<Nodo>(*diccLog));
+        	diccLog->Izq(*aux2);
+        	diccLog->Raiz().altura = 1 + max(Altura(diccLog->Izq()),Altura(diccLog->Der()));
+        	aux1->Raiz().altura = 1 + max(Altura(aux1->Izq()),Altura(aux1->Der()));
         	return aux1;
         };
-        int FactorDeBalanceo();
+        int FactorDeBalanceo(Ab<Nodo> *diccLog);
 
-        void DefinirPrivate(Ab<Nodo> *diccLog,const K& p, const S& s){
-        	if(diccLog==NULL){
+        int Altura(Ab<Nodo> *diccLog){
+            if (diccLog->IsNil())
+                return 0;
+            return diccLog->Raiz().altura;
+        }
+
+        int Max(int a, int b){
+            return (a > b)? a : b;
+        }
+
+        void DefinirPrivate(Ab<Nodo>& diccLog,const K& p, const S& s){
+        	if(diccLog.IsNil() || diccLog.Tamano()==0){
         		Nodo nodo;
 				nodo.clave = p;
 				nodo.significado = s;
 				nodo.altura = 1;
-				diccLog = new Ab<Nodo>(NULL,nodo,NULL);
-				if(_diccLog==NULL)
-					_diccLog = diccLog;
+				diccLog = Ab<Nodo>(new Ab<Nodo>(),nodo,new Ab<Nodo>());
+		/*		if(_diccLog->IsNil()){
+					delete _diccLog;
+					_diccLog = &diccLog;
+					delete &diccLog;
+				}*/
+
 			}
 			else{
-				Nodo raiz = diccLog->Raiz();
+				Nodo raiz = diccLog.Raiz();
 				if(p<raiz.clave){
-					DefinirPrivate(diccLog->Izq(),p,s);
+					DefinirPrivate(*diccLog.Izq(),p,s);
 				}else{
-					DefinirPrivate(diccLog->Der(),p,s);
-				}
-				raiz.altura = 1 + (diccLog->Izq()->Raiz().altura > diccLog->Izq()->Raiz().altura)?diccLog->Izq()->Raiz().altura:diccLog->Der()->Raiz().altura;
-				int fdb = FactorDeBalanceo();
-				if(fdb>1 && p<diccLog->Izq()->Raiz().clave)
-					RotarDerecha(diccLog);
-				if(fdb<-1 && p>diccLog->Der()->Raiz().clave)
-					RotarIzquierda(diccLog);
-				if(fdb>1 && p>diccLog->Izq()->Raiz().clave){
-					RotarIzquierda(diccLog->Izq());
-					RotarDerecha(diccLog);
-				}
-				if(fdb<-1 && p<diccLog->Der()->Raiz().clave){
-					RotarDerecha(diccLog->Der());
-					RotarIzquierda(diccLog);
+					DefinirPrivate(*diccLog.Der(),p,s);
 				}
 
+				diccLog.Raiz().altura = 1 + max(Altura(diccLog.Izq()),Altura(diccLog.Der()));
+				int fdb = FactorDeBalanceo(&diccLog);
+				if(fdb>1 && p<diccLog.Izq()->Raiz().clave)
+					diccLog = *RotarDerecha(&diccLog);
+				if(fdb<-1 && p>diccLog.Der()->Raiz().clave)
+					diccLog = *RotarIzquierda(&diccLog);
+				if(fdb>1 && p>diccLog.Izq()->Raiz().clave){
+					diccLog = *RotarIzquierda(diccLog.Izq());
+					diccLog = *RotarDerecha(&diccLog);
+				}
+				if(fdb<-1 && p<diccLog.Der()->Raiz().clave){
+					diccLog = *RotarDerecha(diccLog.Der());
+					diccLog = *RotarIzquierda(&diccLog);
+				}
 				cout<<"No Soy nil"<<endl;
 			}
+
+
+
 
         }
 
@@ -107,18 +124,15 @@ namespace dcnet {
     };
 
 	template<typename K,typename S>
-	int DiccLog<K,S>::FactorDeBalanceo(){
-		if(_diccLog->IsNil()){
+	int DiccLog<K,S>::FactorDeBalanceo(Ab<Nodo> *diccLog){
+		if(diccLog->IsNil()){
 			return 0;
 		}else{
 			int alturaIzq =0;
 			int alturaDer =0;
-			if(!_diccLog->Izq()->IsNil()){
-				alturaIzq = _diccLog->Izq()->Raiz().altura;
-			}
-			if(!_diccLog->Der()->IsNil()){
-				alturaDer = _diccLog->Izq()->Raiz().altura;
-			}
+			alturaIzq = Altura(diccLog->Izq());
+			alturaDer = Altura(diccLog->Der());
+
 			return alturaIzq - alturaDer;
 		}
 	}
