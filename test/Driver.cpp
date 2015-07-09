@@ -1,9 +1,16 @@
 #include "Driver.h"
 #include "ArbolSintactico.h"
 
+using namespace dcnet;
+
 namespace aed2 {
 
-Driver::Driver(): red(Red()), dcnet(DCNet()) {}
+Driver::Driver(){
+    red = *new Red();
+    dcnet = *new DCNet((const Red)red);
+}
+
+//Driver::Driver(): red(Red()), dcnet(DCNet(red)) {}
 
 Driver::~Driver() {
     // TODO
@@ -15,7 +22,7 @@ Nat Driver::CantidadComputadoras() const {
     return red.Computadoras().Longitud();
 }
 
-const Computadora& Driver::IesimaComputadora(const Nat i) const {
+const Computadora Driver::IesimaComputadora(const Nat i) const {
     assert( i < CantidadComputadoras() );
     return red.Computadoras()[i].Ip();
 }
@@ -24,16 +31,17 @@ Nat Driver::CantidadInterfacesDe(const Computadora& c) const {
     return dameCompu(c).Interfaces().Cardinal();
 }
 
-const Interfaz& Driver::IesimaInterfazDe(const Computadora& c, const Nat i) const{
+const Interfaz& Driver::IesimaInterfazDe(const Computadora& c, /*const*/ Nat i) const{ //Error decrement of readonly parameter
     assert(i < dameCompu(c).Interfaces().Cardinal());
-    Conj<Compu>::const_Iterador it = dameCompu(c).Interfaces().CrearIt();
+    //Conj<Compu>::const_Iterador it = dameCompu(c).Interfaces().CrearIt(); //Interfaces es de tipo Interfaz
+    Conj<Interfaz>::const_Iterador it = dameCompu(c).Interfaces().CrearIt();
     while(i-- > 0) {
         it.Avanzar();
     }
     return it.Siguiente();
 } 
 
-const Interfaz& Driver::IntefazUsada(const Computadora& c1, const Computadora& c2) const {
+const Interfaz Driver::IntefazUsada(const Computadora& c1, const Computadora& c2) const {
     return red.InterfazUsada(dameCompu(c1), dameCompu(c2));
 }
 

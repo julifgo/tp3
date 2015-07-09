@@ -2,9 +2,13 @@
 #define DRIVER_H_
 
 #include "Tipos.h"
-#include "aed2/TiposBasicos.h"
+#include "../aed2/TiposBasicos.h"
 
-//#include ...
+#include "../nuestros/red.h"
+#include "../nuestros/compu.h"
+#include "../nuestros/dcnet.h"
+
+using namespace dcnet;
 
 namespace aed2 {
 
@@ -19,12 +23,12 @@ class Driver
         /// Observadores Red //////////////////////////////////////////////////////////
 
         Nat CantidadComputadoras() const;
-        const Computadora& IesimaComputadora(const Nat i) const ;
+        const Computadora IesimaComputadora(const Nat i) const ;
         
         Nat CantidadInterfacesDe(const Computadora& c) const;
-        const Interfaz& IesimaInterfazDe(const Computadora& c, const Nat i) const ;
+        const Interfaz& IesimaInterfazDe(const Computadora& c, /*const*/ Nat i) const ;
 
-        const Interfaz& IntefazUsada(const Computadora& c1, const Computadora& c2) const;
+        const Interfaz IntefazUsada(const Computadora& c1, const Computadora& c2) const;
 
         bool conectadas(const Computadora& c1, const Computadora& c2) const;
 
@@ -63,7 +67,7 @@ class Driver
         Red red;
         DCNet dcnet;
 
-        const Compu& Driver::dameCompu(const Computadora& c) const
+        const Compu& dameCompu(const Computadora& c) const;
 
     /*********************************************************************
      * TODO: Va a ser necesario instanciar privadamente un Modulo DCNet *
