@@ -26,6 +26,8 @@ namespace dcnet {
            
             bool operator<(const Paquete& otro) const;
 
+            bool operator>(const Paquete& otro) const;
+
             Paquete& operator=(const Paquete& paquete);
 
             //Miembros faltantes

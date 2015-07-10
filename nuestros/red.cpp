@@ -16,6 +16,7 @@ namespace dcnet{
 		it.AgregarComoSiguiente(compu);
 		Conj<Interfaz> conjInter = compu.Interfaces();
 		Arreglo<bool> arr = ArmarArreglo(conjInter);
+
 		estr.usaInterfaz.definir(compu.Ip(),arr);
 		DiccString<Nat> diccInterfaz;
 		estr.interfaz.definir(compu.Ip(),diccInterfaz);

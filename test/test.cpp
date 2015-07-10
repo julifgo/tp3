@@ -4,9 +4,6 @@
 //#include "../aed2/Conj.h"
 //#include "../aed2/Dicc.h"
 
-#include "../nuestros/paquete.h"
-#include "../nuestros/compu.h"
-
 #include <string>
 #include <iostream>
 
@@ -91,7 +88,7 @@ bool Comparar(const T& t, const S& s)
  */
  
 void test_dcnet_ejemplo() {
-	Conj<Interfaz> conjIc1;
+	/*Conj<Interfaz> conjIc1;
 	Conj<Interfaz> conjIc2;
 	Conj<Interfaz> conjIc3;
 	
@@ -120,15 +117,15 @@ void test_dcnet_ejemplo() {
 	ASSERT_EQ(dcnet.IesimaComputadora(2),c3);
 	
 	// ejemplo - Indexado en 0 
-	/*Interfaz i1 = dcnet.IesimaInterfazDe(c1, 0); 
+	Interfaz i1 = dcnet.IesimaInterfazDe(c1, 0); 
 	Interfaz i2 = dcnet.IesimaInterfazDe(c2, 2);
 	
 	dcnet.Conectar(c1, i1, c2, i2);
 	dcnet.CrearPaquete(c1, c2, 3);
 	dcnet.AvanzarSegundo();	
 
-	ASSERT_EQ(dcnet.laQueMasEnvio(), c1);*/
-	ASSERT_EQ(1,1);
+	ASSERT_EQ(dcnet.laQueMasEnvio(), c1);
+	ASSERT_EQ(1,1);*/
 		
 }
 
@@ -296,6 +293,182 @@ void test_compu_equal() {
 }
 
 //TESTS RED (utlizando driver)
+/*
+        Nat CantidadComputadoras() const;
+        const Computadora IesimaComputadora(const Nat i) const ;
+        
+        Nat CantidadInterfacesDe(const Computadora& c);
+        const Interfaz& IesimaInterfazDe(const Computadora& c, Nat i) const ;
+
+        const Interfaz IntefazUsada(const Computadora& c1, const Computadora& c2) const;
+
+        bool conectadas(const Computadora& c1, const Computadora& c2) const;
+
+        /// Armado Red ////////////////////////////////////////////////////////////////
+
+        void AgregarComputadora(const Computadora& ip, const Conj<Interfaz>& ci);
+        
+        void Conectar(const Computadora& c1, const Interfaz& i1, const Computadora& c2, const Interfaz& i2);
+*/
+void test_red_agregarComputadora() {
+
+	//Agrego una computadora con interfaces a la red y me fijo que todas los getters de drivers devuelvan datos consistentes.
+
+	Driver dr;
+
+	ASSERT_EQ(dr.CantidadComputadoras(), 0);
+
+	Computadora c = "192.168.0.1";
+	Conj<Interfaz> i;
+
+	i.Agregar(0);
+	i.Agregar(1);
+	i.Agregar(2);
+
+	dr.AgregarComputadora(c, i);
+
+
+	ASSERT_EQ(dr.CantidadComputadoras(), 1);
+
+	//ASSERT_EQ(dr.CantidadInterfacesDe(c), 3);
+	ASSERT_EQ(dr.IesimaComputadora(0), c);
+	//ASSERT_EQ(dr.IesimaInterfazDe(c, 0), 0);
+	//ASSERT_EQ(dr.IesimaInterfazDe(c, 1), 1);
+	//ASSERT_EQ(dr.IesimaInterfazDe(c, 2), 2);
+}
+
+void test_red_cantidadComputadoras() {
+
+	Driver dr;
+
+	ASSERT_EQ(dr.CantidadComputadoras(), 0);
+
+	Computadora c1 = "192.168.0.1";
+
+	dr.AgregarComputadora(c1, Conj<Interfaz>());
+	ASSERT_EQ(dr.CantidadComputadoras(), 1);
+
+	Computadora c2 = "192.168.0.2";
+
+	dr.AgregarComputadora(c2, Conj<Interfaz>());
+	ASSERT_EQ(dr.CantidadComputadoras(), 2);
+
+	Computadora c3 = "192.168.0.3";
+
+	dr.AgregarComputadora(c3, Conj<Interfaz>());
+	ASSERT_EQ(dr.CantidadComputadoras(), 3);
+
+	Computadora c4 = "192.168.0.4";
+
+	dr.AgregarComputadora(c4, Conj<Interfaz>());
+	ASSERT_EQ(dr.CantidadComputadoras(), 4);
+
+}
+
+void test_red_iesimaComputadora() {
+
+	Driver dr;
+	Computadora c1 = "192.168.0.1";
+	Computadora c2 = "192.168.0.2";
+	Computadora c3 = "192.168.0.3";
+	Computadora c4 = "192.168.0.4";
+
+	dr.AgregarComputadora(c1, Conj<Interfaz>());
+	dr.AgregarComputadora(c2, Conj<Interfaz>());
+	dr.AgregarComputadora(c3, Conj<Interfaz>());
+	dr.AgregarComputadora(c4, Conj<Interfaz>());
+
+
+	ASSERT_EQ(dr.IesimaComputadora(0), c1);
+	ASSERT_EQ(dr.IesimaComputadora(1), c2);
+	ASSERT_EQ(dr.IesimaComputadora(2), c3);
+	ASSERT_EQ(dr.IesimaComputadora(3), c4);
+
+}
+
+void test_red_cantidadInterfacesDe() {
+
+	Driver dr;
+	Computadora c1 = "192.168.0.1";
+	Conj<Interfaz> i1;
+
+	dr.AgregarComputadora(c1, i1);
+
+	//ASSERT_EQ(dr.CantidadInterfacesDe(c1), 0);
+	
+	Computadora c2 = "192.168.0.2";
+	Conj<Interfaz> i2;
+	i2.Agregar(0);
+	i2.Agregar(1);
+
+	dr.AgregarComputadora(c2, i2);
+
+	//ASSERT_EQ(dr.CantidadInterfacesDe(c2), 2);
+
+}
+
+void test_red_intefazUsada() {
+
+	Driver dr;
+	Computadora c1 = "192.168.0.1";
+	Conj<Interfaz> i1;
+	i1.Agregar(1);
+
+	dr.AgregarComputadora(c1, i1);
+	
+	Computadora c2 = "192.168.0.2";
+	Conj<Interfaz> i2;
+	i2.Agregar(2);
+
+	dr.AgregarComputadora(c2, i2);
+
+	//dr.Conectar(c1, 1, c2, 2);
+
+	//ASSERT_EQ(dr.InterfazUsada(c1, c2), 1);
+
+	//ASSERT_EQ(dr.InterfazUsada(c2, c1), 2);
+
+}
+
+void test_red_conectadas() {
+
+	Driver dr;
+	Computadora c1 = "192.168.0.1";
+	Conj<Interfaz> i1;
+	i1.Agregar(1);
+
+	dr.AgregarComputadora(c1, i1);
+	
+	Computadora c2 = "192.168.0.2";
+	Conj<Interfaz> i2;
+	i2.Agregar(2);
+
+	dr.AgregarComputadora(c2, i2);
+
+	//dr.Conectar(c1, 1, c2, 2);
+
+	//ASSERT_EQ(dr.Conectadas(c1, c2), true);
+
+}
+
+void test_red_conectar() {
+
+	Driver dr;
+	Computadora c1 = "192.168.0.1";
+	Conj<Interfaz> i1;
+	i1.Agregar(1);
+
+	dr.AgregarComputadora(c1, i1);
+	
+	Computadora c2 = "192.168.0.2";
+	Conj<Interfaz> i2;
+	i2.Agregar(2);
+
+	dr.AgregarComputadora(c2, i2);
+
+	//dr.Conectar(c1, 1, c2, 2);
+
+}
 
 int main(int argc, char **argv)
 {
@@ -320,6 +493,15 @@ int main(int argc, char **argv)
 	RUN_TEST(test_compu_ip);
 	RUN_TEST(test_compu_interfaces);
 	RUN_TEST(test_compu_equal);
+
+	cout << endl << "Test: Red" << endl;
+
+	//test compu
+	RUN_TEST(test_red_agregarComputadora);
+	RUN_TEST(test_red_cantidadComputadoras);
+	RUN_TEST(test_red_iesimaComputadora);
+	RUN_TEST(test_red_cantidadInterfacesDe);
+	RUN_TEST(test_red_intefazUsada);
 
 
 

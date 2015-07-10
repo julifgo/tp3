@@ -38,7 +38,7 @@ namespace dcnet{
 			const ConjLog<Paquete> EnEspera(const Compu& c);
 			void CrearPaquete(const Paquete& p);
 			void AvanzarSegundo();
-			bool IsPaqueteEnTransito(const Paquete& p) const;
+			bool IsPaqueteEnTransito(const Paquete& p); //retiro const porque obtemer del dicc_trie no se lo banca
 			const Compu LaQueMasEnvio() const;
 	};
 }

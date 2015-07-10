@@ -65,8 +65,19 @@ namespace dcnet{
 		cout<<"en espera iniciando bien: "<<estr.enEspera.definido("0")<<endl;
 	}
 
-	bool DCNet::IsPaqueteEnTransito(const Paquete& p) const{
-		return true;
+	bool DCNet::IsPaqueteEnTransito(const Paquete& p){
+		//listo, sin testear, borrar cuando se pueda y se testee
+
+		Lista<Compu>::const_Iterador it = estr.red->Computadoras().CrearIt();
+
+		bool encontrado = false;
+
+		while ( it.HaySiguiente() && !encontrado ) {
+			encontrado = estr.enEspera.obtener(it.Siguiente().Ip())->Pertenece(p);
+			it.Avanzar();
+		}
+
+		return encontrado;
 	}
 
 	const Compu DCNet::LaQueMasEnvio() const{
