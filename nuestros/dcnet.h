@@ -24,8 +24,9 @@ namespace dcnet{
 				const Red* red;
 				DiccString<Nat> cantPaquetesEnviados;
 				Lista<Compu>::Iterador laQueMasEnvio;
-				DiccString<DiccLog<Nat,Lista<Compu>>> CaminoRecorrido;
-				DiccString<ConjLog<Paquete*>> enEspera;
+				DiccString<DiccLog<Nat,Lista<Compu> > > CaminoRecorrido;
+				DiccString<ConjLog<Paquete* > > enEspera;
+
 			};
 			estr estr;
 		public:
@@ -34,7 +35,7 @@ namespace dcnet{
 			~DCNet();
 			const Red& red() const;
 			Nat CantidadEnviados(const Compu& c) /*const*/; //TODO. El acceso a Dicc trie no nos deja poner const
-			const Lista<Compu> CaminoRecorrido(const Paquete* p) const;
+			const Lista<Compu> CaminoRecorrido(Paquete* p) const;
 			const ConjLog<Paquete*> EnEspera(const Compu& c);
 			void CrearPaquete(Paquete* p);
 			void AvanzarSegundo();

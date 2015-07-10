@@ -22,11 +22,10 @@ namespace dcnet{
 		}*/
 		for (Nat i = 0; i < estr.red->Computadoras().Longitud(); i++)
 		{
-			//ConjLog<Paquete> *cPaq = new ConjLog<Paquete>();
 			estr.enEspera.definir(estr.red->Computadoras()[i].Ip(),*new ConjLog<Paquete*>()); //TODO. Pierde memoria por cada creacion de un new Conj
 			Nat aux =0;
 			estr.cantPaquetesEnviados.definir(estr.red->Computadoras()[i].Ip(),aux);
-			estr.CaminoRecorrido.definir(estr.red->Computadoras()[i].Ip(),*new DiccLog<Nat,Lista<Compu>>());
+			estr.CaminoRecorrido.definir(estr.red->Computadoras()[i].Ip(),*new DiccLog<Nat,Lista<Compu> >());
 			//delete cPaq;
 		}
 	}
@@ -44,7 +43,7 @@ namespace dcnet{
 		return res;
 	}
 
-	const Lista<Compu> DCNet::CaminoRecorrido(const Paquete* p) const{
+	const Lista<Compu> DCNet::CaminoRecorrido(Paquete* p) const{
 		return Lista<Compu>(); //TODO. Implementar!
 	}
 
