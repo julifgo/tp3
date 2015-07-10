@@ -34,26 +34,24 @@ class Ab {
     Nat _cardinal;
 
  public:
-    Ab();                          // Construye un árbol vacío
-    Ab(const Ab<T>&);              // Construye un árbol por copia
-    Ab(Ab<T>*, const T&, Ab<T>*);  // Construye un árbol a partir de su raíz
-                                      // y subárboles izquierdo y derecho
-    ~Ab();                         // Destruye un árbol
+    Ab();
+    Ab(const Ab<T>&);
+    Ab(Ab<T>*, const T&, Ab<T>*);
 
-    Ab<T>& operator=(const Ab<T>&);  // Operador de asignación por copia
+    ~Ab();
 
-    bool IsNil() const;          // Devuelve True si y solo si el árbol
-                                    // no contiene nodos
-    T& Raiz() const;             // Devuelve el valor de la raíz del árbol
-   /* Ab<T>* Izq() const;          // Devuelve el subárbol izquierdo
-    Ab<T>* Der() const;     */     // Devuelve el subárbol derecho
-    Ab<T>* Izq();                // Devuelve el subárbol izquierdo
-    Ab<T>* Der();   	           // Devuelve el subárbol derecho
-    void Izq(Ab<T>&);            // Reemplaza el subárbol izquierdo
-                                    // (NO libera memoria)
-    void Der(Ab<T>&);            // Reemplaza el subárbol derecho
-                                    // (NO libera memoria)
-    Nat Tamano() const;       // Devuelve la cantidad de nodos del árbol
+    Ab<T>& operator=(const Ab<T>&);
+
+    bool IsNil() const;
+
+    T& Raiz() const;
+    Ab<T>* Izq();
+    Ab<T>* Der();
+    void Izq(Ab<T>&);
+
+    void Der(Ab<T>&);
+
+    Nat Tamano() const;
 };
 
 // Implementación de métodos públicos
@@ -83,7 +81,7 @@ Ab<T>::~Ab() {
 
 template<typename T>
 Ab<T>& Ab<T>::operator=(const Ab<T>& otro) {
-    delete _raiz;
+    //delete _raiz;
     _raiz = otro._raiz == NULL ? NULL : new Nodo(*(otro._raiz));
     _cardinal = otro._cardinal;
     return *this;
@@ -100,18 +98,6 @@ T& Ab<T>::Raiz() const {
     return _raiz->valor;
 }
 
-/*template<typename T>
-Ab<T>* Ab<T>::Izq() const {
-    assert(!IsNil());
-    return _raiz->_izq;
-}
-
-template<typename T>
-Ab<T>* Ab<T>::Der() const {
-    assert(!IsNil());
-    return _raiz->_der;
-}*/
-
 template<typename T>
 Ab<T>* Ab<T>::Izq() {
     assert(!IsNil());
@@ -127,15 +113,15 @@ Ab<T>* Ab<T>::Der() {
 template<typename T>
 void Ab<T>::Izq(Ab<T>& i) {
     assert(!IsNil());
-    // delete _raiz->_izq;
-    _raiz->_izq = &i;
+   //  delete _raiz->_izq;
+     _raiz->_izq = i._raiz==NULL? new Ab<T>():&i;
 }
 
 template<typename T>
 void Ab<T>::Der(Ab<T>& d) {
     assert(!IsNil());
-    // delete _raiz->_der;
-    _raiz->_der = &d;
+   //  delete _raiz->_der;
+    _raiz->_der = d._raiz==NULL? new Ab<T>():&d;
 }
 
 template<typename T>
