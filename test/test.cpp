@@ -128,7 +128,6 @@ void test_dcnet_ejemplo() {
 		
 }
 
-//
 //TESTS PAQUETE
 
 void test_paquete_id() {
@@ -246,13 +245,55 @@ void test_paquete_lower_by_id() {
 
 }
 
-//
 //TESTS COMPU
 
+void test_compu_ip() {
+
+	Compu c("192.168.0.1");
+
+	ASSERT_EQ(c.Ip(), "192.168.0.1");
+
+}
+
+void test_compu_interfaces() {
+
+	Compu c("192.168.0.1");
+	c.AgInterfaz(0);
+	c.AgInterfaz(1);
+	c.AgInterfaz(2);
+
+	Conj<Interfaz> interfaces;
+	interfaces.Agregar(0);
+	interfaces.Agregar(1);
+	interfaces.Agregar(2);
+
+	ASSERT_EQ(to_str(c.Interfaces()), to_str(interfaces) );
+
+}
+
+void test_compu_equal() {
+
+	Compu c1("192.168.0.1");
+	c1.AgInterfaz(0);
+	c1.AgInterfaz(1);
+	c1.AgInterfaz(2);
+
+	Compu c2("192.168.0.1");
+	c2.AgInterfaz(0);
+	c2.AgInterfaz(1);
+	c2.AgInterfaz(2);
+
+	ASSERT_EQ(to_str(c1 == c2), to_str(true));
+
+}
+
+//TESTS RED (utlizando driver)
 
 int main(int argc, char **argv)
 {
 	//RUN_TEST(test_dcnet_ejemplo);
+
+	cout << endl << "Test: Paquete" << endl;
 
 	//test paquete
 	RUN_TEST(test_paquete_id);
@@ -263,6 +304,14 @@ int main(int argc, char **argv)
 	RUN_TEST(test_paquete_assign);
 	RUN_TEST(test_paquete_lower_by_prioridad);
 	RUN_TEST(test_paquete_lower_by_id);
+
+	cout << endl << "Test: Compu" << endl;
+
+	//test compu
+	RUN_TEST(test_compu_ip);
+	RUN_TEST(test_compu_interfaces);
+	RUN_TEST(test_compu_equal);
+
 
 
 	/******************************************************************
