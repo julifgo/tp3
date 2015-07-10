@@ -26,7 +26,7 @@ class Ab {
         }
         
         ~Nodo() {
-            delete _izq;
+        	delete _izq;
             delete _der;
         }
     };
@@ -113,14 +113,14 @@ Ab<T>* Ab<T>::Der() {
 template<typename T>
 void Ab<T>::Izq(Ab<T>& i) {
     assert(!IsNil());
-   //  delete _raiz->_izq;
+   // delete _raiz->_izq;
      _raiz->_izq = i._raiz==NULL? new Ab<T>():&i;
 }
 
 template<typename T>
 void Ab<T>::Der(Ab<T>& d) {
     assert(!IsNil());
-   //  delete _raiz->_der;
+   // delete _raiz->_der;
     _raiz->_der = d._raiz==NULL? new Ab<T>():&d;
 }
 

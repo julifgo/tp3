@@ -17,30 +17,31 @@ namespace dcnet {
                 }
            };
 
-           Ab<Nodo>* Minimo() const{
-				Ab<Nodo>* min = _diccLog;
-				while(!min->Izq()->IsNil()){
-					min = min->Izq();
+           Ab<Nodo>* Minimo(Ab<Nodo> *diccLog) const{
+				while(!diccLog->Izq()->IsNil()){
+					diccLog = diccLog->Izq();
 				}
-				return min;
+				return diccLog;
            }
            Ab<Nodo>* RotarIzquierda(Ab<Nodo>* diccLog){
-         		Ab<Nodo>* aux1 = diccLog->Der();
-           	Ab<Nodo> aux2 = *aux1->Izq();
-           	aux1->Izq(*new Ab<Nodo>(*diccLog));
-           	aux1->Izq()->Der(aux2);
-           	aux1->Izq()->Raiz().altura =1 + max(Altura(aux1->Izq()->Izq()),Altura(aux1->Izq()->Der()));
-           	aux1->Raiz().altura = 1 + max(Altura(aux1->Izq()),Altura(aux1->Der()));
-           	return aux1;
+         		assert(!diccLog->Der()->IsNil());
+        	   	Ab<Nodo>* aux1 = diccLog->Der();
+         		Ab<Nodo> aux2 = *aux1->Izq();
+         		aux1->Izq(*new Ab<Nodo>(*diccLog));
+         		aux1->Izq()->Der(aux2);
+         		aux1->Izq()->Raiz().altura =1 + max(Altura(aux1->Izq()->Izq()),Altura(aux1->Izq()->Der()));
+         		aux1->Raiz().altura = 1 + max(Altura(aux1->Izq()),Altura(aux1->Der()));
+           		return aux1;
            };
            Ab<Nodo>* RotarDerecha(Ab<Nodo>* diccLog){
-           	Ab<Nodo>* aux1 = diccLog->Izq();
-           	Ab<Nodo> aux2 = *aux1->Der();
-           	aux1->Der(*new Ab<Nodo>(*diccLog));
-           	aux1->Der()->Izq(aux2);
-           	aux1->Der()->Raiz().altura = 1 + max(Altura(aux1->Der()->Izq()),Altura(aux1->Der()->Der()));
-           	aux1->Raiz().altura = 1 + max(Altura(aux1->Izq()),Altura(aux1->Der()));
-           	return aux1;
+        	   assert(!diccLog->Izq()->IsNil());
+        	   Ab<Nodo>* aux1 = diccLog->Izq();
+        	   Ab<Nodo> aux2 = *aux1->Der();
+        	   aux1->Der(*new Ab<Nodo>(*diccLog));
+        	   aux1->Der()->Izq(aux2);
+        	   aux1->Der()->Raiz().altura = 1 + max(Altura(aux1->Der()->Izq()),Altura(aux1->Der()->Der()));
+        	   aux1->Raiz().altura = 1 + max(Altura(aux1->Izq()),Altura(aux1->Der()));
+        	   return aux1;
            };
            int FactorDeBalanceo(Ab<Nodo> *diccLog);
 
@@ -53,6 +54,52 @@ namespace dcnet {
            int Max(int a, int b){
                return (a > b)? a : b;
            }
+
+           void BorrarPrivate(Ab<Nodo>& diccLog,const K& clave){
+        	   if(!diccLog.IsNil()){
+        		   if(clave < diccLog.Raiz().clave){
+        			   BorrarPrivate(*diccLog.Izq(),clave);
+        		   }else if(clave > diccLog.Raiz().clave){
+        			   BorrarPrivate(*diccLog.Der(),clave);
+        		   }else{
+        			   if(diccLog.Izq()->IsNil() || diccLog.Der()->IsNil()){
+        				   Ab<Nodo>* temp = (!diccLog.Izq()->IsNil())?diccLog.Izq():diccLog.Der();
+        				   if(temp->IsNil()){
+        					   temp = &diccLog;
+        					   diccLog = *new Ab<Nodo>();
+        				   }else{
+        					   diccLog = *temp;
+        				   }
+        				   delete temp;
+        			   }
+        			   else{
+        				   Ab<Nodo>* temp = Minimo(diccLog.Der());
+        				   diccLog.Raiz().clave=temp->Raiz().clave;
+        				   BorrarPrivate(*diccLog.Der(),temp->Raiz().clave);
+        			   }
+        		   }
+        		   if(!diccLog.IsNil()){
+        			   diccLog.Raiz().altura = 1 + max(Altura(diccLog.Izq()),Altura(diccLog.Der()));
+        			   int fdb = FactorDeBalanceo(&diccLog);
+        			   if(fdb > 1 && FactorDeBalanceo(diccLog.Izq())>=0){
+        				   diccLog = *RotarDerecha(&diccLog);
+        			   }
+        			   if(fdb > 1 && FactorDeBalanceo(diccLog.Izq())<0){
+        			   	   diccLog.Izq(*RotarIzquierda(diccLog.Izq()));
+        			   	   diccLog = *RotarDerecha(&diccLog);
+        			   }
+        			   if(fdb < -1 && FactorDeBalanceo(diccLog.Der())<=0){
+        			       diccLog = *RotarIzquierda(&diccLog);
+        			   }
+        			   if(fdb > 1 && FactorDeBalanceo(diccLog.Izq())<0){
+        				   diccLog.Der(*RotarDerecha(diccLog.Der()));
+        				   diccLog = *RotarIzquierda(&diccLog);
+        			   }
+
+        		   }
+        	   }
+           }
+
 
            void DefinirPrivate(Ab<Nodo>& diccLog,const K& p, const S& s){
            	if(diccLog.IsNil() || diccLog.Tamano()==0){
@@ -90,7 +137,7 @@ namespace dcnet {
    					diccLog.Der(*RotarDerecha(diccLog.Der()));
    					diccLog = *RotarIzquierda(&diccLog);
    				}
-   				/*if(diccLog.Raiz().clave==2 && !diccLog.Izq()->IsNil() && !diccLog.Der()->IsNil()){
+   				if(diccLog.Raiz().clave==2 && !diccLog.Izq()->IsNil() && !diccLog.Der()->IsNil()){
    					cout <<"ASSERTEANDO..."<<endl;
    					assert(diccLog.Raiz().clave==2);
    					assert(diccLog.Izq()->Raiz().clave==1);
@@ -99,7 +146,7 @@ namespace dcnet {
    					assert(diccLog.Der()->Der()->IsNil());
    					assert(diccLog.Izq()->Izq()->IsNil());
    					assert(diccLog.Izq()->Der()->IsNil());
-   				}*/
+   				}
    			//	cout<<"No Soy nil"<<endl;
    			}
 
@@ -124,10 +171,12 @@ namespace dcnet {
         }
 
         S& Significado(const K& clave) const;
-        void Borrar(const K& clave);
+        void Borrar(const K& clave){
+        	BorrarPrivate(*_diccLog,clave);
+        }
 
         S& MinimoSignificado() const{
-        	return Minimo()->Raiz().significado;
+        	return Minimo(_diccLog)->Raiz().significado;
         }
         Nat CantClaves() const{
         	return _diccLog->Tamano();
