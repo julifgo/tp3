@@ -111,12 +111,32 @@ namespace dcnet {
 				cout<<"No Soy nil"<<endl;
 			}
 
-
-
-
         }
 
+        S& SignificadoPrivate(Ab<Nodo>* diccLog, const K& clave) const{
+        	if(diccLog->Raiz().clave == clave){
+        		return  diccLog->Raiz().significado;
+        	}
+        	if(!diccLog->IsNil() &&  diccLog->Raiz().clave > clave){
+        		return SignificadoPrivate(diccLog->Izq(),clave);
+        	}else{
+        		return SignificadoPrivate(diccLog->Der(),clave);
+        	}
+        }
 
+        bool IsDefinidoPrivate(Ab<Nodo>* diccLog, const K& clave) const{
+			if(diccLog->IsNil()){
+				return false;
+			}
+        	if(diccLog->Raiz().clave == clave){
+				return true;
+			}
+			if(!diccLog->IsNil() &&  diccLog->Raiz().clave > clave){
+				return IsDefinidoPrivate(diccLog->Izq(),clave);
+			}else{
+				return IsDefinidoPrivate(diccLog->Der(),clave);
+			}
+		}
 
         Ab<Nodo> *_diccLog;
             
@@ -137,6 +157,15 @@ namespace dcnet {
 		}
 	}
 
+	template<typename K,typename S>
+	S& DiccLog<K,S>::Significado(const K& clave) const{
+		return SignificadoPrivate(_diccLog,clave);
+	}
+
+	template<typename K,typename S>
+	bool DiccLog<K,S>::IsDefinido(const K& clave) const{
+		return IsDefinidoPrivate(_diccLog,clave);
+	}
 }
 
 
