@@ -32,6 +32,10 @@ namespace dcnet {
     	return this->_prioridad < otro.Prioridad() || this->_id < otro.Id();
     }
 
+    bool Paquete::operator>(const Paquete& otro) const {
+        return !(this->_prioridad < otro.Prioridad() || this->_id < otro.Id()) && !(otro == *this);
+    }
+
 	Paquete& Paquete::operator=(const Paquete& paquete) {
 		this->_id = paquete.Id();
 		this->_prioridad = paquete.Prioridad();
