@@ -129,7 +129,9 @@ namespace dcnet {
         S& MinimoSignificado() const{
         	return Minimo()->Raiz().significado;
         }
-        Nat CantClaves() const;
+        Nat CantClaves() const{
+        	return _diccLog->Tamano();
+        }
 
 
 

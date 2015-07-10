@@ -24,8 +24,8 @@ namespace dcnet{
 				const Red* red;
 				DiccString<Nat> cantPaquetesEnviados;
 				Lista<Compu>::Iterador laQueMasEnvio;
-				DiccString<DiccLog<Nat,Lista<Compu>>> CaminoRecorrido;
-				DiccString<ConjLog<Paquete>> enEspera;
+				DiccString<DiccLog<Nat,Lista<Compu> > > CaminoRecorrido;
+				DiccString<ConjLog<Paquete> > enEspera;
 			};
 			estr estr;
 		public:
