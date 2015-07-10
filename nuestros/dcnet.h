@@ -10,6 +10,8 @@
 #include "../aed2.h"
 #include "red.h"
 #include "paquete.h"
+#include "diccLog.h"
+#include "conjLog.h"
 #include <ostream>
 
 using namespace aed2;
@@ -22,7 +24,8 @@ namespace dcnet{
 				const Red* red;
 				DiccString<Nat> cantPaquetesEnviados;
 				Lista<Compu>::Iterador laQueMasEnvio;
-				//TODO. Faltan elementos aun no definidos
+				DiccString<DiccLog<Nat,Lista<Compu>>> CaminoRecorrido;
+				DiccString<ConjLog<Paquete>> enEspera;
 			};
 			estr estr;
 		public:
@@ -32,7 +35,7 @@ namespace dcnet{
 			const Red& red() const;
 			Nat CantidadEnviados(const Compu& c) /*const*/; //TODO. El acceso a Dicc trie no nos deja poner const
 			const Lista<Compu> CaminoRecorrido(const Paquete& p) const;
-			const Conj<Paquete> EnEspera(const Compu& c) const;
+			const ConjLog<Paquete> EnEspera(const Compu& c);
 			void CrearPaquete(const Paquete& p);
 			void AvanzarSegundo();
 			bool IsPaqueteEnTransito(const Paquete& p) const;
