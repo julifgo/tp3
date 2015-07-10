@@ -3,9 +3,6 @@
 
 #include "Tipos.h"
 #include "../aed2/TiposBasicos.h"
-
-#include "../nuestros/red.h"
-#include "../nuestros/compu.h"
 #include "../nuestros/dcnet.h"
 
 using namespace dcnet;
@@ -26,9 +23,9 @@ class Driver
         const Computadora IesimaComputadora(const Nat i) const ;
         
         Nat CantidadInterfacesDe(const Computadora& c);
-        const Interfaz& IesimaInterfazDe(const Computadora& c, /*const*/ Nat i) const ;
+        const Interfaz& IesimaInterfazDe(const Computadora& c, Nat i) const ;
 
-        /*const*/ Interfaz IntefazUsada(const Computadora& c1, const Computadora& c2) /*const*/;
+        const Interfaz IntefazUsada(const Computadora& c1, const Computadora& c2) const;
 
         bool conectadas(const Computadora& c1, const Computadora& c2) const;
 
