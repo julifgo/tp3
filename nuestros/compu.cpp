@@ -6,6 +6,7 @@ using namespace aed2;
 using namespace std;
 
 namespace dcnet{
+	typedef String IP;
 	//Equivalente en TP a operacion Crear(ip: ip)
 		Compu::Compu(const IP ip){
 			estr.ip = ip; 
