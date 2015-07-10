@@ -64,7 +64,7 @@ class Driver
         
     private:
 
-        const Red* red;
+        Red* red;
         DCNet* dcnet;
 
         const Compu& dameCompu(const Computadora& c) const;

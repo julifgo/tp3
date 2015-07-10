@@ -15,17 +15,19 @@ Driver::Driver(){
 Driver::~Driver() {
     // TODO
     //acá iria el destructor de red y/o dcnet entre otras cosas
+    delete red;
+    delete dcnet;
 }
 
 // TAD RED
-/*Nat Driver::CantidadComputadoras() const {
+Nat Driver::CantidadComputadoras() const {
     return red->Computadoras().Longitud();
-}*/
+}
 
-/*const Computadora Driver::IesimaComputadora(const Nat i) const {
+const Computadora Driver::IesimaComputadora(const Nat i) const {
     assert( i < CantidadComputadoras() );
     return red->Computadoras()[i].Ip();
-}*/
+}
         
 /*Nat Driver::CantidadInterfacesDe(const Computadora& c) {
     return dameCompu(c).Interfaces().Cardinal();
@@ -51,7 +53,13 @@ Driver::~Driver() {
 
 // TAD DCNET
 void Driver::AgregarComputadora(const Computadora& ip, const Conj<Interfaz>& ci) {
-    // TODO
+    Compu c(ip);
+    Conj<Interfaz>::const_Iterador it = ci.CrearIt();
+    while(it.HaySiguiente()) {
+        c.AgInterfaz(it.Siguiente());
+        it.Avanzar();   
+    }
+    red->AgCompu((const Compu)c);
 }
         
 void Driver::Conectar(const Computadora& c1, const Interfaz& i1, const Computadora& c2, const Interfaz& i2) {

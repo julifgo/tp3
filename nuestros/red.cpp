@@ -12,7 +12,7 @@ namespace dcnet{
 	}
 	void Red::AgCompu(const Compu& compu){
 		assert(!estr.vecinos.definido(compu.Ip()));
-		Lista<Compu>::Iterador it = estr.computadoras.CrearIt();
+		Lista<Compu>::Iterador it = estr.computadoras.CrearItUlt();
 		it.AgregarComoSiguiente(compu);
 		Conj<Interfaz> conjInter = compu.Interfaces();
 		Arreglo<bool> arr = ArmarArreglo(conjInter);

@@ -17,7 +17,7 @@ namespace dcnet{
   			this->estr.interfaces = Conj<Interfaz>(otra.estr.interfaces);
   		}
 		Compu::~Compu(){
-			//Nada?
+			
 		}
 		const IP Compu::Ip() const{
 			return this->estr.ip;
@@ -26,6 +26,7 @@ namespace dcnet{
 			return this->estr.interfaces;
 		} 
 		void Compu::AgInterfaz(const Interfaz interfaz){
+			assert(!estr.interfaces.Pertenece(interfaz));
 			this->estr.interfaces.AgregarRapido(interfaz);
 		}
 		/// Operacion de igualdad entre dos compus
