@@ -65,9 +65,11 @@ namespace dcnet {
         			   if(diccLog.Izq()->IsNil() || diccLog.Der()->IsNil()){
         				   Ab<Nodo>* temp = (!diccLog.Izq()->IsNil())?diccLog.Izq():diccLog.Der();
         				   if(temp->IsNil()){
-        					   temp = &diccLog;
-        					   diccLog = *new Ab<Nodo>();
+        					   *temp = diccLog;
+        					   diccLog = Ab<Nodo>();
         				   }else{
+        					 //  delete &diccLog;
+        					//   diccLog = Ab<Nodo>();
         					   diccLog = *temp;
         				   }
         				   delete temp;
@@ -75,10 +77,11 @@ namespace dcnet {
         			   else{
         				   Ab<Nodo>* temp = Minimo(diccLog.Der());
         				   diccLog.Raiz().clave=temp->Raiz().clave;
+        				   diccLog.Raiz().significado=temp->Raiz().significado;
         				   BorrarPrivate(*diccLog.Der(),temp->Raiz().clave);
         			   }
         		   }
-        		   if(!diccLog.IsNil()){
+        		   if(diccLog.Tamano()>0){
         			   diccLog.Raiz().altura = 1 + max(Altura(diccLog.Izq()),Altura(diccLog.Der()));
         			   int fdb = FactorDeBalanceo(&diccLog);
         			   if(fdb > 1 && FactorDeBalanceo(diccLog.Izq())>=0){
@@ -137,7 +140,7 @@ namespace dcnet {
    					diccLog.Der(*RotarDerecha(diccLog.Der()));
    					diccLog = *RotarIzquierda(&diccLog);
    				}
-   				if(diccLog.Raiz().clave==2 && !diccLog.Izq()->IsNil() && !diccLog.Der()->IsNil()){
+   			/*	if(diccLog.Raiz().clave==2 && !diccLog.Izq()->IsNil() && !diccLog.Der()->IsNil()){
    					cout <<"ASSERTEANDO..."<<endl;
    					assert(diccLog.Raiz().clave==2);
    					assert(diccLog.Izq()->Raiz().clave==1);
@@ -146,7 +149,7 @@ namespace dcnet {
    					assert(diccLog.Der()->Der()->IsNil());
    					assert(diccLog.Izq()->Izq()->IsNil());
    					assert(diccLog.Izq()->Der()->IsNil());
-   				}
+   				}*/
    			//	cout<<"No Soy nil"<<endl;
    			}
 
