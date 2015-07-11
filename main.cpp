@@ -16,7 +16,7 @@ int main()
 {
 	
 	/**/
-	cout << "Creo compu 0 con interfaces 0" << endl;
+	cout << "Creo compu 0 con interfaces 0, 1, 2, 4" << endl;
 	
 	//Creacion de Compus con Interfaces
 	Compu comp0("0");
@@ -25,20 +25,24 @@ int main()
 	comp0.AgInterfaz(2);
 	comp0.AgInterfaz(4);
 
-	cout << "Creo compu 1 con interfaces 0" << endl;
+	cout << "Creo compu 1 con interfaces 0, 1, 2" << endl;
 
 	Compu comp1("1");
 	comp1.AgInterfaz(0);
 	comp1.AgInterfaz(1);
 	comp1.AgInterfaz(2);
+
 	//Consulta de una Ip de una Compu
 	cout<<"Compu: "<<comp1.Ip()<<endl;
-	
+
+
+	cout << "Creo compu 2 con interfaces 0, 1" << endl;
 
 	Compu comp2("2");
 	comp2.AgInterfaz(0);
 	comp2.AgInterfaz(1);
 
+	cout << "Creo compu 3 con interfaces 0, 1" << endl;
 	Compu comp3("3");
 	comp3.AgInterfaz(0);
 	comp3.AgInterfaz(1);
@@ -67,6 +71,7 @@ int main()
 	cout << r.CaminosMin(comp3, comp2) << endl;
 
 	//Prueba de una interfaz usada entre dos compus conectadas
+
 	Interfaz inter = r.InterfazUsada(comp0,comp1);
 	cout<<"Interfaz usada entre 0 y 1: "<<inter<<endl;
 	DCNet dcnet(r);

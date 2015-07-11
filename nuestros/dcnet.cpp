@@ -29,8 +29,7 @@ namespace dcnet{
 		}
 	}
 	DCNet::~DCNet(){
-		cout<<"destructor dcnet"<<endl;
-			
+		//cout<<"destructor dcnet"<<endl;	
 	}
 
 	const Red& DCNet::red() const{
