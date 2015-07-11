@@ -81,7 +81,6 @@ Ab<T>::~Ab() {
 
 template<typename T>
 Ab<T>& Ab<T>::operator=(const Ab<T>& otro) {
-    //delete _raiz;
     _raiz = otro._raiz == NULL ? NULL : new Nodo(*(otro._raiz));
     _cardinal = otro._cardinal;
     return *this;
@@ -113,7 +112,7 @@ Ab<T>* Ab<T>::Der() {
 template<typename T>
 void Ab<T>::Izq(Ab<T>& i) {
     assert(!IsNil());
-   // delete _raiz->_izq;
+  //  delete _raiz->_izq;
      _raiz->_izq = i._raiz==NULL? new Ab<T>():&i;
 }
 
