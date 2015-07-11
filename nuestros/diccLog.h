@@ -27,7 +27,7 @@ namespace dcnet {
          		assert(!diccLog->Der()->IsNil());
         	   	Ab<Nodo>* aux1 = diccLog->Der();
          		Ab<Nodo> aux2 = *aux1->Izq();
-         		aux1->Izq(*new Ab<Nodo>(*diccLog));
+         		aux1->Izq(*diccLog);
          		aux1->Izq()->Der(aux2);
          		aux1->Izq()->Raiz().altura =1 + max(Altura(aux1->Izq()->Izq()),Altura(aux1->Izq()->Der()));
          		aux1->Raiz().altura = 1 + max(Altura(aux1->Izq()),Altura(aux1->Der()));
@@ -37,7 +37,7 @@ namespace dcnet {
         	   assert(!diccLog->Izq()->IsNil());
         	   Ab<Nodo>* aux1 = diccLog->Izq();
         	   Ab<Nodo> aux2 = *aux1->Der();
-        	   aux1->Der(*new Ab<Nodo>(*diccLog));
+        	   aux1->Der(*diccLog);
         	   aux1->Der()->Izq(aux2);
         	   aux1->Der()->Raiz().altura = 1 + max(Altura(aux1->Der()->Izq()),Altura(aux1->Der()->Der()));
         	   aux1->Raiz().altura = 1 + max(Altura(aux1->Izq()),Altura(aux1->Der()));
@@ -160,7 +160,6 @@ namespace dcnet {
             _diccLog = new Ab<Nodo>();
         }//Equivalente a Vacio()                    
         ~DiccLog<K,S>(){                            
-            //cout<<"destructor"<<endl;               
             delete this->_diccLog;
         }                                           
                                                     
