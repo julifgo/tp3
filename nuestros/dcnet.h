@@ -22,12 +22,18 @@ namespace dcnet{
 
 	class DCNet{ 
 		private:
+
+			struct colasEspera{
+				ConjLog<Paquete*> paquetes;
+			};
+
 			struct estr{
 				/*const */Red* red;
 				DiccString<Nat> cantPaquetesEnviados;
 				Lista<Compu>::Iterador laQueMasEnvio;
 				DiccString<DiccLog<Nat,Lista<Compu> > > CaminoRecorrido;
-				DiccString<ConjLog<Paquete* > > enEspera;
+				//DiccString<ConjLog<Paquete* > > enEspera;
+				DiccString<colasEspera > enEspera;
 
 			};
 
