@@ -121,8 +121,8 @@ Nat Driver::prioridad(const Paquete& p) const {
 const Compu& Driver::dameCompu(const Computadora& c) const {
     Lista<Compu>::const_Iterador it = red->Computadoras().CrearIt();
 
-    cout << red->Computadoras() << endl;
-    cout << it.Siguiente() << endl;
+    //cout << red->Computadoras() << endl;
+    //cout << it.Siguiente() << endl;
     
     /*while(it.Siguiente().Ip() != c) {
         it.Avanzar();

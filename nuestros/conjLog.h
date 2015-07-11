@@ -22,7 +22,7 @@ namespace dcnet {
 
 		}
 
-		void Definir(const T& valor){
+		void Definir(T& valor){
 			conj.Definir(valor,valor);
 		}
 

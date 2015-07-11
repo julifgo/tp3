@@ -13,6 +13,8 @@
 #include "diccLog.h"
 #include "conjLog.h"
 #include <ostream>
+#include "compu.h"
+#include "paquete.h"
 
 using namespace aed2;
 
@@ -21,21 +23,28 @@ namespace dcnet{
 	class DCNet{ 
 		private:
 			struct estr{
-				const Red* red;
+				/*const */Red* red;
 				DiccString<Nat> cantPaquetesEnviados;
 				Lista<Compu>::Iterador laQueMasEnvio;
 				DiccString<DiccLog<Nat,Lista<Compu> > > CaminoRecorrido;
 				DiccString<ConjLog<Paquete* > > enEspera;
 
 			};
+
+			struct Buffer{
+				Buffer(){};
+				Compu* compu;
+				Paquete* paquete;
+			};
+
 			estr estr;
 		public:
 			DCNet();
-			DCNet(const Red& red);//Equivalente a IniciarDCNEt
+			DCNet(Red& red);//Equivalente a IniciarDCNEt
 			~DCNet();
 			const Red& red() const;
 			Nat CantidadEnviados(const Compu& c) /*const*/; //TODO. El acceso a Dicc trie no nos deja poner const
-			const Lista<Compu> CaminoRecorrido(Paquete* p) const;
+			const Lista<Compu> CaminoRecorrido(Paquete* p);
 			const ConjLog<Paquete*> EnEspera(const Compu& c);
 			void CrearPaquete(Paquete* p);
 			void AvanzarSegundo();

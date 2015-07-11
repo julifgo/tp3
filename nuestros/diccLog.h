@@ -160,7 +160,6 @@ namespace dcnet {
             _diccLog = new Ab<Nodo>();
         }//Equivalente a Vacio()                    
         ~DiccLog<K,S>(){                            
-       //     cout<<"destructor"<<endl;
             delete this->_diccLog;
         }                                           
                                                     
