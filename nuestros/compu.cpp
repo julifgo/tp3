@@ -20,7 +20,7 @@ namespace dcnet{
 		Compu::~Compu(){
 			
 		}
-		const IP Compu::Ip() const{
+		const IP& Compu::Ip() const{
 			return this->estr.ip;
 		}
 		const Conj<Interfaz>& Compu::Interfaces() const{ //Se devuelve res como referencia a las interfaces pero no son modificables

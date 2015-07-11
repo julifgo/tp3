@@ -28,7 +28,7 @@ namespace dcnet{
 		Compu(const IP ip);//Equivalente en TP a operacion Crear(ip: ip)
 		Compu(const Compu& otra);/// Crea por copia una compu (operación Copiar())
 		~Compu();
-		const IP Ip() const;
+		const IP& Ip() const;
 		const Conj<Interfaz>& Interfaces() const;
 		void AgInterfaz(const Interfaz interfaz);
 		bool operator==(const Compu& otra) const;/// Operacion de igualdad entre dos compus

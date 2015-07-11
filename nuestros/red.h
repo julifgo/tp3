@@ -59,7 +59,7 @@ namespace dcnet{
   		void AgCompu(const Compu& compu);
   		Lista<Compu> Computadoras() const;
   		bool Conectadas(const Compu& c1,const Compu& c2);
-  		Interfaz InterfazUsada(const Compu& c1,const Compu& c2);
+  		Interfaz& InterfazUsada(const Compu& c1,const Compu& c2);
   		Conj<Compu> Vecinos(const Compu& c1);
   		bool UsaInterfaz(const Compu& c1,Nat i);
   		bool HayCamino(const Compu& c1, const Compu& c2);

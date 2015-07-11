@@ -1,8 +1,8 @@
 #include "Driver.h"
 #include "mini_test.h"
-#include "aed2/Lista.h"
-#include "aed2/Conj.h"
-#include "aed2/Dicc.h"
+#include "../aed2/Lista.h"
+#include "../aed2/Conj.h"
+#include "../aed2/Dicc.h"
 
 #include <string>
 #include <iostream>
@@ -87,6 +87,9 @@ bool Comparar(const T& t, const S& s)
  */
  
 void test_dcnet_ejemplo() {
+	
+	/** /
+
 	Conj<Interfaz> conjIc1;
 	Conj<Interfaz> conjIc2;
 	Conj<Interfaz> conjIc3;
@@ -121,6 +124,8 @@ void test_dcnet_ejemplo() {
 	dcnet.AvanzarSegundo();	
 
 	ASSERT_EQ(dcnet.laQueMasEnvio(), c1);
+
+	/**/
 		
 }
 

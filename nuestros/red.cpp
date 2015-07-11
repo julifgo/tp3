@@ -43,11 +43,10 @@ namespace dcnet{
 		return otra;
 	}*/
 	
-	Interfaz Red::InterfazUsada(const Compu& c1,const Compu& c2){
+	Interfaz& Red::InterfazUsada(const Compu& c1,const Compu& c2){
 		assert( Conectadas(c1, c2) );
 
-		Interfaz res = *estr.interfaz.obtener(c1.Ip())->obtener(c2.Ip());
-		return res;
+		return *estr.interfaz.obtener( c1.Ip() )->obtener( c2.Ip() );
 	}
 
 	Conj<Compu> Red::Vecinos(const Compu& c1){

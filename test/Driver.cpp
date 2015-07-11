@@ -19,15 +19,15 @@ Driver::~Driver() {
 
 // TAD RED
 Nat Driver::CantidadComputadoras() const {
-    return red->Computadoras().Longitud();
+    return this->red->Computadoras().Longitud();
 }
 
-const Computadora Driver::IesimaComputadora(const Nat i) const {
+const Computadora& Driver::IesimaComputadora(const Nat i) const {
     assert( i < CantidadComputadoras() );
-    return red->Computadoras()[i].Ip();
+    return this->red->Computadoras()[i].Ip();
 }
         
-Nat Driver::CantidadInterfacesDe(const Computadora& c) {
+Nat Driver::CantidadInterfacesDe(const Computadora& c) const {
     return dameCompu(c).Interfaces().Cardinal();
 }
 
@@ -40,12 +40,12 @@ const Interfaz& Driver::IesimaInterfazDe(const Computadora& c, Nat i) const {
     return it.Siguiente();
 }
 
-const Interfaz Driver::IntefazUsada(const Computadora& c1, const Computadora& c2) const {
-    return red->InterfazUsada(dameCompu(c1), dameCompu(c2));
+const Interfaz& Driver::IntefazUsada(const Computadora& c1, const Computadora& c2) const {
+    return this->red->InterfazUsada(dameCompu(c1), dameCompu(c2));
 }
 
 bool Driver::conectadas(const Computadora& c1, const Computadora& c2) const {
-    return red->Conectadas(dameCompu(c1), dameCompu(c2));
+    return this->red->Conectadas(dameCompu(c1), dameCompu(c2));
 }
 
 // TAD DCNET
@@ -56,7 +56,7 @@ void Driver::AgregarComputadora(const Computadora& ip, const Conj<Interfaz>& ci)
         c.AgInterfaz(it.Siguiente());
         it.Avanzar();   
     }
-    red->AgCompu(c);
+    this->red->AgCompu(c);
 }
     
 /*    
