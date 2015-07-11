@@ -179,6 +179,7 @@ namespace dcnet {
         bool IsDefinido(const K& p) const;          
                                                     
         void Definir(const K& p, const S& s){
+        	assert(!IsDefinido(p));
         	DefinirPrivate(&_diccLog,p,s);
         }
 
@@ -188,6 +189,7 @@ namespace dcnet {
         }
 
         S& MinimoSignificado() const{
+        	assert(!_diccLog->IsNil());
         	return Minimo(_diccLog)->Raiz().significado;
         }
         Nat CantClaves() const{
@@ -212,6 +214,7 @@ namespace dcnet {
 
 	template<typename K,typename S>
 	S& DiccLog<K,S>::Significado(const K& clave) const{
+		assert(IsDefinido(clave));
 		return SignificadoPrivate(_diccLog,clave);
 	}
 
