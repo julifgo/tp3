@@ -10,7 +10,7 @@ typedef Nat Prioridad;
 typedef Nat Interfaz;
 typedef Nat ID;
 typedef String Computadora;
-//typedef Nat Paquete;
+typedef Nat Paquete;
 /***
  * Las restricciones son Strings con expresiones conformadas por operadores,
  * paréntesis y nombres de caracteristicas los cuales sólo son LETRAS del alfabeto

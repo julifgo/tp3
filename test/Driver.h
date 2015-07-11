@@ -6,6 +6,7 @@
 #include "../nuestros/dcnet.h"
 
 using namespace dcnet;
+//#include ...
 
 namespace aed2 {
 
@@ -20,12 +21,12 @@ class Driver
         /// Observadores Red //////////////////////////////////////////////////////////
 
         Nat CantidadComputadoras() const;
-        const Computadora IesimaComputadora(const Nat i) const ;
+        const Computadora& IesimaComputadora(const Nat i) const ;
         
-        Nat CantidadInterfacesDe(const Computadora& c);
-        const Interfaz& IesimaInterfazDe(const Computadora& c, Nat i) const ;
+        Nat CantidadInterfacesDe(const Computadora& c) const;
+        const Interfaz& IesimaInterfazDe(const Computadora& c, const Nat i) const ;
 
-        const Interfaz IntefazUsada(const Computadora& c1, const Computadora& c2) const;
+        const Interfaz& IntefazUsada(const Computadora& c1, const Computadora& c2) const;
 
         bool conectadas(const Computadora& c1, const Computadora& c2) const;
 
