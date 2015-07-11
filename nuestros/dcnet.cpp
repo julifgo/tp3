@@ -112,8 +112,8 @@ namespace dcnet{
 
 		while( itBuffer.HaySiguiente() ) {
 			ConjLog<Paquete*> cjaMod = *estr.enEspera.obtener(itBuffer.Siguiente().compu->Ip());
-			Paquete *p3 = itBuffer.Siguiente().paquete;
-			cjaMod.Definir(p3);
+			Paquete *paq = itBuffer.Siguiente().paquete;
+			cjaMod.Definir(paq);
 			itBuffer.Avanzar();
 		}	
 	}
