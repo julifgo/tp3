@@ -1,6 +1,6 @@
 CC=g++
 LDFLAGS=
-CFLAGS=-g -std=c++11 -Wall
+CFLAGS=-g -std=c++11 -Werror
 EXECUTABLE=main
 SOURCES=aed2/ConjAcotado.cpp \
 		nuestros/compu.cpp \

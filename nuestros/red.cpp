@@ -65,7 +65,7 @@ namespace dcnet{
 		return res;
 	}
 
-	bool Red::HayCamino(const Compu& c1,const Compu& c2){
+	bool Red::HayCamino(const Compu& c1,const Compu& c2) {
 		assert( Esta( Computadoras(), c1 ) );
 		assert( Esta( Computadoras(), c2 ) );
 
