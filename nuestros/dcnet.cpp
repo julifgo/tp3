@@ -79,7 +79,7 @@ namespace dcnet{
 			ConjLog<Paquete*>* cPaq = estr.enEspera.obtener(it.Siguiente().Ip());
 			if( cPaq->Cardinal() > 0 ) {
 				Paquete* p = cPaq->Minimo();
-				Conj<Lista<Compu>>::const_Iterador itComp = estr.red->CaminosMin(it.Siguiente(), p->Destino()).CrearIt();
+				Conj<Lista<Compu> >::const_Iterador itComp = estr.red->CaminosMin(it.Siguiente(), p->Destino()).CrearIt();
 				Lista<Compu> masCorto = itComp.Siguiente();
 				masCorto.Fin();
 				Compu pcaMover = masCorto.Primero();
