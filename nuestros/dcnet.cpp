@@ -22,8 +22,7 @@ namespace dcnet{
 		}*/
 		for (Nat i = 0; i < estr.red->Computadoras().Longitud(); i++)
 		{
-			//ConjLog<Paquete> *cPaq = new ConjLog<Paquete>();
-			estr.enEspera.definir(estr.red->Computadoras()[i].Ip(),*new ConjLog<Paquete>()); //TODO. Pierde memoria por cada creacion de un new Conj
+			estr.enEspera.definir(estr.red->Computadoras()[i].Ip(),*new ConjLog<Paquete*>()); //TODO. Pierde memoria por cada creacion de un new Conj
 			Nat aux =0;
 			estr.cantPaquetesEnviados.definir(estr.red->Computadoras()[i].Ip(),aux);
 			estr.CaminoRecorrido.definir(estr.red->Computadoras()[i].Ip(),*new DiccLog<Nat,Lista<Compu> >());
@@ -44,20 +43,18 @@ namespace dcnet{
 		return res;
 	}
 
-	const Lista<Compu> DCNet::CaminoRecorrido(const Paquete& p) const{
+	const Lista<Compu> DCNet::CaminoRecorrido(Paquete* p) const{
 		return Lista<Compu>(); //TODO. Implementar!
 	}
 
-	const ConjLog<Paquete> DCNet::EnEspera(const Compu& c){
+	const ConjLog<Paquete*> DCNet::EnEspera(const Compu& c){
 		assert(estr.enEspera.definido(c.Ip()));
 		return *estr.enEspera.obtener(c.Ip());
 	}
 
-	void DCNet::CrearPaquete(const Paquete& p){
-		//ConjLog<Paquete> *cPaq = estr.enEspera.obtener(p.Origen().Ip());
-		//cPaq->Definir(p);
-		//ConjLog<int> bla;
-		//bla.Definir(1);
+	void DCNet::CrearPaquete(Paquete* p){
+		ConjLog<Paquete*> *cPaq = estr.enEspera.obtener(p->Origen().Ip());
+		cPaq->Definir(p);
 	}
 
 	void DCNet::AvanzarSegundo(){
@@ -65,7 +62,7 @@ namespace dcnet{
 		cout<<"en espera iniciando bien: "<<estr.enEspera.definido("0")<<endl;
 	}
 
-	bool DCNet::IsPaqueteEnTransito(const Paquete& p){
+	bool DCNet::IsPaqueteEnTransito(Paquete* p){
 		//listo, sin testear, borrar cuando se pueda y se testee
 
 		Lista<Compu>::const_Iterador it = estr.red->Computadoras().CrearIt();
