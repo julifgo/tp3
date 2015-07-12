@@ -74,6 +74,26 @@ namespace dcnet{
 		return res;
 	}
 
+	const Lista<Compu> DCNet::CaminoRecorrido(Nat id){
+		Lista<Compu> res;
+		DiccString<DiccLog<Nat,Lista<Compu>* >* >::Iterador *it = new DiccString<DiccLog<Nat,Lista<Compu>* >* >::Iterador(&estr.CaminoRecorrido);
+		bool found = false;
+		DiccLog<Nat,Lista<Compu>* > *paquetesPc0 = *it->valorActual();
+		if(paquetesPc0->IsDefinido(id)){
+			found = true;
+			res = *paquetesPc0->Significado(id);
+		}
+		while(it->avanzar() && !found){
+			DiccLog<Nat,Lista<Compu>* > *paquetes = *it->valorActual();
+			if(paquetes->IsDefinido(id)){
+				found = true;
+				res = *paquetes->Significado(id);
+			}
+		}
+		delete it;
+		return res;
+	}
+
 	const ConjLog<Paquete*>* DCNet::EnEspera(const Compu& c){
 		assert(estr.enEspera.definido(c.Ip()));
 		return *estr.enEspera.obtener(c.Ip());
