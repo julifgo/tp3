@@ -53,13 +53,24 @@ int main()
 	r.AgCompu(comp2);
 	r.AgCompu(comp3);
 
+
 	cout << "Conectando..." << endl;
-	r.Conectar(comp0 ,comp1, 0, 0);
-	r.Conectar(comp0 ,comp3, 1, 0);
-	r.Conectar(comp0 ,comp2, 2, 0);
-	r.Conectar(comp1 ,comp2, 1, 1);
-	r.Conectar(comp3 ,comp1, 1, 2);
-	cout << "Conectado !" << endl;
+    Nat i1 = 0;
+    Nat i2 = 0;
+    r.Conectar(comp0 ,comp1, i1, i2);
+    Nat i3 = 1;
+    Nat i4 = 0;
+    r.Conectar(comp0 ,comp3, i3, i4);
+    Nat i5 = 2;
+    Nat i6 = 0;
+    r.Conectar(comp0 ,comp2, i5, i6);
+    Nat i7 = 1;
+    Nat i8 = 1;
+    r.Conectar(comp1 ,comp2, i7, i8);
+    Nat i9 = 1;
+    Nat i10 = 2;
+    r.Conectar(comp3 ,comp1, i9, i10);
+    cout << "Conectado !" << endl;
 
 	cout << "Algunos caminos minimos" << endl;
 

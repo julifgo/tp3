@@ -50,6 +50,7 @@ namespace dcnet{
 			const Red* red() const;
 			Nat CantidadEnviados(const Compu& c) /*const*/; //TODO. El acceso a Dicc trie no nos deja poner const
 			const Lista<Compu> CaminoRecorrido(Paquete* p);
+			const Lista<Compu> CaminoRecorrido(Nat id);
 			const ConjLog<Paquete*>* EnEspera(const Compu& c);
 			void CrearPaquete(Paquete* p);
 			void AvanzarSegundo();

@@ -69,7 +69,7 @@ namespace dcnet{
   		
   		Conj<Lista<Compu> > CaminosMin(const Compu&, const Compu&);
   		
-  		void Conectar(const Compu&, const Compu&, Nat, Nat);
+  		void Conectar(const Compu&, const Compu&, Nat&, Nat&);
 	
 	};
 }
