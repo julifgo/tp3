@@ -36,7 +36,7 @@ namespace dcnet {
 			return conj.IsDefinido(valor);
 		}
 
-		const Nat Cardinal(){
+		const Nat Cardinal() const{
 			return conj.CantClaves();
 		}
 

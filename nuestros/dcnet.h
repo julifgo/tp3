@@ -46,10 +46,10 @@ namespace dcnet{
 			DCNet();
 			DCNet(Red& red);//Equivalente a IniciarDCNEt
 			~DCNet();
-			const Red& red() const;
+			const Red* red() const;
 			Nat CantidadEnviados(const Compu& c) /*const*/; //TODO. El acceso a Dicc trie no nos deja poner const
 			const Lista<Compu> CaminoRecorrido(Paquete* p);
-			const ConjLog<Paquete*> EnEspera(const Compu& c);
+			const ConjLog<Paquete*>* EnEspera(const Compu& c);
 			void CrearPaquete(Paquete* p);
 			void AvanzarSegundo();
 			bool IsPaqueteEnTransito(Paquete* p); //retiro const porque obtemer del dicc_trie no se lo banca

@@ -43,8 +43,8 @@ namespace dcnet{
         }
 	}
 
-	const Red& DCNet::red() const{
-		return *estr.red; 
+	const Red* DCNet::red() const{
+		return estr.red; 
 	}
 
 	Nat DCNet::CantidadEnviados(const Compu& c){
@@ -66,10 +66,9 @@ namespace dcnet{
 		return res;
 	}
 
-	const ConjLog<Paquete*> DCNet::EnEspera(const Compu& c){
+	const ConjLog<Paquete*>* DCNet::EnEspera(const Compu& c){
 		assert(estr.enEspera.definido(c.Ip()));
-		return **estr.enEspera.obtener(c.Ip());
-		//return *new ConjLog<Paquete*>();
+		return *estr.enEspera.obtener(c.Ip());
 	}
 
 	void DCNet::CrearPaquete(Paquete* p){
@@ -136,12 +135,16 @@ namespace dcnet{
 	}
 
 	bool DCNet::IsPaqueteEnTransito(Paquete* p){
-		//TODO. sin testear, borrar cuando se pueda y se testee
-		Lista<Compu>::const_Iterador it = estr.red->Computadoras().CrearIt();
+		//Lista<Compu>::const_Iterador it = estr.red->Computadoras().CrearIt(); //No anda el iterador de la list
 		bool encontrado = false;
-		while ( it.HaySiguiente() && !encontrado ) {
-			//encontrado = estr.enEspera.obtener(it.Siguiente().Ip())->Pertenece(p);
-			it.Avanzar();
+		Nat i = 0;
+		while(i < estr.red->Computadoras().Longitud() && !encontrado)
+		//for (Nat i = 0; i < estr.red->Computadoras().Longitud(); i++)
+		{
+			ConjLog<Paquete* >*conj  = *estr.enEspera.obtener(estr.red->Computadoras()[i].Ip());
+			encontrado = conj->Pertenece(p);
+			i++;
+			//it.Avanzar();
 		}
 
 		return encontrado;
