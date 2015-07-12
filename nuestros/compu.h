@@ -4,42 +4,50 @@
 /
 */
 
-//PASAR IMPLEMENTACIONES A CPP
-
 #ifndef DC_COMPU_H_
 #define DC_COMPU_H_
 
 #include <ostream>
+
 using namespace aed2;
+
 namespace dcnet{
+
 	typedef Nat Interfaz;
 	typedef String IP;
 
 	class Compu{
-	private:
-		struct estr{
+
+		private:
+
 			IP ip;
-			Conj<Interfaz> interfaces;
-		};
 
-		estr estr;
+			Conj<Interfaz>* interfaces;
 
-	public:
-		Compu(const IP ip);//Equivalente en TP a operacion Crear(ip: ip)
-		Compu(const Compu& otra);/// Crea por copia una compu (operación Copiar())
-		~Compu();
-		const IP Ip() const;
-		const Conj<Interfaz>& Interfaces() const;
-		void AgInterfaz(const Interfaz interfaz);
-		bool operator==(const Compu& otra) const;/// Operacion de igualdad entre dos compus
-		bool operator!=(const Compu& otra) const;/// Operacion de !igualdad entre dos compus
-		//ostream& operator<<(ostream& out);
-		//friend ostream& operator<< (ostream &out, Compu &compu);
+		public:
 
-  	
+			Compu(const IP);
+			
+			Compu(const Compu&);
+			
+			~Compu();
+			
+			const IP& Ip() const;
+			
+			const Conj<Interfaz>& Interfaces() const;
+			
+			void AgInterfaz(const Interfaz);
+			
+			Compu& operator=(const Compu&);
+			
+			bool operator==(const Compu&) const;
+			
+			bool operator!=(const Compu&) const;
+	
 	};
 
 	std::ostream& operator<<(std::ostream&, const Compu&);
+
 }
 
 #endif

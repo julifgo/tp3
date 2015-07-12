@@ -18,3 +18,4 @@ Tp3/Tp3.vcxproj.filters
 **/.nfs*
 main
 testing
+test/ejemplo.cpp

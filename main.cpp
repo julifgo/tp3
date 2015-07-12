@@ -91,12 +91,8 @@ int main()
 	
 
 	dcnet.red(); //Se recupera la red del dcnet
-	delete p1;
-	delete p2;
-	delete p3;
 
 
 
 	return 0;
 }
-

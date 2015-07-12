@@ -10,8 +10,6 @@ namespace dcnet {
         
         public:
 
-            //Miembros definidos en el módulo
-
             Nat Id() const;
 
             Nat Prioridad() const;
@@ -20,19 +18,19 @@ namespace dcnet {
 
             const Compu& Destino() const;
 
-            Paquete(Nat id, Nat prioridad, const Compu& origen, const Compu& destino);
+            Paquete(Paquete&);
+
+            Paquete(Nat, Nat, const Compu&, const Compu&);
 
             ~Paquete();
            
-            bool operator<(const Paquete& otro) const;
+            bool operator<(const Paquete&) const;
 
-            bool operator>(const Paquete& otro) const;
+            bool operator>(const Paquete&) const;
 
-            Paquete& operator=(const Paquete& paquete);
+            Paquete& operator=(const Paquete&);
 
-            //Miembros faltantes
-
-            bool operator==(const Paquete& otro) const;
+            bool operator==(const Paquete&) const;
 
         private:
 

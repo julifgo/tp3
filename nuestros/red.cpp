@@ -6,71 +6,52 @@ using namespace aed2;
 using namespace std;
 
 namespace dcnet{
-	Red::Red(){
-	}
-	Red::~Red(){
-	}
-	void Red::AgCompu(const Compu& compu){
-		assert(!estr.vecinos.definido(compu.Ip()));
-		Lista<Compu>::Iterador it = estr.computadoras.CrearItUlt();
-		it.AgregarComoSiguiente(compu);
-		Conj<Interfaz> conjInter = compu.Interfaces();
-		Arreglo<bool> arr = ArmarArreglo(conjInter);
 
-		estr.usaInterfaz.definir(compu.Ip(),arr);
-		DiccString<Nat> diccInterfaz;
-		estr.interfaz.definir(compu.Ip(),diccInterfaz);
-		Conj<Compu> conjVecinos;
-		estr.vecinos.definir(compu.Ip(),conjVecinos);
-		DiccString<Conj<Lista<Compu> > > caminosCortos;
-		estr.caminosMasCortos.definir(compu.Ip(),caminosCortos);
+	//Constructores ----------------------------------
+
+	Red::Red() { }
+
+	//Destructor -------------------------------------
+
+	Red::~Red() { }
+
+	//Getters ----------------------------------------
+
+	Lista<Compu> Red::Computadoras() const {
+		return this->computadoras;
 	}
 
-	Lista<Compu> Red::Computadoras() const{
-		return estr.computadoras;
-	}
-
-	bool Red::Conectadas(const Compu& c1,const Compu& c2){
+	bool Red::Conectadas(const Compu& c1,const Compu& c2) {
 		assert( Esta( Computadoras(), c1 ) );
 		assert( Esta( Computadoras(), c2 ) );
 		
-		Conj<Compu> conjVecinos = *estr.vecinos.obtener(c1.Ip());
-		return conjVecinos.Pertenece(c2);
+		return this->vecinos.obtener(c1.Ip())->Pertenece(c2);
 	}
-
-	/*const Red& Red::operator=(const Red& otra){
-		//delete &this;
-		return otra;
-	}*/
 	
-	Interfaz Red::InterfazUsada(const Compu& c1,const Compu& c2){
+	Interfaz& Red::InterfazUsada(const Compu& c1,const Compu& c2) {
 		assert( Conectadas(c1, c2) );
 
-		Interfaz res = *estr.interfaz.obtener(c1.Ip())->obtener(c2.Ip());
-		return res;
+		return *this->interfaz.obtener( c1.Ip() )->obtener( c2.Ip() );
 	}
 
-	Conj<Compu> Red::Vecinos(const Compu& c1){
+	Conj<Compu> Red::Vecinos(const Compu& c1) {
 		assert( Esta( Computadoras(), c1 ) );
 
-		Conj<Compu> res = *estr.vecinos.obtener(c1.Ip());
-		return res;
+		return *this->vecinos.obtener(c1.Ip());
 	}
 
-	bool Red::UsaInterfaz(const Compu& c1,Nat i){
+	bool Red::UsaInterfaz(const Compu& c1,Nat i) {
 		assert( Esta( Computadoras(), c1 ) );
 		assert( c1.Interfaces().Pertenece(i) );
 
-		bool res = estr.usaInterfaz.obtener(c1.Ip())->operator [](i);
-		return res;
+		return this->usaInterfaz.obtener(c1.Ip())->operator [](i);
 	}
 
 	bool Red::HayCamino(const Compu& c1,const Compu& c2) {
 		assert( Esta( Computadoras(), c1 ) );
 		assert( Esta( Computadoras(), c2 ) );
 
-		bool res = ! estr.caminosMasCortos.obtener(c1.Ip())->obtener(c2.Ip())->EsVacio();
-		return res;
+		return ! this->caminosMasCortos.obtener(c1.Ip())->obtener(c2.Ip())->EsVacio();
 	}
 
 	Conj<Lista<Compu> > Red::CaminosMin(const Compu& c1,const Compu& c2) {
@@ -78,12 +59,34 @@ namespace dcnet{
 		assert( Esta( Computadoras(), c2 ) );
 		assert( HayCamino(c1, c2) );
 
-		Conj<Lista<Compu> > res = *(estr.caminosMasCortos.obtener(c1.Ip()))->obtener(c2.Ip());
-		return res;
+		return *(this->caminosMasCortos.obtener(c1.Ip()))->obtener(c2.Ip());
+	}
+	
+	//Setters ----------------------------------------
+
+	void Red::AgCompu(const Compu& compu) {
+		assert(!this->vecinos.definido(compu.Ip()));
+
+		Lista<Compu>::Iterador it = this->computadoras.CrearItUlt();
+		it.AgregarComoSiguiente( compu );
+
+
+		//cout << "computadoras de red " << this->computadoras << endl;
+
+		Arreglo<bool> arr = ArmarArreglo( compu.Interfaces() );
+
+		this->usaInterfaz.definir(compu.Ip(),arr);
+		DiccString<Nat> diccInterfaz;
+		this->interfaz.definir(compu.Ip(),diccInterfaz);
+		Conj<Compu> conjVecinos;
+		this->vecinos.definir(compu.Ip(),conjVecinos);
+		DiccString<Conj<Lista<Compu> > > caminosCortos;
+		this->caminosMasCortos.definir(compu.Ip(),caminosCortos);
 	}
 
-	void Red::Conectar(const Compu& c1,const Compu& c2,Nat i1, Nat i2){
-		assert( estr.vecinos.definido(c1.Ip()) && estr.vecinos.definido(c2.Ip()) ); //preguntar a lea si va, es la parte que dice que no pueden estar conectadas?
+
+	void Red::Conectar(const Compu& c1,const Compu& c2,Nat i1, Nat i2) {
+		assert( this->vecinos.definido(c1.Ip()) && this->vecinos.definido(c2.Ip()) );
 		assert( Esta( Computadoras(), c1 ) );
 		assert( Esta( Computadoras(), c2 ) );
 		assert( c1.Interfaces().Pertenece(i1) );
@@ -91,30 +94,30 @@ namespace dcnet{
 		assert( !UsaInterfaz(c1, i1) );
 		assert( !UsaInterfaz(c2, i2) );
 
-		estr.vecinos.obtener(c1.Ip())->AgregarRapido(c2);
-		estr.vecinos.obtener(c2.Ip())->AgregarRapido(c1);
-		estr.usaInterfaz.obtener(c1.Ip())->operator [](i1) = true;
-		estr.usaInterfaz.obtener(c2.Ip())->operator [](i2) = true;
-		estr.interfaz.obtener(c1.Ip())->definir(c2.Ip(),i1);
-		estr.interfaz.obtener(c2.Ip())->definir(c1.Ip(),i2);
+		this->vecinos.obtener(c1.Ip())->AgregarRapido(c2);
+		this->vecinos.obtener(c2.Ip())->AgregarRapido(c1);
+		this->usaInterfaz.obtener(c1.Ip())->operator [](i1) = true;
+		this->usaInterfaz.obtener(c2.Ip())->operator [](i2) = true;
+		this->interfaz.obtener(c1.Ip())->definir(c2.Ip(),i1);
+		this->interfaz.obtener(c2.Ip())->definir(c1.Ip(),i2);
 
 		ActualizarCaminos(c1, c2);
 
 		//Actualiza todos los caminos posibles sobre todas las computadoras en el diccionario de caminos màs cortos
-		Lista<Compu>::const_Iterador it1 = estr.computadoras.CrearIt();
-		Lista<Compu>::const_Iterador it2 = estr.computadoras.CrearIt();
+		Lista<Compu>::const_Iterador it1 = this->computadoras.CrearIt();
+		Lista<Compu>::const_Iterador it2 = this->computadoras.CrearIt();
 
 		while(it1.HaySiguiente()) {
 			while(it2.HaySiguiente()) {
 				ActualizarCaminosMasCortos(it1.Siguiente(), it2.Siguiente());
 				it2.Avanzar();
 			}
-			it2 = estr.computadoras.CrearIt();
+			it2 = this->computadoras.CrearIt();
 			it1.Avanzar();
 		}
 	}
 
-	Interfaz Red::Max(const Conj<Interfaz>& conj) const{
+	Interfaz Red::Max(const Conj<Interfaz>& conj) const {
 		assert(conj.Cardinal() > 0);
 
 		Conj<Interfaz>::const_Iterador it = conj.CrearIt();
@@ -128,24 +131,28 @@ namespace dcnet{
 		return max;
 	}
 
-	Arreglo<bool> Red::ArmarArreglo(const Conj<Interfaz>& conj) const{
+	Arreglo<bool> Red::ArmarArreglo(const Conj<Interfaz>& conj) const {
+		
 		if(conj.Cardinal()==0){
 			return Arreglo<bool>(0);
 		}
+
 		Interfaz max = Max(conj);
 		Arreglo<bool> arr(max+1);
 		Nat i = 0;
+		
 		while (i<=max){
 			arr.Definir(i,false);
 			i++;
 		}
+
 		return arr;
 	}
 
 	//operaciones privadas de caminos auxiliares
 
 	void Red::ActualizarCaminos(const Compu& pc1, const Compu& pc2) {
-		Conj<Lista<Compu> >& caminos = this->estr.caminos;
+		Conj<Lista<Compu> >& caminos = this->caminos;
 		Conj<Lista<Compu> >& caminosQueEmpiezanConpc1 = CaminosQueEmpiezanConPcx(caminos, pc1);
 		Conj<Lista<Compu> >& caminosQueEmpiezanConpc2 = CaminosQueEmpiezanConPcx(caminos, pc2);
 
@@ -190,7 +197,7 @@ namespace dcnet{
 	}
 
 	void Red::ActualizarCaminosMasCortos(const Compu& pc1, const Compu& pc2) {
-		Conj<Lista<Compu> >& aux = CaminosQueTerminanConPcx(this->estr.caminos, pc2);
+		Conj<Lista<Compu> >& aux = CaminosQueTerminanConPcx(this->caminos, pc2);
 		Conj<Lista<Compu> >& caminosRes = CaminosQueEmpiezanConPcx(aux, pc1);
  		Conj<Lista<Compu> > caminosAAgregar;
 
@@ -213,13 +220,13 @@ namespace dcnet{
 				itConjCamino.Retroceder();
 			}
 			
-			if(estr.caminosMasCortos.definido(pc1.Ip())){
-				estr.caminosMasCortos.obtener(pc1.Ip())->definir(pc2.Ip(), caminosAAgregar);
+			if(this->caminosMasCortos.definido(pc1.Ip())){
+				this->caminosMasCortos.obtener(pc1.Ip())->definir(pc2.Ip(), caminosAAgregar);
 			}
 			else{
 				DiccString<Conj<Lista<Compu> > > hasta;	
 				hasta.definir( pc2.Ip(), caminosAAgregar );
-				estr.caminosMasCortos.definir( pc1.Ip(), hasta );
+				this->caminosMasCortos.definir( pc1.Ip(), hasta );
 			}
 		}
 		
