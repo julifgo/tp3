@@ -11,14 +11,11 @@ namespace dcnet{
 	DCNet::DCNet(){}
 	DCNet::DCNet(Red& red){
 		estr.red = &red;
-		estr.laQueMasEnvio = new Compu(estr.red->Computadoras().Primero());
-		/*Lista<Compu>::Iterador it = estr.red->Computadoras().CrearIt();
-		while(it.HaySiguiente()){ //NO ANDA EL ITERADOR DE LISTA. VER EN MAIN QUE LISTA DE RED ANDA PERFECTO !
-			cout<<it.Siguiente().Ip()<<endl;
-			//ConjLog<Paquete> cPaq;
-			//estr.enEspera.definir(it.Siguiente().Ip(),cPaq);
-			it.Avanzar();
-		}*/
+		if(estr.red->Computadoras().Longitud()>0)
+			estr.laQueMasEnvio = new Compu(estr.red->Computadoras().Primero());
+		else
+			estr.laQueMasEnvio = NULL;
+
 		for (Nat i = 0; i < estr.red->Computadoras().Longitud(); i++)
 		{
 			ConjLog<Paquete*> *cPaq = new ConjLog<Paquete*>();
@@ -105,7 +102,7 @@ namespace dcnet{
 			ConjLog<Paquete*>* cPaq = *estr.enEspera.obtener(ipActual);
 			if( cPaq->Cardinal() > 0 ) {
 				Paquete* p = cPaq->Minimo();
-				Conj<Lista<Compu> > conjCortos = estr.red->CaminosMin(ipActual, p->Destino());
+				Conj<Lista<Compu> > conjCortos = estr.red->CaminosMin(estr.red->Computadoras()[i], p->Destino());
 				Lista<Compu> masCorto = conjCortos.CrearIt().Siguiente();
 				masCorto.Fin();
 				Compu pcaMover = masCorto.Primero();
@@ -133,7 +130,12 @@ namespace dcnet{
 				estr.cantPaquetesEnviados.definir(ipActual,enviados);
 
 				if(enviados > *estr.cantPaquetesEnviados.obtener(estr.laQueMasEnvio->Ip()) ) {
-					*estr.laQueMasEnvio = estr.red->Computadoras()[i];
+					if (estr.laQueMasEnvio == NULL){
+						estr.laQueMasEnvio = new Compu(estr.red->Computadoras()[i]);
+					}
+					else{
+						*estr.laQueMasEnvio = estr.red->Computadoras()[i];
+					}
 				}
 			}
 		}
