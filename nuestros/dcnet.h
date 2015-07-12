@@ -28,8 +28,9 @@ namespace dcnet{
 			struct estr{
 				/*const */Red* red;
 				DiccString<Nat> cantPaquetesEnviados;
-				Lista<Compu>::Iterador laQueMasEnvio;
-				DiccString<DiccLog<Nat,Lista<Compu> >* > CaminoRecorrido;
+				//Lista<Compu>::Iterador laQueMasEnvio; //ITERADOR NO FUNCIONA,SE CAMBIO POR PUNTERO A CPU
+				Compu* laQueMasEnvio;
+				DiccString<DiccLog<Nat,Lista<Compu>* >* > CaminoRecorrido;
 				DiccString<ConjLog<Paquete* >* > enEspera;
 			};
 
@@ -41,7 +42,8 @@ namespace dcnet{
 
 			estr estr;
 			Lista<ConjLog<Paquete*>* > colasPaquete;
-			Lista<DiccLog<Nat,Lista<Compu> >* > colasCaminos;
+			Lista<DiccLog<Nat,Lista<Compu>* >* > colasCaminos;
+			Lista<Lista<Compu>*> colasRecorridos;
 		public:
 			DCNet();
 			DCNet(Red& red);//Equivalente a IniciarDCNEt
