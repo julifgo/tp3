@@ -23,29 +23,14 @@ namespace dcnet{
 	class DCNet{ 
 		private:
 
-			struct colasEspera{
-				ConjLog<int> *paquetes;
-
-				colasEspera(){
-					//paquetes = new ConjLog<int>();
-				}
-
-				~colasEspera()
-				{
-					//return;
-					cout<<"Destrucvtor colas"<<endl;
-				}
-			};
+			
 
 			struct estr{
 				/*const */Red* red;
 				DiccString<Nat> cantPaquetesEnviados;
 				Lista<Compu>::Iterador laQueMasEnvio;
-				DiccString<DiccLog<Nat,Lista<Compu> > > CaminoRecorrido;
-				DiccString<ConjLog<int > > enEspera;
-				//DiccString<ConjLog<Paquete* > > enEspera;1
-				//DiccString<colasEspera > enEspera;
-
+				DiccString<DiccLog<Nat,Lista<Compu> >* > CaminoRecorrido;
+				DiccString<ConjLog<Paquete* >* > enEspera;
 			};
 
 			struct Buffer{
@@ -55,7 +40,8 @@ namespace dcnet{
 			};
 
 			estr estr;
-			colasEspera colas;
+			Lista<ConjLog<Paquete*>* > colasPaquete;
+			Lista<DiccLog<Nat,Lista<Compu> >* > colasCaminos;
 		public:
 			DCNet();
 			DCNet(Red& red);//Equivalente a IniciarDCNEt
