@@ -82,7 +82,7 @@ namespace dcnet{
 	}
 
 
-	void Red::Conectar(const Compu& c1,const Compu& c2,Nat i1, Nat i2) {
+	void Red::Conectar(const Compu& c1,const Compu& c2,Nat& i1, Nat& i2) {
 		assert( this->vecinos.definido(c1.Ip()) && this->vecinos.definido(c2.Ip()) );
 		assert( Esta( Computadoras(), c1 ) );
 		assert( Esta( Computadoras(), c2 ) );
