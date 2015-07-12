@@ -78,14 +78,24 @@ int main()
 	Paquete *p1 = new Paquete(1,1,comp0,comp3); //Creacion de un nuevo paquete para la red
 	Paquete *p2 = new Paquete(2,1,comp0,comp2); //Creacion de un nuevo paquete para la red
 	Paquete *p3 = new Paquete(3,2,comp2,comp1); //Creacion de un nuevo paquete para la red
-	dcnet.CrearPaquete(p1); //Agrego los paquetes a dcnet. Se cargan en las listas de esperas de las compus de origen
+	/*dcnet.CrearPaquete(p1); //Agrego los paquetes a dcnet. Se cargan en las listas de esperas de las compus de origen
 	dcnet.CrearPaquete(p2);
 	dcnet.CrearPaquete(p3);
-//	dcnet.AvanzarSegundo(); #DANGER
+*/
+
+	delete p1;
+	delete p2;
+	delete p3;
+	Lista<Compu> compus = r.Computadoras();
+	cout<<"Computadoras de la red_: "<<compus<<endl;
+	
+
 	dcnet.red(); //Se recupera la red del dcnet
 	delete p1;
 	delete p2;
 	delete p3;
+
+
 
 	return 0;
 }
