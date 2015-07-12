@@ -29,7 +29,7 @@ namespace dcnet{
 			Nat aux = 0;
 			estr.cantPaquetesEnviados.definir(estr.red->Computadoras()[i].Ip(),aux);
 
-			DiccLog<Nat,Lista<Compu> >*cCamino = new DiccLog<Nat,Lista<Compu> >();
+			DiccLog<Nat,Lista<Compu>* >*cCamino = new DiccLog<Nat,Lista<Compu>* >();
 			colasCaminos.AgregarAtras(cCamino);
 			estr.CaminoRecorrido.definir(estr.red->Computadoras()[i].Ip(),cCamino);
 		}
@@ -41,6 +41,10 @@ namespace dcnet{
             delete colasPaquete.operator [](i);
             delete colasCaminos.operator [](i);
         }
+		for (Nat i = 0; i < colasRecorridos.Longitud(); i++)
+		{
+			delete colasRecorridos.operator [](i);
+		}
 		delete estr.laQueMasEnvio;
 	}
 
@@ -55,15 +59,21 @@ namespace dcnet{
 
 	const Lista<Compu> DCNet::CaminoRecorrido(Paquete* p){
 		Lista<Compu> res;
-		DiccString<DiccLog<Nat,Lista<Compu> >* >::Iterador *it = new DiccString<DiccLog<Nat,Lista<Compu> >* >::Iterador(&estr.CaminoRecorrido);
+		DiccString<DiccLog<Nat,Lista<Compu>* >* >::Iterador *it = new DiccString<DiccLog<Nat,Lista<Compu>* >* >::Iterador(&estr.CaminoRecorrido);
 		bool found = false;
+		DiccLog<Nat,Lista<Compu>* > *paquetesPc0 = *it->valorActual();
+		if(paquetesPc0->IsDefinido(p->Id())){
+			found = true;
+			res = *paquetesPc0->Significado(p->Id());
+		}
 		while(it->avanzar() && !found){
-			DiccLog<Nat,Lista<Compu> > *paquetes = *it->valorActual();
+			DiccLog<Nat,Lista<Compu>* > *paquetes = *it->valorActual();
 			if(paquetes->IsDefinido(p->Id())){
 				found = true;
-				res = paquetes->Significado(p->Id());
+				res = *paquetes->Significado(p->Id());
 			}
 		}
+		delete it;
 		return res;
 	}
 
@@ -77,8 +87,11 @@ namespace dcnet{
 		//TODO. ASSERT COMPU ORIGEN (Y DESTINO?)
 		ConjLog<Paquete*>* conj = *estr.enEspera.obtener(p->Origen().Ip());
 		conj->Definir(p);
-		DiccLog<Nat,Lista<Compu> > *dicc = *estr.CaminoRecorrido.obtener(p->Origen().Ip());
-		dicc->Definir(p->Id(),Lista<Compu>()); //TODO. Me juego la cabeza que esto va a leakear//LEAK: ES FIX Sacar el NEW? TODO:TESTEAR
+		DiccLog<Nat,Lista<Compu>* > *dicc = *estr.CaminoRecorrido.obtener(p->Origen().Ip());
+		Lista<Compu>* camino = new Lista<Compu>();
+		colasRecorridos.AgregarAtras(camino);
+		camino->AgregarAdelante(p->Origen());
+		dicc->Definir(p->Id(),camino); //TODO. Me juego la cabeza que esto va a leakear//LEAK: ES FIX Sacar el NEW? TODO:TESTEAR
 		//delete dicc;
 	}
 
@@ -99,7 +112,7 @@ namespace dcnet{
 				Compu pcaMover = masCorto.Primero();
 				if( pcaMover == p->Destino() ) {
 					cPaq->Borrar(p);
-					DiccLog<Nat,Lista<Compu> > *dicc = *estr.CaminoRecorrido.obtener(ipActual);
+					DiccLog<Nat,Lista<Compu>* > *dicc = *estr.CaminoRecorrido.obtener(ipActual);
 					dicc->Borrar(p->Id());
 					//delete dicc;
 				} else {
@@ -107,10 +120,10 @@ namespace dcnet{
 					b.compu = &pcaMover;
 					b.paquete = p;
 					buffer.AgregarAtras( b );
-					DiccLog<Nat,Lista<Compu> > *dicc = *estr.CaminoRecorrido.obtener(ipActual);
-					Lista<Compu> camino = dicc->Significado(p->Id());
-					camino.AgregarAtras(pcaMover);
-					DiccLog<Nat,Lista<Compu> > *dicc2 = *estr.CaminoRecorrido.obtener(pcaMover.Ip());
+					DiccLog<Nat,Lista<Compu>* > *dicc = *estr.CaminoRecorrido.obtener(ipActual);
+					Lista<Compu>* camino = dicc->Significado(p->Id());
+					camino->AgregarAtras(pcaMover);
+					DiccLog<Nat,Lista<Compu>* > *dicc2 = *estr.CaminoRecorrido.obtener(pcaMover.Ip());
 					dicc2->Definir(p->Id(), camino);
 					cPaq->Borrar(p);
 					dicc->Borrar(p->Id());
