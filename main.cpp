@@ -81,8 +81,11 @@ int main()
 	dcnet.CrearPaquete(p1); //Agrego los paquetes a dcnet. Se cargan en las listas de esperas de las compus de origen
 	dcnet.CrearPaquete(p2);
 	dcnet.CrearPaquete(p3);
+//	dcnet.AvanzarSegundo(); #DANGER
 	dcnet.red(); //Se recupera la red del dcnet
-	
+	delete p1;
+	delete p2;
+	delete p3;
 
 	return 0;
 }
