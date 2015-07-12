@@ -35,7 +35,6 @@ namespace dcnet{
 			};
 
 			struct Buffer{
-				Buffer(){};
 				Compu* compu;
 				Paquete* paquete;
 			};
