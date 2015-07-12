@@ -6,7 +6,6 @@
 #include "../nuestros/dcnet.h"
 
 using namespace dcnet;
-//#include ...
 
 namespace aed2 {
 
@@ -21,9 +20,11 @@ class Driver
         /// Observadores Red //////////////////////////////////////////////////////////
 
         Nat CantidadComputadoras() const;
+
         const Computadora& IesimaComputadora(const Nat i) const ;
         
         Nat CantidadInterfacesDe(const Computadora& c) const;
+        
         const Interfaz& IesimaInterfazDe(const Computadora& c, const Nat i) const ;
 
         const Interfaz& IntefazUsada(const Computadora& c1, const Computadora& c2) const;
@@ -40,11 +41,13 @@ class Driver
        /// Observadores DCNet //////////////////////////////////////////////////////////////
     
         Nat CantidadNodosRecorridosPor(const Paquete& p) const;
+        
         const Computadora& IesimoNodoRecorridoPor(const Paquete& p, const Nat i) const;
 
         Nat CantidadEnviadosPor(const Computadora& c) const;
     
         Nat CantidadEnEsperaEn(const Computadora& c) const;
+        
         const Paquete& IesimoEnEsperaEn(const Computadora& c, const Nat i) const;
 
         /// Acciones DCNet ////////////////////////////////////////////////////////////
@@ -57,21 +60,18 @@ class Driver
         
         // Auxiliares para ver los paquetes
         const Computadora& origen(const Paquete& p) const; 
+        
         const Computadora& destino(const Paquete& p) const; 
+        
         Nat prioridad(const Paquete& p) const; 
         
     private:
 
         Red* red;
+        
         DCNet* dcnet;
 
-        const Compu& dameCompu(const Computadora& c) const;
-
-    /*********************************************************************
-     * TODO: Va a ser necesario instanciar privadamente un Modulo DCNet *
-     * con el cuál interactuar. Además, pueden declarar todas las        *
-     * funciones auxiliares que les hagan falta.                         *
-     *********************************************************************/
+        const Compu dameCompu(const Computadora& c) const;
 
 }; // class Driver
 
