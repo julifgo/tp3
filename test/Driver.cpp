@@ -17,6 +17,11 @@ Driver::~Driver() {
 
 // TAD RED
 Nat Driver::CantidadComputadoras() const {
+
+    //Aca es el problema!
+
+    cout << this->red->Computadoras().Longitud() << endl;
+
     return this->red->Computadoras().Longitud();
 }
 
@@ -27,10 +32,6 @@ const Computadora& Driver::IesimaComputadora(const Nat i) const {
 }
         
 Nat Driver::CantidadInterfacesDe(const Computadora& c) const {
-
-    cout << dameCompu(c) << endl;
-
-
     return dameCompu(c).Interfaces().Cardinal();
 }
 
