@@ -52,7 +52,7 @@ bool Driver::conectadas(const Computadora& c1, const Computadora& c2) const {
 
 // TAD DCNET
 
-/*void Driver::AgregarComputadora(const Computadora& ip, const Conj<Interfaz>& ci) {
+void Driver::AgregarComputadora(const Computadora& ip, const Conj<Interfaz>& ci) {
     Compu c(ip);
 
     Conj<Interfaz>::const_Iterador it = ci.CrearIt();
@@ -63,7 +63,7 @@ bool Driver::conectadas(const Computadora& c1, const Computadora& c2) const {
     }
 
     this->red->AgCompu(c);
-}*/
+}
 
 Nat Driver::CantidadNodosRecorridosPor(const Paquete& p) const {
     assert(dcnet != NULL);
@@ -71,7 +71,7 @@ Nat Driver::CantidadNodosRecorridosPor(const Paquete& p) const {
     return this->dcnet->CaminoRecorrido(p).Longitud();
 }
 
-const Computadora& IesimoNodoRecorridoPor(const Paquete& p, const Nat i) const {
+const Computadora& Driver::IesimoNodoRecorridoPor(const Paquete& p, const Nat i) const {
 
 }
 
