@@ -5,11 +5,8 @@ using namespace dcnet;
 
 namespace aed2 {
 
-Driver::Driver() {
-    this->red = new Red();
-    this->dcnet = new DCNet( *this->red );
-}
-
+Driver::Driver(): red(new Red()), dcnet(NULL) {}
+/*
 Driver::~Driver() {
     delete dcnet;
     delete red;
@@ -70,6 +67,6 @@ const Compu Driver::dameCompu(const Computadora& c) const {
 
     return red->Computadoras()[i];
 }
-
+*/
 
 } // namespace aed2

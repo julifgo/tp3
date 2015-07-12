@@ -70,9 +70,6 @@ namespace dcnet{
 		Lista<Compu>::Iterador it = this->computadoras.CrearItUlt();
 		it.AgregarComoSiguiente( compu );
 
-
-		//cout << "computadoras de red " << this->computadoras << endl;
-
 		Arreglo<bool> arr = ArmarArreglo( compu.Interfaces() );
 
 		this->usaInterfaz.definir(compu.Ip(),arr);
