@@ -81,7 +81,7 @@ int main()
 	/*dcnet.CrearPaquete(p1); //Agrego los paquetes a dcnet. Se cargan en las listas de esperas de las compus de origen
 	dcnet.CrearPaquete(p2);
 	dcnet.CrearPaquete(p3);
-	dcnet.red(); //Se recupera la red del dcnet*/
+*/
 
 	delete p1;
 	delete p2;
@@ -89,6 +89,12 @@ int main()
 	Lista<Compu> compus = r.Computadoras();
 	cout<<"Computadoras de la red_: "<<compus<<endl;
 	
+
+	dcnet.red(); //Se recupera la red del dcnet
+	delete p1;
+	delete p2;
+	delete p3;
+
 
 
 	return 0;

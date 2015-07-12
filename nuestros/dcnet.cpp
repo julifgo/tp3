@@ -40,7 +40,7 @@ namespace dcnet{
         {
             delete colasPaquete.operator [](i);
             delete colasCaminos.operator [](i);
-        }	
+        }
 	}
 
 	const Red& DCNet::red() const{
@@ -74,8 +74,10 @@ namespace dcnet{
 
 	void DCNet::CrearPaquete(Paquete* p){
 		//TODO. ASSERT COMPU ORIGEN (Y DESTINO?)
+		ConjLog<Paquete*>* conj = *estr.enEspera.obtener(p->Origen().Ip());
+		conj->Definir(p);
 		DiccLog<Nat,Lista<Compu> > *dicc = *estr.CaminoRecorrido.obtener(p->Origen().Ip());
-		dicc->Definir(p->Id(),*new Lista<Compu>()); //TODO. Me juego la cabeza que esto va a leakear
+		dicc->Definir(p->Id(),Lista<Compu>()); //TODO. Me juego la cabeza que esto va a leakear//LEAK: ES FIX Sacar el NEW? TODO:TESTEAR
 		//delete dicc;
 	}
 
@@ -86,7 +88,7 @@ namespace dcnet{
 
 		while( it.HaySiguiente() ) {
 
-			ConjLog<Paquete*>* cPaq ;//= estr.enEspera.obtener(it.Siguiente().Ip());
+			ConjLog<Paquete*>* cPaq = *estr.enEspera.obtener(it.Siguiente().Ip());
 			if( cPaq->Cardinal() > 0 ) {
 				Paquete* p = cPaq->Minimo();
 				Conj<Lista<Compu> >::const_Iterador itComp = estr.red->CaminosMin(it.Siguiente(), p->Destino()).CrearIt();
