@@ -47,14 +47,11 @@ class Ab {
     T& Raiz() const;
     Ab<T>* Izq();
     Ab<T>* Der();
-    void Izq(Ab<T>&);
-
-    void Der(Ab<T>&);
+    void Izq(Ab<T>*);
+    void Der(Ab<T>*);
 
     Nat Tamano() const;
 };
-
-// Implementación de métodos públicos
 
 template<typename T>
 Ab<T>::Ab() : _raiz(NULL), _cardinal(0) {
@@ -69,8 +66,8 @@ Ab<T>::Ab(const Ab<T>& otro) {
 template<typename T>
 Ab<T>::Ab(Ab<T>* i, const T& r, Ab<T>* d) {
     _raiz = new Nodo(i, r, d);
-    Nat cardinalIzq = i==NULL?0:i->_cardinal;
-    Nat cardinalDer = d==NULL?0:d->_cardinal;
+    Nat cardinalIzq = i->_raiz==NULL?0:i->_cardinal;
+    Nat cardinalDer = d->_raiz==NULL?0:d->_cardinal;
     _cardinal = cardinalIzq + cardinalDer + 1;
 }
 
@@ -81,7 +78,8 @@ Ab<T>::~Ab() {
 
 template<typename T>
 Ab<T>& Ab<T>::operator=(const Ab<T>& otro) {
-    _raiz = otro._raiz == NULL ? NULL : new Nodo(*(otro._raiz));
+	delete _raiz;
+	_raiz = otro._raiz == NULL ? NULL : new Nodo(*(otro._raiz));
     _cardinal = otro._cardinal;
     return *this;
 }
@@ -110,17 +108,23 @@ Ab<T>* Ab<T>::Der() {
 }
 
 template<typename T>
-void Ab<T>::Izq(Ab<T>& i) {
+void Ab<T>::Izq(Ab<T>* i) {
     assert(!IsNil());
   //  delete _raiz->_izq;
-     _raiz->_izq = i._raiz==NULL? new Ab<T>():&i;
+     _raiz->_izq = i;
+     Nat cardinalIzq = i->_raiz==NULL?0:i->_cardinal;
+     Nat cardinalDer = _raiz->_der->_cardinal;
+     _cardinal = cardinalIzq + cardinalDer + 1;
 }
 
 template<typename T>
-void Ab<T>::Der(Ab<T>& d) {
+void Ab<T>::Der(Ab<T>* d) {
     assert(!IsNil());
    // delete _raiz->_der;
-    _raiz->_der = d._raiz==NULL? new Ab<T>():&d;
+    _raiz->_der = d;
+    Nat cardinalIzq = _raiz->_izq->_cardinal;
+    Nat cardinalDer = d->_raiz==NULL?0:d->_cardinal;
+    _cardinal = cardinalIzq + cardinalDer + 1;
 }
 
 template<typename T>

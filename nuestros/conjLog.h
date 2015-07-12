@@ -16,13 +16,13 @@ namespace dcnet {
 	class ConjLog{
 	public:
 		ConjLog<T>(){
-			//cout<<"Creando conjLog"<<endl;
+			cout<<"Creando conjLog"<<endl;
 		}
 		~ConjLog<T>(){
-
+			cout<<"Destruyendo conjLog"<<endl;
 		}
 
-		void Definir(T& valor){
+		void Definir(const T& valor){
 			conj.Definir(valor,valor);
 		}
 
@@ -36,7 +36,7 @@ namespace dcnet {
 			return conj.IsDefinido(valor);
 		}
 
-		const Nat Cardinal(){
+		const Nat Cardinal() const{
 			return conj.CantClaves();
 		}
 
