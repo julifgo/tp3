@@ -28,7 +28,8 @@ namespace dcnet{
 			struct estr{
 				/*const */Red* red;
 				DiccString<Nat> cantPaquetesEnviados;
-				Lista<Compu>::Iterador laQueMasEnvio;
+				//Lista<Compu>::Iterador laQueMasEnvio; //ITERADOR NO FUNCIONA,SE CAMBIO POR PUNTERO A CPU
+				Compu* laQueMasEnvio;
 				DiccString<DiccLog<Nat,Lista<Compu> >* > CaminoRecorrido;
 				DiccString<ConjLog<Paquete* >* > enEspera;
 			};
