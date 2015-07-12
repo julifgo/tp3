@@ -6,43 +6,64 @@ using namespace aed2;
 using namespace std;
 
 namespace dcnet{
-	typedef String IP;
-	//Equivalente en TP a operacion Crear(ip: ip)
-		Compu::Compu(const IP ip){
-			estr.ip = ip; 
-			estr.interfaces = Conj<Interfaz>();
+
+		//Constructores ----------------------------------
+
+		Compu::Compu(const IP ip) {
+			this->ip = ip;
+			this->interfaces = new Conj<Interfaz>();
 		}
-		/// Crea por copia una compu (operación Copiar())
-  		Compu::Compu(const Compu& otra){
-  			this->estr.ip = otra.estr.ip;
-  			this->estr.interfaces = Conj<Interfaz>(otra.estr.interfaces);
-  		}
-		Compu::~Compu(){
-			
-		}
-		const IP& Compu::Ip() const{
-			return this->estr.ip;
-		}
-		const Conj<Interfaz>& Compu::Interfaces() const{ //Se devuelve res como referencia a las interfaces pero no son modificables
-			return this->estr.interfaces;
-		} 
-		void Compu::AgInterfaz(const Interfaz interfaz){
-			assert(!estr.interfaces.Pertenece(interfaz));
-			this->estr.interfaces.AgregarRapido(interfaz);
-		}
-		/// Operacion de igualdad entre dos compus
-  		bool Compu::operator==(const Compu& otra) const{
-  			return this->estr.ip == otra.estr.ip;
+
+  		Compu::Compu(const Compu& otra) {
+  			*this = otra;
   		}
 
-  		bool Compu::operator!=(const Compu& otra) const{
-  		  	return !(this->estr.ip == otra.estr.ip);
+  		//Destructor -------------------------------------
+
+		Compu::~Compu() { 
+			delete this->interfaces;
+		}
+
+		//Getters ----------------------------------------
+
+		const IP& Compu::Ip() const {
+			return this->ip;
+		}
+
+		const Conj<Interfaz>& Compu::Interfaces() const {
+			return *this->interfaces;
+		}
+
+		//Setters ----------------------------------------
+
+		void Compu::AgInterfaz(const Interfaz interfaz) {
+			//assert(!estr.interfaces.Pertenece(interfaz));
+
+			this->interfaces->AgregarRapido(interfaz);
+		}
+
+		//Operadores -------------------------------------
+
+  		Compu& Compu::operator=(const Compu& otra) {
+  			this->ip = otra.Ip();
+
+			//delete this->interfaces; //La posición pudo estar previamente seteada.
+  			
+  			this->interfaces = new Conj<Interfaz>(otra.Interfaces());
+
+  			return *this;
   		}
 
-		std::ostream& operator<<(std::ostream& os, const Compu& c)
-		{
-			os << c.Ip();
-		  	return os;
+  		bool Compu::operator==(const Compu& otra) const {
+  			return this->ip == otra.Ip() && *this->interfaces == otra.Interfaces();
+  		}
+
+  		bool Compu::operator!=(const Compu& otra) const {
+  		  	return !(this->ip == otra.Ip() && *this->interfaces == otra.Interfaces());
+  		}
+
+		std::ostream& operator<<(std::ostream& os, const Compu& c) {
+		  	return os << c.Ip();
 		}
 
 }
