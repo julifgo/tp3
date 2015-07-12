@@ -6,7 +6,7 @@ using namespace dcnet;
 namespace aed2 {
 
 Driver::Driver(): red(new Red()), dcnet(NULL) {}
-/*
+
 Driver::~Driver() {
     delete dcnet;
     delete red;
@@ -19,8 +19,8 @@ Nat Driver::CantidadComputadoras() const {
 
 const Computadora& Driver::IesimaComputadora(const Nat i) const {
     assert( i < CantidadComputadoras() );
-
-    return this->red->Computadoras()[i].Ip();
+    Computadora* res = new Computadora(red->Computadoras()[i].Ip());
+    return *res;
 }
      
 Nat Driver::CantidadInterfacesDe(const Computadora& c) const {
@@ -67,6 +67,6 @@ const Compu Driver::dameCompu(const Computadora& c) const {
 
     return red->Computadoras()[i];
 }
-*/
+
 
 } // namespace aed2
