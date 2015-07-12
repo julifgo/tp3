@@ -137,24 +137,27 @@ void test_red_agregarComputadora() {
 	Driver dr;
 
 	ASSERT_EQ(dr.CantidadComputadoras(), 0);
+	Computadora c = "192.168.0.1";
+	Conj<Interfaz> i;
 
-	//Computadora c = "192.168.0.1";
-	//Conj<Interfaz> i;
+	i.Agregar(0);
+	i.Agregar(1);
+	i.Agregar(2);
 
-	//i.Agregar(0);
-	//i.Agregar(1);
-	//i.Agregar(2);
+	Computadora c1 = "192.168.0.2";
 
-	//Computadora c1 = "192.168.0.2";
+	dr.AgregarComputadora(c, i);
+	/** /
+	dr.AgregarComputadora(c1, i);
 
-	//dr.AgregarComputadora(c, i);
-	//dr.AgregarComputadora(c1, i);
 
-	//ASSERT_EQ(dr.CantidadComputadoras(), 2);
-	//ASSERT_EQ(dr.CantidadInterfacesDe(c), 3);
+	ASSERT_EQ(dr.CantidadComputadoras(), 2);
+	ASSERT_EQ(dr.CantidadInterfacesDe(c), 3);
 
-	//cout << "llegon" << endl;
-	//ASSERT_EQ(dr.IesimaComputadora(0), c);
+	cout << "llegon" << endl;
+	ASSERT_EQ(dr.IesimaComputadora(0), c);
+
+	/**/
 	//ASSERT_EQ(dr.IesimaInterfazDe(c, 0), 0);
 	//ASSERT_EQ(dr.IesimaInterfazDe(c, 1), 1);
 	//ASSERT_EQ(dr.IesimaInterfazDe(c, 2), 2);

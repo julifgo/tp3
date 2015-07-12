@@ -11,17 +11,12 @@ Driver::Driver() {
 }
 
 Driver::~Driver() {
-    delete red;
     delete dcnet;
+    delete red;
 }
 
 // TAD RED
 Nat Driver::CantidadComputadoras() const {
-
-    //Aca es el problema!
-
-    cout << this->red->Computadoras().Longitud() << endl;
-
     return this->red->Computadoras().Longitud();
 }
 
@@ -30,7 +25,7 @@ const Computadora& Driver::IesimaComputadora(const Nat i) const {
 
     return this->red->Computadoras()[i].Ip();
 }
-        
+     
 Nat Driver::CantidadInterfacesDe(const Computadora& c) const {
     return dameCompu(c).Interfaces().Cardinal();
 }
@@ -54,6 +49,7 @@ bool Driver::conectadas(const Computadora& c1, const Computadora& c2) const {
 }
 
 // TAD DCNET
+
 void Driver::AgregarComputadora(const Computadora& ip, const Conj<Interfaz>& ci) {
     Compu c(ip);
 
@@ -66,7 +62,7 @@ void Driver::AgregarComputadora(const Computadora& ip, const Conj<Interfaz>& ci)
 
     this->red->AgCompu(c);
 }
-        
+
 const Compu Driver::dameCompu(const Computadora& c) const {
     Nat i = 0;
 
@@ -74,5 +70,6 @@ const Compu Driver::dameCompu(const Computadora& c) const {
 
     return red->Computadoras()[i];
 }
+
 
 } // namespace aed2
