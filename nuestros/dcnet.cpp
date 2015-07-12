@@ -10,6 +10,7 @@ namespace dcnet{
 
 	DCNet::DCNet(){}
 	DCNet::DCNet(Red& red){
+		//colas = new colasEspera();
 		estr.red = &red;
 		estr.laQueMasEnvio = estr.red->Computadoras().CrearIt();
 		/*Lista<Compu>::Iterador it = estr.red->Computadoras().CrearIt();
@@ -22,12 +23,13 @@ namespace dcnet{
 		for (Nat i = 0; i < estr.red->Computadoras().Longitud(); i++)
 		{
 			cout<<"1"<<endl;
-			colasEspera c = colasEspera();
+			//colasEspera c = colasEspera();
 			//c.paquetes = ConjLog<Paquete*>();
 			
 			//c.paquetes = ConjLog<Paquete*>();
+			colas.paquetes = new ConjLog<int>();
 			cout<<"2"<<endl;
-			estr.enEspera.definir(estr.red->Computadoras()[i].Ip(),c); //TODO. Pierde memoria por cada creacion de un new Conj
+			estr.enEspera.definir(estr.red->Computadoras()[i].Ip(),*colas.paquetes); //TODO. Pierde memoria por cada creacion de un new Conj
 			cout<<"3"<<endl;
 			/*estr.cantPaquetesEnviados.definir(estr.red->Computadoras()[i].Ip(),aux);
 			estr.CaminoRecorrido.definir(estr.red->Computadoras()[i].Ip(),*new DiccLog<Nat,Lista<Compu> >());*/

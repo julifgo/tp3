@@ -16,10 +16,10 @@ namespace dcnet {
 	class ConjLog{
 	public:
 		ConjLog<T>(){
-			//cout<<"Creando conjLog"<<endl;
+			cout<<"Creando conjLog"<<endl;
 		}
 		~ConjLog<T>(){
-
+			cout<<"Destruyendo conjLog"<<endl;
 		}
 
 		void Definir(const T& valor){
