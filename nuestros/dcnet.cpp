@@ -11,9 +11,9 @@ namespace dcnet{
 	DCNet::DCNet(){}
 	DCNet::DCNet(Red& red){
 		estr.red = &red;
-		estr.laQueMasEnvio = estr.red->Computadoras().CrearIt();
-		//Lista<Compu>::Iterador it = estr.red->Computadoras().CrearIt();
-		/*while(it.HaySiguiente()){ //NO ANDA EL ITERADOR DE LISTA ! ! 
+		estr.laQueMasEnvio = new Compu(estr.red->Computadoras().Primero());
+		/*Lista<Compu>::Iterador it = estr.red->Computadoras().CrearIt();
+		while(it.HaySiguiente()){ //NO ANDA EL ITERADOR DE LISTA. VER EN MAIN QUE LISTA DE RED ANDA PERFECTO !
 			cout<<it.Siguiente().Ip()<<endl;
 			//ConjLog<Paquete> cPaq;
 			//estr.enEspera.definir(it.Siguiente().Ip(),cPaq);
@@ -21,19 +21,35 @@ namespace dcnet{
 		}*/
 		for (Nat i = 0; i < estr.red->Computadoras().Longitud(); i++)
 		{
-			estr.enEspera.definir(estr.red->Computadoras()[i].Ip(),*new ConjLog<Paquete*>()); //TODO. Pierde memoria por cada creacion de un new Conj
-			Nat aux =0;
+			ConjLog<Paquete*> *cPaq = new ConjLog<Paquete*>();
+			colasPaquete.AgregarAtras(cPaq);
+			estr.enEspera.definir(estr.red->Computadoras()[i].Ip(),cPaq);
+
+
+			Nat aux = 0;
 			estr.cantPaquetesEnviados.definir(estr.red->Computadoras()[i].Ip(),aux);
-			estr.CaminoRecorrido.definir(estr.red->Computadoras()[i].Ip(),*new DiccLog<Nat,Lista<Compu> >());
-			//delete cPaq;
+
+			DiccLog<Nat,Lista<Compu>* >*cCamino = new DiccLog<Nat,Lista<Compu>* >();
+			colasCaminos.AgregarAtras(cCamino);
+			estr.CaminoRecorrido.definir(estr.red->Computadoras()[i].Ip(),cCamino);
 		}
 	}
 	DCNet::~DCNet(){
-		//cout<<"destructor dcnet"<<endl;	
+		cout<<"destructor dcnet"<<endl;
+		for (Nat i = 0; i < estr.red->Computadoras().Longitud(); i++)
+        {
+            delete colasPaquete.operator [](i);
+            delete colasCaminos.operator [](i);
+        }
+		for (Nat i = 0; i < colasRecorridos.Longitud(); i++)
+		{
+			delete colasRecorridos.operator [](i);
+		}
+		delete estr.laQueMasEnvio;
 	}
 
-	const Red& DCNet::red() const{
-		return *estr.red; 
+	const Red* DCNet::red() const{
+		return estr.red; 
 	}
 
 	Nat DCNet::CantidadEnviados(const Compu& c){
@@ -43,74 +59,89 @@ namespace dcnet{
 
 	const Lista<Compu> DCNet::CaminoRecorrido(Paquete* p){
 		Lista<Compu> res;
-		DiccString<DiccLog<Nat,Lista<Compu> > >::Iterador *it = new DiccString<DiccLog<Nat,Lista<Compu> > >::Iterador(&estr.CaminoRecorrido);
+		DiccString<DiccLog<Nat,Lista<Compu>* >* >::Iterador *it = new DiccString<DiccLog<Nat,Lista<Compu>* >* >::Iterador(&estr.CaminoRecorrido);
 		bool found = false;
+		DiccLog<Nat,Lista<Compu>* > *paquetesPc0 = *it->valorActual();
+		if(paquetesPc0->IsDefinido(p->Id())){
+			found = true;
+			res = *paquetesPc0->Significado(p->Id());
+		}
 		while(it->avanzar() && !found){
-			DiccLog<Nat,Lista<Compu> > *paquetes = it->valorActual();
+			DiccLog<Nat,Lista<Compu>* > *paquetes = *it->valorActual();
 			if(paquetes->IsDefinido(p->Id())){
 				found = true;
-				res = paquetes->Significado(p->Id());
+				res = *paquetes->Significado(p->Id());
 			}
 		}
+		delete it;
 		return res;
 	}
 
-	const ConjLog<Paquete*> DCNet::EnEspera(const Compu& c){
+	const ConjLog<Paquete*>* DCNet::EnEspera(const Compu& c){
 		assert(estr.enEspera.definido(c.Ip()));
 		return *estr.enEspera.obtener(c.Ip());
-		//return *new ConjLog<Paquete*>();
 	}
 
 	void DCNet::CrearPaquete(Paquete* p){
 		//TODO. ASSERT COMPU ORIGEN (Y DESTINO?)
-
-		estr.enEspera.obtener(p->Origen().Ip())->Definir(p);
-		estr.CaminoRecorrido.obtener(p->Origen().Ip())->Definir(p->Id(),*new Lista<Compu>());
-
+		ConjLog<Paquete*>* conj = *estr.enEspera.obtener(p->Origen().Ip());
+		conj->Definir(p);
+		DiccLog<Nat,Lista<Compu>* > *dicc = *estr.CaminoRecorrido.obtener(p->Origen().Ip());
+		Lista<Compu>* camino = new Lista<Compu>();
+		colasRecorridos.AgregarAtras(camino);
+		camino->AgregarAdelante(p->Origen());
+		dicc->Definir(p->Id(),camino); //TODO. Me juego la cabeza que esto va a leakear//LEAK: ES FIX Sacar el NEW? TODO:TESTEAR
+		//delete dicc;
 	}
 
 
 	void DCNet::AvanzarSegundo(){
-		Lista<Compu>::Iterador it = estr.red->Computadoras().CrearIt();
+		//Lista<Compu>::Iterador it = estr.red->Computadoras().CrearIt();
 		Lista<Buffer> buffer; 
 
-		while( it.HaySiguiente() ) {
-
-			ConjLog<Paquete*>* cPaq = estr.enEspera.obtener(it.Siguiente().Ip());
+		for (Nat i = 0; i < estr.red->Computadoras().Longitud(); i++)
+			{
+			IP ipActual = estr.red->Computadoras()[i].Ip();
+			ConjLog<Paquete*>* cPaq = *estr.enEspera.obtener(ipActual);
 			if( cPaq->Cardinal() > 0 ) {
 				Paquete* p = cPaq->Minimo();
-				Conj<Lista<Compu> >::const_Iterador itComp = estr.red->CaminosMin(it.Siguiente(), p->Destino()).CrearIt();
-				Lista<Compu> masCorto = itComp.Siguiente();
+				Conj<Lista<Compu> > conjCortos = estr.red->CaminosMin(ipActual, p->Destino());
+				Lista<Compu> masCorto = conjCortos.CrearIt().Siguiente();
 				masCorto.Fin();
 				Compu pcaMover = masCorto.Primero();
 				if( pcaMover == p->Destino() ) {
 					cPaq->Borrar(p);
-					estr.CaminoRecorrido.obtener(it.Siguiente().Ip())->Borrar(p->Id());
+					DiccLog<Nat,Lista<Compu>* > *dicc = *estr.CaminoRecorrido.obtener(ipActual);
+					dicc->Borrar(p->Id());
+					//delete dicc;
 				} else {
 					Buffer b;
 					b.compu = &pcaMover;
 					b.paquete = p;
 					buffer.AgregarAtras( b );
-					Lista<Compu> camino = estr.CaminoRecorrido.obtener(it.Siguiente().Ip())->Significado(p->Id());
-					camino.AgregarAtras(pcaMover);
-					estr.CaminoRecorrido.obtener(pcaMover.Ip())->Definir(p->Id(), camino);
+					DiccLog<Nat,Lista<Compu>* > *dicc = *estr.CaminoRecorrido.obtener(ipActual);
+					Lista<Compu>* camino = dicc->Significado(p->Id());
+					camino->AgregarAtras(pcaMover);
+					DiccLog<Nat,Lista<Compu>* > *dicc2 = *estr.CaminoRecorrido.obtener(pcaMover.Ip());
+					dicc2->Definir(p->Id(), camino);
 					cPaq->Borrar(p);
-					estr.CaminoRecorrido.obtener(it.Siguiente().Ip())->Borrar(p->Id());
+					dicc->Borrar(p->Id());
+					//delete dicc;
+					//delete dicc2;
 				}
-				Nat enviados = (*estr.cantPaquetesEnviados.obtener(it.Siguiente().Ip()) + 1); //?
+				Nat enviados = (*estr.cantPaquetesEnviados.obtener(ipActual) + 1); //?
+				estr.cantPaquetesEnviados.definir(ipActual,enviados);
 
-				if(enviados > *estr.cantPaquetesEnviados.obtener(estr.laQueMasEnvio.Siguiente().Ip()) ) {
-					estr.laQueMasEnvio = it;
+				if(enviados > *estr.cantPaquetesEnviados.obtener(estr.laQueMasEnvio->Ip()) ) {
+					*estr.laQueMasEnvio = estr.red->Computadoras()[i];
 				}
 			}
-
-			it.Avanzar();
 		}
 
 		Lista<Buffer>::const_Iterador itBuffer = buffer.CrearIt();
 
 		while( itBuffer.HaySiguiente() ) {
-			ConjLog<Paquete*> cjaMod = *estr.enEspera.obtener(itBuffer.Siguiente().compu->Ip());
+			ConjLog<Paquete*> cjaMod;// = *estr.enEspera.obtener(itBuffer.Siguiente().compu->Ip());
 			Paquete *paq = itBuffer.Siguiente().paquete;
 			cjaMod.Definir(paq);
 			itBuffer.Avanzar();
@@ -118,18 +149,22 @@ namespace dcnet{
 	}
 
 	bool DCNet::IsPaqueteEnTransito(Paquete* p){
-		//TODO. sin testear, borrar cuando se pueda y se testee
-		Lista<Compu>::const_Iterador it = estr.red->Computadoras().CrearIt();
+		//Lista<Compu>::const_Iterador it = estr.red->Computadoras().CrearIt(); //No anda el iterador de la list
 		bool encontrado = false;
-		while ( it.HaySiguiente() && !encontrado ) {
-			encontrado = estr.enEspera.obtener(it.Siguiente().Ip())->Pertenece(p);
-			it.Avanzar();
+		Nat i = 0;
+		while(i < estr.red->Computadoras().Longitud() && !encontrado)
+		//for (Nat i = 0; i < estr.red->Computadoras().Longitud(); i++)
+		{
+			ConjLog<Paquete* >*conj  = *estr.enEspera.obtener(estr.red->Computadoras()[i].Ip());
+			encontrado = conj->Pertenece(p);
+			i++;
+			//it.Avanzar();
 		}
 
 		return encontrado;
 	}
 
 	const Compu DCNet::LaQueMasEnvio() const{
-		return estr.laQueMasEnvio.Siguiente();
+		return *estr.laQueMasEnvio;
 	}
 }

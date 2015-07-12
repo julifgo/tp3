@@ -22,13 +22,16 @@ namespace dcnet{
 
 	class DCNet{ 
 		private:
+
+			
+
 			struct estr{
 				/*const */Red* red;
 				DiccString<Nat> cantPaquetesEnviados;
-				Lista<Compu>::Iterador laQueMasEnvio;
-				DiccString<DiccLog<Nat,Lista<Compu> > > CaminoRecorrido;
-				DiccString<ConjLog<Paquete* > > enEspera;
-
+				//Lista<Compu>::Iterador laQueMasEnvio; //ITERADOR NO FUNCIONA,SE CAMBIO POR PUNTERO A CPU
+				Compu* laQueMasEnvio;
+				DiccString<DiccLog<Nat,Lista<Compu>* >* > CaminoRecorrido;
+				DiccString<ConjLog<Paquete* >* > enEspera;
 			};
 
 			struct Buffer{
@@ -38,14 +41,17 @@ namespace dcnet{
 			};
 
 			estr estr;
+			Lista<ConjLog<Paquete*>* > colasPaquete;
+			Lista<DiccLog<Nat,Lista<Compu>* >* > colasCaminos;
+			Lista<Lista<Compu>*> colasRecorridos;
 		public:
 			DCNet();
 			DCNet(Red& red);//Equivalente a IniciarDCNEt
 			~DCNet();
-			const Red& red() const;
+			const Red* red() const;
 			Nat CantidadEnviados(const Compu& c) /*const*/; //TODO. El acceso a Dicc trie no nos deja poner const
 			const Lista<Compu> CaminoRecorrido(Paquete* p);
-			const ConjLog<Paquete*> EnEspera(const Compu& c);
+			const ConjLog<Paquete*>* EnEspera(const Compu& c);
 			void CrearPaquete(Paquete* p);
 			void AvanzarSegundo();
 			bool IsPaqueteEnTransito(Paquete* p); //retiro const porque obtemer del dicc_trie no se lo banca
