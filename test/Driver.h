@@ -35,7 +35,7 @@ class Driver
 
         void AgregarComputadora(const Computadora& ip, const Conj<Interfaz>& ci);
         
-        void Conectar(const Computadora& c1, const Interfaz& i1, const Computadora& c2, const Interfaz& i2);
+        void Conectar(const Computadora& c1, Interfaz& i1, const Computadora& c2, Interfaz& i2);
     
 
        /// Observadores DCNet //////////////////////////////////////////////////////////////

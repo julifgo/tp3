@@ -6,7 +6,7 @@ using namespace dcnet;
 namespace aed2 {
 
 Driver::Driver(): red(new Red()), dcnet(NULL) {}
-/*
+
 Driver::~Driver() {
     delete dcnet;
     delete red;
@@ -41,13 +41,17 @@ const Interfaz& Driver::IntefazUsada(const Computadora& c1, const Computadora& c
     return this->red->InterfazUsada(dameCompu(c1), dameCompu(c2));
 }
 
+void Driver::Conectar(const Computadora& c1, Interfaz& i1, const Computadora& c2, Interfaz& i2){
+    this->red->Conectar(c1,c2,i1,i2);
+}
+
 bool Driver::conectadas(const Computadora& c1, const Computadora& c2) const {
     return this->red->Conectadas(dameCompu(c1), dameCompu(c2));
 }
 
 // TAD DCNET
 
-void Driver::AgregarComputadora(const Computadora& ip, const Conj<Interfaz>& ci) {
+/*void Driver::AgregarComputadora(const Computadora& ip, const Conj<Interfaz>& ci) {
     Compu c(ip);
 
     Conj<Interfaz>::const_Iterador it = ci.CrearIt();
@@ -58,7 +62,7 @@ void Driver::AgregarComputadora(const Computadora& ip, const Conj<Interfaz>& ci)
     }
 
     this->red->AgCompu(c);
-}
+}*/
 
 const Compu Driver::dameCompu(const Computadora& c) const {
     Nat i = 0;
@@ -67,6 +71,6 @@ const Compu Driver::dameCompu(const Computadora& c) const {
 
     return red->Computadoras()[i];
 }
-*/
+
 
 } // namespace aed2
