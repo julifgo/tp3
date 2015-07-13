@@ -78,7 +78,7 @@ class Driver
         const dcnet::Paquete& FindPaquete(const Paquete& p) const;
 
 
-        Lista<Computadora*> aBorrar;
+        Lista<Compu*>* aBorrar;
 
 }; // class Driver
 

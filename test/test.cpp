@@ -204,7 +204,7 @@ void test_dcnet_paquetes() {
 	dr.AgregarComputadora(c1, i2);
 
 	dr.CrearPaquete(c,c1,1);
-	cout << dr.prioridad(0) << endl;
+	ASSERT_EQ(dr.prioridad(0),1);
 
 
 	ASSERT_EQ(dr.CantidadComputadoras(), 2);
@@ -216,7 +216,7 @@ void test_dcnet_paquetes() {
 	ASSERT_EQ(dr.IesimaInterfazDe(c, 0), 0);
 	ASSERT_EQ(dr.IesimaInterfazDe(c1, 0), 0);
 	ASSERT_EQ(dr.IesimaInterfazDe(c, 1), 1);
-	ASSERT_EQ(dr.IesimaInterfazDe(c, 2), 2);
+	ASSERT_EQ(dr.IesimaInterfazDe(c1, 0), 0);
 }
 
 int main(int argc, char **argv)
