@@ -196,6 +196,62 @@ void test_red() {
 //	ASSERT_EQ(dr.IesimaInterfazDe(c, 2), 2);
 }
 
+void test_findPaquetes() {
+
+	Driver dcnet;
+
+	Computadora c0 = "0";
+	Computadora c1 = "1";
+	Computadora c2 = "2";
+	Computadora c3 = "3";
+	Computadora c4 = "4";
+
+	Conj<Interfaz> i0;
+	Conj<Interfaz> i1;
+	Conj<Interfaz> i2;
+	Conj<Interfaz> i3;
+	Conj<Interfaz> i4;
+
+	i0.Agregar(0); i0.Agregar(1);
+	i1.Agregar(0); i1.Agregar(1); i1.Agregar(2);
+	i2.Agregar(0);
+	i3.Agregar(0); i3.Agregar(1); i3.Agregar(2); i3.Agregar(3);
+	i4.Agregar(0); i4.Agregar(2);
+
+	dcnet.AgregarComputadora(c0, i0);
+	dcnet.AgregarComputadora(c1, i1);
+	dcnet.AgregarComputadora(c2, i2);
+	dcnet.AgregarComputadora(c3, i3);
+	dcnet.AgregarComputadora(c4, i4);
+
+	Interfaz _i0 = 0;
+	Interfaz _i1 = 1;
+	Interfaz _i2 = 2;
+	Interfaz _i3 = 3;
+	Interfaz _i4 = 4;
+
+	dcnet.Conectar(c0, _i0, c1, _i0);
+	dcnet.Conectar(c0, _i1, c3, _i0);
+	dcnet.Conectar(c1, _i1, c4, _i0);
+	dcnet.Conectar(c1, _i2, c3, _i1);
+	dcnet.Conectar(c3, _i2, c2, _i0);
+
+	dcnet.CrearPaquete(c1, c3, 3);
+	dcnet.CrearPaquete(c2, c3, 3);
+	dcnet.CrearPaquete(c0, c2, 1);
+
+	ASSERT_EQ(dcnet.prioridad(0), 3);
+	//ASSERT_EQ(dcnet.prioridad(1), 3);
+	//ASSERT_EQ(dcnet.prioridad(2), 1);
+	//ASSERT_EQ(dcnet.origen(0), c1);
+	//ASSERT_EQ(dcnet.origen(1), c2);
+	//ASSERT_EQ(dcnet.origen(2), c0);
+	//ASSERT_EQ(dcnet.destino(0), c3);
+	//ASSERT_EQ(dcnet.destino(1), c3);
+	//ASSERT_EQ(dcnet.destino(2), c2);
+
+}
+
 void test_dcnet_paquetes() {
 	Driver dr;
 	Computadora c = "192.168.0.1";
@@ -237,6 +293,7 @@ int main(int argc, char **argv)
     RUN_TEST(test_dcnet_ejemplo);
     //RUN_TEST(test_dcnet_paquetes);
     RUN_TEST(test_red);
+    RUN_TEST(test_findPaquetes);
 	/******************************************************************
 	 * TODO: escribir casos de test exhaustivos para todas            *
 	 * las funcionalidades del módulo.                                *
