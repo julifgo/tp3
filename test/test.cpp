@@ -261,12 +261,12 @@ void test_findPaquetes() {
 	dcnet.CrearPaquete(c0, c2, 1);
 
 	ASSERT_EQ(dcnet.prioridad(0), 3);
-	//ASSERT_EQ(dcnet.prioridad(1), 3);
+	ASSERT_EQ(dcnet.prioridad(1), 3);
 	//ASSERT_EQ(dcnet.prioridad(2), 1);
-	//ASSERT_EQ(dcnet.origen(0), c1);
+	ASSERT_EQ(dcnet.origen(0), c1);
 	//ASSERT_EQ(dcnet.origen(1), c2);
 	//ASSERT_EQ(dcnet.origen(2), c0);
-	//ASSERT_EQ(dcnet.destino(0), c3);
+	ASSERT_EQ(dcnet.destino(0), c3);
 	//ASSERT_EQ(dcnet.destino(1), c3);
 	//ASSERT_EQ(dcnet.destino(2), c2);
 
@@ -295,7 +295,7 @@ void test_dcnet_paquetes() {
 
 	dr.CrearPaquete(c,c1,1);
 	ASSERT_EQ(dr.prioridad(0),1);
-
+	ASSERT_EQ(dr.origen(0),c);
 
 	ASSERT_EQ(dr.CantidadComputadoras(), 2);
 	ASSERT_EQ(dr.CantidadInterfacesDe(c), 3);
@@ -311,7 +311,7 @@ void test_dcnet_paquetes() {
 int main(int argc, char **argv)
 {
     RUN_TEST(test_dcnet_ejemplo);
-    //RUN_TEST(test_dcnet_paquetes);
+    RUN_TEST(test_dcnet_paquetes);
     RUN_TEST(test_red);
     RUN_TEST(test_findPaquetes);
 	/******************************************************************
