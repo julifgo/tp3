@@ -165,22 +165,12 @@ void Driver::AvanzarSegundo(){
 
 const dcnet::Paquete& Driver::FindPaquete(const Paquete& p) const {
     assert(dcnet != NULL);
-   /* for (Nat i = 0; i < dcnet->red()->Computadoras().Longitud(); i++){
-		ConjLog<dcnet::Paquete*>* conjLog = new ConjLog<dcnet::Paquete*>(*dcnet->EnEspera(dcnet->red()->Computadoras()[i].Ip()));
-		while (conjLog->Cardinal()>0) {
-			if (conjLog->Minimo()->Id() == p) {
-				return *conjLog->Minimo();
-			}
-			conjLog->Borrar(conjLog->Minimo());
-		}
-	}*/
-    Lista<dcnet::Paquete*> lista = dcnet->TodosLosPaquetes();
-    Lista<dcnet::Paquete*>::const_Iterador it= lista.CrearIt();
-       while(it.Siguiente()->Id() != p) {
-           it.Avanzar();
-       }
 
-       return *it.Siguiente();
+    Nat i = 0;
+
+    while(i < dcnet->TodosLosPaquetes().Longitud() && dcnet->TodosLosPaquetes()[i]->Id() != p) { i++; }
+
+    return *dcnet->TodosLosPaquetes()[i];
 }
 
 
