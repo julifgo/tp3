@@ -77,12 +77,18 @@ const Paquete Driver::IesimoEnEsperaEn(const Computadora& c, const Nat i){
        assert(i < paquetesEnEspera->Cardinal());
        ConjLog<dcnet::Paquete*>* paquetes = new ConjLog<dcnet::Paquete*>(*paquetesEnEspera); //TODO. Asegurarse que esto este haciendo una copia.
        Nat j = 0;
+       Lista<dcnet::Paquete*> listaPaq;
        while(j<i){
             dcnet::Paquete* paq = paquetes->Minimo();
+            listaPaq.AgregarAtras(paq);
             paquetes->Borrar(paq);
             j++;
        }
+
        dcnet::Paquete paqReturn = *paquetes->Minimo();
+       for (Nat i = 0; i < listaPaq.Longitud(); i++){
+    	   paquetes->Definir(listaPaq.operator [](i));
+       }
        return paqReturn.Id();
 }
 
