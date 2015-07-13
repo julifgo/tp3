@@ -170,11 +170,36 @@ void test_red_agregarComputadora() {
 //	ASSERT_EQ(dr.IesimaInterfazDe(c, 2), 2);
 }
 
+void test_dcnet_paquetes() {
+	Driver dr;
+	Computadora c = "192.168.0.1";
+	Conj<Interfaz> i;
+
+	i.Agregar(0);
+	i.Agregar(1);
+	i.Agregar(2);
+
+	Conj<Interfaz> i2;
+
+	i2.Agregar(0);
+	i2.Agregar(1);
+	i2.Agregar(2);
+
+	Computadora c1 = "192.168.0.2";
+
+	dr.AgregarComputadora(c, i);
+
+	dr.AgregarComputadora(c1, i2);
+
+//	dr.CrearPaquete(c,c1,1);
+//	cout << dr.prioridad(0) << endl;
+}
+
 int main(int argc, char **argv)
 {
     RUN_TEST(test_dcnet_ejemplo);
     RUN_TEST(test_red_agregarComputadora);
-	
+	RUN_TEST(test_dcnet_paquetes);
 	/******************************************************************
 	 * TODO: escribir casos de test exhaustivos para todas            *
 	 * las funcionalidades del módulo.                                *

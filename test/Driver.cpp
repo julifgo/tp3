@@ -113,7 +113,18 @@ const Computadora& Driver::laQueMasEnvio() const {
 }
 
 Nat Driver::prioridad(const Paquete& p) const {
+	 assert(dcnet != NULL);
+	 return FindPaquete(p).Prioridad();
+}
 
+const Computadora& Driver::origen(const Paquete& p) const {
+	 assert(dcnet != NULL);
+	 return FindPaquete(p).Origen().Ip();
+}
+
+const Computadora& Driver::destino(const Paquete& p) const {
+	 assert(dcnet != NULL);
+	 return FindPaquete(p).Destino().Ip();
 }
 
 const Compu Driver::dameCompu(const Computadora& c) const {
@@ -129,6 +140,22 @@ void Driver::AvanzarSegundo(){
 		this->dcnet = new DCNet(*red);
 	}
 	dcnet->AvanzarSegundo();
+}
+
+const dcnet::Paquete& Driver::FindPaquete(const Paquete& p) const {
+    assert(dcnet != NULL);
+    Lista<Compu>::const_Iterador it1 = red->Computadoras().CrearIt();
+    while (it1.HaySiguiente()) {
+        ConjLog<dcnet::Paquete*> conjLog = *dcnet->EnEspera(it1.Siguiente());
+        //Conj<paquete>::const_Iterador it2 = cola.CrearIt();
+        while (conjLog.Cardinal()>0) {
+            if (conjLog.Minimo()->Id() == p) {
+                return *conjLog.Minimo();
+            }
+            conjLog.Borrar(conjLog.Minimo());
+        }
+        it1.Avanzar();
+    }
 }
 
 

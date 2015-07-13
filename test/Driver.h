@@ -75,6 +75,9 @@ class Driver
 
         const Compu dameCompu(const Computadora& c) const;
 
+        const dcnet::Paquete& FindPaquete(const Paquete& p) const;
+
+
         Lista<Computadora*> aBorrar;
 
 }; // class Driver
