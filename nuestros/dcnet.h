@@ -43,6 +43,7 @@ namespace dcnet{
 			Lista<ConjLog<Paquete*>* > colasPaquete;
 			Lista<DiccLog<Nat,Lista<Compu>* >* > colasCaminos;
 			Lista<Lista<Compu>*> colasRecorridos;
+			Lista<Paquete*> todos;
 		public:
 			DCNet();
 			DCNet(Red& red);//Equivalente a IniciarDCNEt
@@ -56,6 +57,8 @@ namespace dcnet{
 			void AvanzarSegundo();
 			bool IsPaqueteEnTransito(Paquete* p); //retiro const porque obtemer del dicc_trie no se lo banca
 			const Compu LaQueMasEnvio() const;
+			Lista<Paquete*> TodosLosPaquetes();
+
 	};
 }
 #endif

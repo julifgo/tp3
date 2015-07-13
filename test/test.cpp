@@ -88,8 +88,6 @@ bool Comparar(const T& t, const S& s)
  
 void test_dcnet_ejemplo() {
 	
-
-
 	Conj<Interfaz> conjIc1;
 	Conj<Interfaz> conjIc2;
 	Conj<Interfaz> conjIc3;
@@ -158,9 +156,7 @@ void test_dcnet_ejemplo() {
 	ASSERT_EQ(dcnet.CantidadEnviadosPor(c3),2);
 
 	ASSERT_EQ(dcnet.laQueMasEnvio(), c3);
-
 	
-		
 }
 
 
@@ -209,11 +205,10 @@ void test_red() {
 	ASSERT(dr.InterfazUsada(c0, c1) == i_0_0);
 	ASSERT(dr.InterfazUsada(c1, c0) == i_0_1);
 
-	//cout << "llegon" << endl;
-//	ASSERT_EQ(dr.IesimaInterfazDe(c, 0), 0);
-//	ASSERT_EQ(dr.IesimaInterfazDe(c1, 0), 0);
-//	ASSERT_EQ(dr.IesimaInterfazDe(c, 1), 1);
-//	ASSERT_EQ(dr.IesimaInterfazDe(c, 2), 2);
+	ASSERT_EQ(dr.IesimaInterfazDe(c0, 0), 0);
+	ASSERT_EQ(dr.IesimaInterfazDe(c1, 0), 0);
+	ASSERT_EQ(dr.IesimaInterfazDe(c0, 1), 1);
+	ASSERT_EQ(dr.IesimaInterfazDe(c1, 2), 2);
 }
 
 void test_findPaquetes() {
@@ -262,13 +257,13 @@ void test_findPaquetes() {
 
 	ASSERT_EQ(dcnet.prioridad(0), 3);
 	ASSERT_EQ(dcnet.prioridad(1), 3);
-	//ASSERT_EQ(dcnet.prioridad(2), 1);
+	ASSERT_EQ(dcnet.prioridad(2), 1);
 	ASSERT_EQ(dcnet.origen(0), c1);
-	//ASSERT_EQ(dcnet.origen(1), c2);
-	//ASSERT_EQ(dcnet.origen(2), c0);
+	ASSERT_EQ(dcnet.origen(1), c2);
+	ASSERT_EQ(dcnet.origen(2), c0);
 	ASSERT_EQ(dcnet.destino(0), c3);
-	//ASSERT_EQ(dcnet.destino(1), c3);
-	//ASSERT_EQ(dcnet.destino(2), c2);
+	ASSERT_EQ(dcnet.destino(1), c3);
+	ASSERT_EQ(dcnet.destino(2), c2);
 
 }
 
@@ -293,6 +288,7 @@ void test_dcnet_paquetes() {
 
 	dr.AgregarComputadora(c1, i2);
 
+	dr.CrearPaquete(c,c1,1);
 	dr.CrearPaquete(c,c1,1);
 	ASSERT_EQ(dr.prioridad(0),1);
 	ASSERT_EQ(dr.origen(0),c);

@@ -81,6 +81,9 @@ class Driver
 
         Lista<dcnet::Paquete*>* aBorrarPaquetes;
 
+//        Lista<ConjLog<dcnet::Paquete*>*>* aBorrarConj;
+
+  //      Lista<const dcnet::Paquete*>* paqaborrar;
 
 }; // class Driver
 

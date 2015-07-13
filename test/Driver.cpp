@@ -16,8 +16,10 @@ Driver::~Driver() {
     for (Nat i = 0; i < aBorrarPaquetes->Longitud(); i++){
       	delete aBorrarPaquetes->operator [](i);
     }
+
     delete aBorrar;
     delete aBorrarPaquetes;
+
 }
 
 // TAD RED
@@ -164,14 +166,11 @@ void Driver::AvanzarSegundo(){
 const dcnet::Paquete& Driver::FindPaquete(const Paquete& p) const {
     assert(dcnet != NULL);
 
-    Lista<dcnet::Paquete*>::const_Iterador it = dcnet->TodosLosPaquetes();
+    Nat i = 0;
 
-    while(it.Siguiente()->Id() != p) {
-        it.Avanzar();
-    }
+    while(i < dcnet->TodosLosPaquetes().Longitud() && dcnet->TodosLosPaquetes()[i]->Id() != p) { i++; }
 
-    return *it.Siguiente();
-
+    return *dcnet->TodosLosPaquetes()[i];
 }
 
 
