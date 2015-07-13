@@ -254,6 +254,8 @@ void test_findPaquetes() {
 	dcnet.CrearPaquete(c2, c3, 3);
 	dcnet.CrearPaquete(c0, c2, 1);
 
+
+	//tests
 	ASSERT_EQ(dcnet.prioridad(0), 3);
 	ASSERT_EQ(dcnet.prioridad(1), 3);
 	ASSERT_EQ(dcnet.prioridad(2), 1);
@@ -303,12 +305,155 @@ void test_dcnet_paquetes() {
 	ASSERT_EQ(dr.IesimaInterfazDe(c1, 0), 0);
 }
 
+void test_integral() {
+
+	Driver dcnet;
+
+	//test
+	ASSERT_EQ(dcnet.CantidadComputadoras(), 0);
+
+	//Creamos las computadoras
+
+	Computadora c0 = "0";
+	Computadora c1 = "1";
+	Computadora c2 = "2";
+	Computadora c3 = "3";
+	Computadora c4 = "4";
+
+	//Agregamos las interfaces
+
+	Interfaz _i0 = 0;
+	Interfaz _i1 = 1;
+	Interfaz _i2 = 2;
+	Interfaz _i3 = 3;
+	Interfaz _i4 = 4;
+
+	Conj<Interfaz> i0;
+	Conj<Interfaz> i1;
+	Conj<Interfaz> i2;
+	Conj<Interfaz> i3;
+	Conj<Interfaz> i4;
+
+	i0.Agregar(_i0); i0.Agregar(_i1);
+	i1.Agregar(_i0); i1.Agregar(_i1); i1.Agregar(_i2);
+	i2.Agregar(_i0);
+	i3.Agregar(_i0); i3.Agregar(_i1); i3.Agregar(_i2); i3.Agregar(_i3);
+	i4.Agregar(_i0); i4.Agregar(_i2);
+
+	//Agregamos las computadoras
+
+	dcnet.AgregarComputadora(c0, i0);
+	dcnet.AgregarComputadora(c1, i1);
+	dcnet.AgregarComputadora(c2, i2);
+	dcnet.AgregarComputadora(c3, i3);
+	dcnet.AgregarComputadora(c4, i4);
+
+	//Conectamos las computadoras
+
+	dcnet.Conectar(c0, _i0, c1, _i0);
+	dcnet.Conectar(c0, _i1, c3, _i0);
+	dcnet.Conectar(c1, _i1, c4, _i0);
+	dcnet.Conectar(c1, _i2, c3, _i1);
+	dcnet.Conectar(c3, _i2, c2, _i0);
+
+	//Creamos algunos paquetes
+
+	aed2::Paquete p0 = 0;
+	aed2::Paquete p1 = 1;
+
+	dcnet.CrearPaquete(c1, c3, 3);
+	dcnet.CrearPaquete(c2, c3, 3);
+
+	//test
+	ASSERT_EQ(dcnet.CantidadComputadoras(), 5);
+
+	ASSERT(dcnet.InterfazUsada(c0, c1) == _i0);
+	ASSERT(dcnet.InterfazUsada(c1, c0) == _i0);
+	ASSERT(dcnet.InterfazUsada(c0, c3) == _i1);
+	ASSERT(dcnet.InterfazUsada(c3, c0) == _i0);
+	ASSERT(dcnet.InterfazUsada(c1, c4) == _i1);
+	ASSERT(dcnet.InterfazUsada(c4, c1) == _i0);
+	ASSERT(dcnet.InterfazUsada(c1, c3) == _i2);
+	ASSERT(dcnet.InterfazUsada(c3, c1) == _i1);
+	ASSERT(dcnet.InterfazUsada(c3, c2) == _i2);
+	ASSERT(dcnet.InterfazUsada(c2, c3) == _i0);
+
+	ASSERT(dcnet.conectadas(c1, c0));
+	ASSERT(dcnet.conectadas(c3, c0));
+	ASSERT(dcnet.conectadas(c4, c1));
+	ASSERT(dcnet.conectadas(c3, c1));
+	ASSERT(dcnet.conectadas(c2, c3));
+
+	//deberia devolver la computadora de origen
+	ASSERT_EQ(dcnet.IesimoNodoRecorridoPor(p0, 0), c1);
+	ASSERT_EQ(dcnet.IesimoNodoRecorridoPor(p1, 0), c2);
+	//deberia devolver 0 porque no se avanzó segundo
+	ASSERT_EQ(dcnet.CantidadNodosRecorridosPor(p0), 1);
+	ASSERT_EQ(dcnet.CantidadNodosRecorridosPor(p1), 1);
+
+	//deberia devolver 0 porque no se avanzó segundo
+	ASSERT_EQ(dcnet.CantidadEnviadosPor(c0), 0);
+	ASSERT_EQ(dcnet.CantidadEnviadosPor(c1), 0);	
+	ASSERT_EQ(dcnet.CantidadEnviadosPor(c2), 0);
+	ASSERT_EQ(dcnet.CantidadEnviadosPor(c3), 0);
+	ASSERT_EQ(dcnet.CantidadEnviadosPor(c4), 0);
+
+	ASSERT_EQ(dcnet.CantidadEnEsperaEn(c0), 0);
+	ASSERT_EQ(dcnet.CantidadEnEsperaEn(c1), 1);	
+	ASSERT_EQ(dcnet.CantidadEnEsperaEn(c2), 1);
+	ASSERT_EQ(dcnet.CantidadEnEsperaEn(c3), 0);
+	ASSERT_EQ(dcnet.CantidadEnEsperaEn(c4), 0);
+
+	//devuelve el paquete
+	ASSERT_EQ(dcnet.IesimoEnEsperaEn(c1, 0), 0);	
+	ASSERT_EQ(dcnet.IesimoEnEsperaEn(c2, 0), 1);
+
+	dcnet.AvanzarSegundo();
+	/**/
+	//no deberian cambiar
+	ASSERT_EQ(dcnet.CantidadComputadoras(), 5);
+
+	ASSERT(dcnet.InterfazUsada(c0, c1) == _i0);
+	ASSERT(dcnet.InterfazUsada(c1, c0) == _i0);
+	ASSERT(dcnet.InterfazUsada(c0, c3) == _i1);
+	ASSERT(dcnet.InterfazUsada(c3, c0) == _i0);
+	ASSERT(dcnet.InterfazUsada(c1, c4) == _i1);
+	ASSERT(dcnet.InterfazUsada(c4, c1) == _i0);
+	ASSERT(dcnet.InterfazUsada(c1, c3) == _i2);
+	ASSERT(dcnet.InterfazUsada(c3, c1) == _i1);
+	ASSERT(dcnet.InterfazUsada(c3, c2) == _i2);
+	ASSERT(dcnet.InterfazUsada(c2, c3) == _i0);
+
+	ASSERT(dcnet.conectadas(c1, c0));
+	ASSERT(dcnet.conectadas(c3, c0));
+	ASSERT(dcnet.conectadas(c4, c1));
+	ASSERT(dcnet.conectadas(c3, c1));
+	ASSERT(dcnet.conectadas(c2, c3));
+
+
+	//deberia devolver 0 porque no se avanzó segundo
+	ASSERT_EQ(dcnet.CantidadEnviadosPor(c0), 0);
+	ASSERT_EQ(dcnet.CantidadEnviadosPor(c1), 1);	
+	ASSERT_EQ(dcnet.CantidadEnviadosPor(c2), 1);
+	ASSERT_EQ(dcnet.CantidadEnviadosPor(c3), 0);
+	ASSERT_EQ(dcnet.CantidadEnviadosPor(c4), 0);
+
+	ASSERT_EQ(dcnet.CantidadEnEsperaEn(c0), 0);
+	ASSERT_EQ(dcnet.CantidadEnEsperaEn(c1), 0);	
+	ASSERT_EQ(dcnet.CantidadEnEsperaEn(c2), 0);
+	ASSERT_EQ(dcnet.CantidadEnEsperaEn(c3), 0);
+	ASSERT_EQ(dcnet.CantidadEnEsperaEn(c4), 0);
+
+	/**/
+}
+
 int main(int argc, char **argv)
 {
     RUN_TEST(test_dcnet_ejemplo);
     RUN_TEST(test_dcnet_paquetes);
     RUN_TEST(test_red);
     RUN_TEST(test_findPaquetes);
+    RUN_TEST(test_integral);
 	/******************************************************************
 	 * TODO: escribir casos de test exhaustivos para todas            *
 	 * las funcionalidades del módulo.                                *
