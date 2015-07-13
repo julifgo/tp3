@@ -21,11 +21,11 @@ class Driver
 
         Nat CantidadComputadoras() const; //listo
 
-        const Computadora& IesimaComputadora(const Nat i) const ; //listo
+        const Computadora IesimaComputadora(const Nat i) const ; //listo
         
         Nat CantidadInterfacesDe(const Computadora& c) const; //listo
         
-        const Interfaz& IesimaInterfazDe(const Computadora& c, const Nat i) const ; //listo
+        const Interfaz IesimaInterfazDe(const Computadora& c, const Nat i) const ; //listo
 
         const Interfaz& IntefazUsada(const Computadora& c1, const Computadora& c2) const; //listo
 
