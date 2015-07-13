@@ -5,11 +5,19 @@ using namespace dcnet;
 
 namespace aed2 {
 
-Driver::Driver(): red(new Red()), dcnet(NULL), _id(0) {}
+Driver::Driver(): red(new Red()), dcnet(NULL), _id(0) ,aBorrar(new Lista<Compu*>),aBorrarPaquetes(new Lista<dcnet::Paquete*>){}
 
 Driver::~Driver() {
     delete dcnet;
     delete red;
+    for (Nat i = 0; i < aBorrar->Longitud(); i++){
+    	delete aBorrar->operator [](i);
+    }
+    for (Nat i = 0; i < aBorrarPaquetes->Longitud(); i++){
+      	delete aBorrarPaquetes->operator [](i);
+    }
+    delete aBorrar;
+    delete aBorrarPaquetes;
 }
 
 // TAD RED
@@ -110,7 +118,7 @@ void Driver::CrearPaquete(const Computadora& origen, const Computadora& destino,
         this->dcnet = new DCNet(*red);
     }
     dcnet::Paquete* p = new dcnet::Paquete(_id, prioridad, dameCompu(origen),dameCompu(destino));
-
+    aBorrarPaquetes->AgregarAtras(p);
     this->dcnet->CrearPaquete( p );
     _id++;
 }
@@ -139,7 +147,9 @@ const Compu& Driver::dameCompu(const Computadora& c) const {
 
     while(i < red->Computadoras().Longitud() && red->Computadoras()[i].Ip() != c) { i++; }
     Compu* c1 = new Compu(red->Computadoras()[i]);
-    
+
+    aBorrar->AgregarAtras(c1);
+
     return *c1;
 }
 
@@ -154,13 +164,13 @@ const dcnet::Paquete& Driver::FindPaquete(const Paquete& p) const {
     assert(dcnet != NULL);
    // Lista<Compu>::const_Iterador it1 = red->Computadoras().CrearIt();
     for (Nat i = 0; i < dcnet->red()->Computadoras().Longitud(); i++){
-		ConjLog<dcnet::Paquete*> conjLog = *dcnet->EnEspera(dcnet->red()->Computadoras()[i].Ip());
+		ConjLog<dcnet::Paquete*>* conjLog = new ConjLog<dcnet::Paquete*>(*dcnet->EnEspera(dcnet->red()->Computadoras()[i].Ip()));
 		//Conj<paquete>::const_Iterador it2 = cola.CrearIt();
-		while (conjLog.Cardinal()>0) {
-			if (conjLog.Minimo()->Id() == p) {
-				return *conjLog.Minimo();
+		while (conjLog->Cardinal()>0) {
+			if (conjLog->Minimo()->Id() == p) {
+				return *conjLog->Minimo();
 			}
-			conjLog.Borrar(conjLog.Minimo());
+			conjLog->Borrar(conjLog->Minimo());
 		}
 	}
 }
