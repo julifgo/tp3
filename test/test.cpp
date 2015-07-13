@@ -154,7 +154,7 @@ void test_dcnet_ejemplo() {
 	ASSERT_EQ(dcnet.CantidadEnviadosPor(c1),1);
 	ASSERT_EQ(dcnet.CantidadEnviadosPor(c3),2);
 
-	//ASSERT_EQ(dcnet.laQueMasEnvio(), c3);
+	ASSERT_EQ(dcnet.laQueMasEnvio(), c3);
 	
 }
 

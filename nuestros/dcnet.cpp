@@ -94,7 +94,7 @@ namespace dcnet{
 		return res;
 	}
 
-	const ConjLog<Paquete*>* DCNet::EnEspera(const Compu& c){
+	ConjLog<Paquete*>* DCNet::EnEspera(const Compu& c){
 		assert(estr.enEspera.definido(c.Ip()));
 		return *estr.enEspera.obtener(c.Ip());
 	}
