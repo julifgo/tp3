@@ -32,7 +32,7 @@ namespace dcnet{
 		}
 	}
 	DCNet::~DCNet(){
-		cout<<"destructor dcnet"<<endl;
+		//cout<<"destructor dcnet"<<endl;
 		for (Nat i = 0; i < estr.red->Computadoras().Longitud(); i++)
         {
             delete colasPaquete.operator [](i);
@@ -163,9 +163,9 @@ namespace dcnet{
 		Lista<Buffer>::const_Iterador itBuffer = buffer.CrearIt();
 
 		while( itBuffer.HaySiguiente() ) {
-			ConjLog<Paquete*> cjaMod;// = *estr.enEspera.obtener(itBuffer.Siguiente().compu->Ip());
+			ConjLog<Paquete*> *cjaMod = *estr.enEspera.obtener(itBuffer.Siguiente().compu->Ip());
 			Paquete *paq = itBuffer.Siguiente().paquete;
-			cjaMod.Definir(paq);
+			cjaMod->Definir(paq);
 			itBuffer.Avanzar();
 		}	
 	}
