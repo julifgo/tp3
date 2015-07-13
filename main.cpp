@@ -1,4 +1,4 @@
-#include <iostream>
+/*include <iostream>
 #include <string>
 #include <cassert>
 #include "aed2.h"
@@ -15,7 +15,7 @@ using namespace dcnet;
 int main()
 {
 	
-	/**/
+
 	cout << "Creo compu 0 con interfaces 0, 1, 2, 4" << endl;
 	
 	//Creacion de Compus con Interfaces
@@ -92,7 +92,7 @@ int main()
 	/*dcnet.CrearPaquete(p1); //Agrego los paquetes a dcnet. Se cargan en las listas de esperas de las compus de origen
 	dcnet.CrearPaquete(p2);
 	dcnet.CrearPaquete(p3);
-*/
+
 
 	delete p1;
 	delete p2;
@@ -106,4 +106,4 @@ int main()
 
 
 	return 0;
-}
+}*/

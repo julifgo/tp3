@@ -37,7 +37,7 @@ const Interfaz Driver::IesimaInterfazDe(const Computadora& c, Nat i) const {
     return it.Siguiente();
 }
 
-const Interfaz& Driver::IntefazUsada(const Computadora& c1, const Computadora& c2) const {
+const Interfaz& Driver::InterfazUsada(const Computadora& c1, const Computadora& c2) const {
     return this->red->InterfazUsada(dameCompu(c1), dameCompu(c2));
 }
 
@@ -65,7 +65,7 @@ const Paquete Driver::IesimoEnEsperaEn(const Computadora& c, const Nat i){
        const ConjLog<dcnet::Paquete*>* paquetesEnEspera = dcnet->EnEspera(c);
        assert(i < paquetesEnEspera->Cardinal());
        ConjLog<dcnet::Paquete*> paquetes = *paquetesEnEspera; //TODO. Asegurarse que esto este haciendo una copia.
-       int j = 0;
+       Nat j = 0;
        while(j<i){
             dcnet::Paquete* paq = paquetes.Minimo();
             paquetes.Borrar(paq);
@@ -110,7 +110,18 @@ const Computadora& Driver::laQueMasEnvio() const {
 }
 
 Nat Driver::prioridad(const Paquete& p) const {
+	 assert(dcnet != NULL);
+	 return FindPaquete(p).Prioridad();
+}
 
+const Computadora& Driver::origen(const Paquete& p) const {
+	 assert(dcnet != NULL);
+	 return FindPaquete(p).Origen().Ip();
+}
+
+const Computadora& Driver::destino(const Paquete& p) const {
+	 assert(dcnet != NULL);
+	 return FindPaquete(p).Destino().Ip();
 }
 
 const Compu Driver::dameCompu(const Computadora& c) const {
@@ -119,6 +130,29 @@ const Compu Driver::dameCompu(const Computadora& c) const {
     while(i < red->Computadoras().Longitud() && red->Computadoras()[i].Ip() != c) { i++; }
 
     return red->Computadoras()[i];
+}
+
+void Driver::AvanzarSegundo(){
+	if (this->dcnet == NULL) {
+		this->dcnet = new DCNet(*red);
+	}
+	dcnet->AvanzarSegundo();
+}
+
+const dcnet::Paquete& Driver::FindPaquete(const Paquete& p) const {
+    assert(dcnet != NULL);
+    Lista<Compu>::const_Iterador it1 = red->Computadoras().CrearIt();
+    while (it1.HaySiguiente()) {
+        ConjLog<dcnet::Paquete*> conjLog = *dcnet->EnEspera(it1.Siguiente());
+        //Conj<paquete>::const_Iterador it2 = cola.CrearIt();
+        while (conjLog.Cardinal()>0) {
+            if (conjLog.Minimo()->Id() == p) {
+                return *conjLog.Minimo();
+            }
+            conjLog.Borrar(conjLog.Minimo());
+        }
+        it1.Avanzar();
+    }
 }
 
 

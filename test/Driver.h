@@ -27,7 +27,7 @@ class Driver
         
         const Interfaz IesimaInterfazDe(const Computadora& c, const Nat i) const ; //listo
 
-        const Interfaz& IntefazUsada(const Computadora& c1, const Computadora& c2) const; //listo
+        const Interfaz& InterfazUsada(const Computadora& c1, const Computadora& c2) const; //listo
 
         bool conectadas(const Computadora& c1, const Computadora& c2) const; //listo
 
@@ -44,11 +44,11 @@ class Driver
         
         const Computadora& IesimoNodoRecorridoPor(const Paquete& p, const Nat i) const;
 
-        Nat CantidadEnviadosPor(const Computadora& c);
+        Nat CantidadEnviadosPor(const Computadora& c); //listo
     
-        Nat CantidadEnEsperaEn(const Computadora& c);
+        Nat CantidadEnEsperaEn(const Computadora& c); //listo
         
-        const Paquete IesimoEnEsperaEn(const Computadora& c, const Nat i);
+        const Paquete IesimoEnEsperaEn(const Computadora& c, const Nat i); //listo
 
         /// Acciones DCNet ////////////////////////////////////////////////////////////
 
@@ -74,6 +74,9 @@ class Driver
         Nat _id;
 
         const Compu dameCompu(const Computadora& c) const;
+
+        const dcnet::Paquete& FindPaquete(const Paquete& p) const;
+
 
         Lista<Computadora*> aBorrar;
 

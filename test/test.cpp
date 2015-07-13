@@ -130,13 +130,60 @@ void test_dcnet_ejemplo() {
 }
 
 
-void test_red_agregarComputadora() {
-
-	//Agrego una computadora con interfaces a la red y me fijo que todas los getters de drivers devuelvan datos consistentes.
+void test_red() {
 
 	Driver dr;
 
 	ASSERT_EQ(dr.CantidadComputadoras(), 0);
+	
+	Computadora c0 = "192.168.0.1";
+	Conj<Interfaz> i0;
+	Interfaz i_0_0 = 0;
+	Interfaz i_0_1 = 1;
+	Interfaz i_0_2 = 2;
+	i0.Agregar(i_0_0);
+	i0.Agregar(i_0_1);
+	i0.Agregar(i_0_2);
+
+	Computadora c1 = "192.168.0.2";
+	Conj<Interfaz> i1;
+	Interfaz i_1_0 = 0;
+	Interfaz i_1_1 = 1;
+	Interfaz i_1_2 = 2;
+	i1.Agregar(i_1_0);
+	i1.Agregar(i_1_1);
+	i1.Agregar(i_1_2);
+
+	dr.AgregarComputadora(c0, i0);
+
+	ASSERT_EQ(dr.CantidadComputadoras(), 1);
+
+	dr.AgregarComputadora(c1, i1);
+
+	ASSERT_EQ(dr.CantidadComputadoras(), 2);
+
+	ASSERT_EQ(dr.CantidadInterfacesDe(c0), 3);
+	ASSERT_EQ(dr.CantidadInterfacesDe(c1), 3);
+
+	ASSERT_EQ(dr.IesimaComputadora(0), c0);
+	ASSERT_EQ(dr.IesimaComputadora(1), c1);
+
+	dr.Conectar(c0, i_0_0, c1, i_0_1);
+
+	ASSERT(dr.conectadas(c0, c1));
+
+	ASSERT(dr.InterfazUsada(c0, c1) == i_0_0);
+	ASSERT(dr.InterfazUsada(c1, c0) == i_0_1);
+
+	//cout << "llegon" << endl;
+//	ASSERT_EQ(dr.IesimaInterfazDe(c, 0), 0);
+//	ASSERT_EQ(dr.IesimaInterfazDe(c1, 0), 0);
+//	ASSERT_EQ(dr.IesimaInterfazDe(c, 1), 1);
+//	ASSERT_EQ(dr.IesimaInterfazDe(c, 2), 2);
+}
+
+void test_dcnet_paquetes() {
+	Driver dr;
 	Computadora c = "192.168.0.1";
 	Conj<Interfaz> i;
 
@@ -154,9 +201,8 @@ void test_red_agregarComputadora() {
 
 	dr.AgregarComputadora(c, i);
 
-	ASSERT_EQ(dr.CantidadComputadoras(), 1);
-
 	dr.AgregarComputadora(c1, i2);
+
 
 	ASSERT_EQ(dr.CantidadComputadoras(), 2);
 	ASSERT_EQ(dr.CantidadInterfacesDe(c), 3);
@@ -168,13 +214,17 @@ void test_red_agregarComputadora() {
 	ASSERT_EQ(dr.IesimaInterfazDe(c1, 0), 0);
 	ASSERT_EQ(dr.IesimaInterfazDe(c, 1), 1);
 	ASSERT_EQ(dr.IesimaInterfazDe(c, 2), 2);
+
+//	dr.CrearPaquete(c,c1,1);
+//	cout << dr.prioridad(0) << endl;
+
 }
 
 int main(int argc, char **argv)
 {
     RUN_TEST(test_dcnet_ejemplo);
-    RUN_TEST(test_red_agregarComputadora);
-	
+    RUN_TEST(test_dcnet_paquetes);
+    RUN_TEST(test_red);
 	/******************************************************************
 	 * TODO: escribir casos de test exhaustivos para todas            *
 	 * las funcionalidades del módulo.                                *
