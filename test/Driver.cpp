@@ -17,23 +17,20 @@ Nat Driver::CantidadComputadoras() const {
     return this->red->Computadoras().Longitud();
 }
 
-const Computadora& Driver::IesimaComputadora(const Nat i) const {
+const Computadora Driver::IesimaComputadora(const Nat i) const {
     assert( i < CantidadComputadoras() );
-    const Computadora *res = new Computadora(red->Computadoras()[i].Ip());
-   // aBorrar.AgregarAdelante(res); TODO: CHECKLEAK
-    return *res;
- //   return red->Computadoras()[i].Ip();
+    return red->Computadoras()[i].Ip();
 }
      
 Nat Driver::CantidadInterfacesDe(const Computadora& c) const {
     return dameCompu(c).Interfaces().Cardinal();
 }
 
-const Interfaz& Driver::IesimaInterfazDe(const Computadora& c, Nat i) const {
+const Interfaz Driver::IesimaInterfazDe(const Computadora& c, Nat i) const {
     assert(i < dameCompu(c).Interfaces().Cardinal());
-
-    Conj<Interfaz>::const_Iterador it = dameCompu(c).Interfaces().CrearIt();
-  //  dameCompu(c).Interfaces().Pertenece(i); PERTENECE PERO ME DEVUELVE BASURA, FALLA ITERADOR
+    //cout<<"Interfaces de la compu: "<<dameCompu(c).Interfaces()<<endl;
+    Conj<dcnet::Interfaz> conj = dameCompu(c).Interfaces();
+    Conj<dcnet::Interfaz>::Iterador it = conj.CrearIt();
     while(i-- > 0) {
         it.Avanzar();
     }
