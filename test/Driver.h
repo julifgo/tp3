@@ -73,7 +73,7 @@ class Driver
 
         Nat _id;
 
-        const Compu dameCompu(const Computadora& c) const;
+        const Compu& dameCompu(const Computadora& c) const;
 
         const dcnet::Paquete& FindPaquete(const Paquete& p) const;
 

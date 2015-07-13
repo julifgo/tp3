@@ -101,8 +101,7 @@ void Driver::CrearPaquete(const Computadora& origen, const Computadora& destino,
     if (this->dcnet == NULL) {
         this->dcnet = new DCNet(*red);
     }
-
-    dcnet::Paquete* p = new dcnet::Paquete(_id, prioridad, dameCompu(origen), dameCompu(destino));
+    dcnet::Paquete* p = new dcnet::Paquete(_id, prioridad, dameCompu(origen),dameCompu(destino));
 
     this->dcnet->CrearPaquete( p );
     _id++;
@@ -127,12 +126,13 @@ const Computadora& Driver::destino(const Paquete& p) const {
 	 return FindPaquete(p).Destino().Ip();
 }
 
-const Compu Driver::dameCompu(const Computadora& c) const {
+const Compu& Driver::dameCompu(const Computadora& c) const {
     Nat i = 0;
 
     while(i < red->Computadoras().Longitud() && red->Computadoras()[i].Ip() != c) { i++; }
+    Compu* c1 = new Compu(red->Computadoras()[i]);
 
-    return red->Computadoras()[i];
+    return *c1;
 }
 
 void Driver::AvanzarSegundo(){
@@ -144,18 +144,17 @@ void Driver::AvanzarSegundo(){
 
 const dcnet::Paquete& Driver::FindPaquete(const Paquete& p) const {
     assert(dcnet != NULL);
-    Lista<Compu>::const_Iterador it1 = red->Computadoras().CrearIt();
-    while (it1.HaySiguiente()) {
-        ConjLog<dcnet::Paquete*> conjLog = *dcnet->EnEspera(it1.Siguiente());
-        //Conj<paquete>::const_Iterador it2 = cola.CrearIt();
-        while (conjLog.Cardinal()>0) {
-            if (conjLog.Minimo()->Id() == p) {
-                return *conjLog.Minimo();
-            }
-            conjLog.Borrar(conjLog.Minimo());
-        }
-        it1.Avanzar();
-    }
+   // Lista<Compu>::const_Iterador it1 = red->Computadoras().CrearIt();
+    for (Nat i = 0; i < dcnet->red()->Computadoras().Longitud(); i++){
+		ConjLog<dcnet::Paquete*> conjLog = *dcnet->EnEspera(dcnet->red()->Computadoras()[i].Ip());
+		//Conj<paquete>::const_Iterador it2 = cola.CrearIt();
+		while (conjLog.Cardinal()>0) {
+			if (conjLog.Minimo()->Id() == p) {
+				return *conjLog.Minimo();
+			}
+			conjLog.Borrar(conjLog.Minimo());
+		}
+	}
 }
 
 

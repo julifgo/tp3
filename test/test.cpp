@@ -203,8 +203,8 @@ void test_dcnet_paquetes() {
 
 	dr.AgregarComputadora(c1, i2);
 
-//	dr.CrearPaquete(c,c1,1);
-//	cout << dr.prioridad(0) << endl;
+	dr.CrearPaquete(c,c1,1);
+	cout << dr.prioridad(0) << endl;
 }
 
 int main(int argc, char **argv)
