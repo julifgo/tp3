@@ -5,7 +5,7 @@ using namespace dcnet;
 
 namespace aed2 {
 
-Driver::Driver(): red(new Red()), dcnet(NULL) {}
+Driver::Driver(): red(new Red()), dcnet(NULL), _id(0) {}
 
 Driver::~Driver() {
     delete dcnet;
@@ -94,7 +94,22 @@ Nat Driver::CantidadNodosRecorridosPor(const Paquete& p) const {
     return this->dcnet->CaminoRecorrido(p).Longitud();
 }
 
-const Computadora& Driver::IesimoNodoRecorridoPor(const Paquete& p, const Nat i) const {
+void Driver::CrearPaquete(const Computadora& origen, const Computadora& destino, Nat prioridad) {
+    if (this->dcnet == NULL) {
+        this->dcnet = new DCNet(*red);
+    }
+
+    dcnet::Paquete* p = new dcnet::Paquete(_id, prioridad, dameCompu(origen), dameCompu(destino));
+
+    this->dcnet->CrearPaquete( p );
+    _id++;
+}
+
+const Computadora& Driver::laQueMasEnvio() const {
+    return this->dcnet->LaQueMasEnvio().Ip();
+}
+
+Nat Driver::prioridad(const Paquete& p) const {
 
 }
 
