@@ -10,7 +10,7 @@ namespace dcnet {
         
         public:
 
-            Nat Id() const;
+            const Nat Id() const;
 
             Nat Prioridad() const;
 

@@ -24,7 +24,7 @@ namespace dcnet {
     
     //Getters ----------------------------------------
 
-    Nat Paquete::Id() const {
+    const Nat Paquete::Id() const {
         return this->_id;
     }
 
