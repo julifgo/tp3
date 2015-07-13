@@ -5,7 +5,7 @@ using namespace dcnet;
 
 namespace aed2 {
 
-Driver::Driver(): red(new Red()), dcnet(NULL), _id(0) ,aBorrar(new Lista<Compu*>){}
+Driver::Driver(): red(new Red()), dcnet(NULL), _id(0) ,aBorrar(new Lista<Compu*>),aBorrarPaquetes(new Lista<dcnet::Paquete*>){}
 
 Driver::~Driver() {
     delete dcnet;
@@ -13,7 +13,11 @@ Driver::~Driver() {
     for (Nat i = 0; i < aBorrar->Longitud(); i++){
     	delete aBorrar->operator [](i);
     }
+    for (Nat i = 0; i < aBorrarPaquetes->Longitud(); i++){
+      	delete aBorrarPaquetes->operator [](i);
+    }
     delete aBorrar;
+    delete aBorrarPaquetes;
 }
 
 // TAD RED
@@ -103,7 +107,7 @@ void Driver::CrearPaquete(const Computadora& origen, const Computadora& destino,
         this->dcnet = new DCNet(*red);
     }
     dcnet::Paquete* p = new dcnet::Paquete(_id, prioridad, dameCompu(origen),dameCompu(destino));
-
+    aBorrarPaquetes->AgregarAtras(p);
     this->dcnet->CrearPaquete( p );
     _id++;
 }
