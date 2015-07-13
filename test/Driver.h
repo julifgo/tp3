@@ -44,11 +44,11 @@ class Driver
         
         const Computadora& IesimoNodoRecorridoPor(const Paquete& p, const Nat i) const;
 
-        Nat CantidadEnviadosPor(const Computadora& c) const;
+        Nat CantidadEnviadosPor(const Computadora& c);
     
-        Nat CantidadEnEsperaEn(const Computadora& c) const;
+        Nat CantidadEnEsperaEn(const Computadora& c);
         
-        const Paquete& IesimoEnEsperaEn(const Computadora& c, const Nat i) const;
+        const Paquete IesimoEnEsperaEn(const Computadora& c, const Nat i);
 
         /// Acciones DCNet ////////////////////////////////////////////////////////////
 
