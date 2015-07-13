@@ -19,44 +19,44 @@ class Driver
 
         /// Observadores Red //////////////////////////////////////////////////////////
 
-        Nat CantidadComputadoras() const;
+        Nat CantidadComputadoras() const; //listo
 
-        const Computadora& IesimaComputadora(const Nat i) const ;
+        const Computadora& IesimaComputadora(const Nat i) const ; //listo
         
-        Nat CantidadInterfacesDe(const Computadora& c) const;
+        Nat CantidadInterfacesDe(const Computadora& c) const; //listo
         
-        const Interfaz& IesimaInterfazDe(const Computadora& c, const Nat i) const ;
+        const Interfaz& IesimaInterfazDe(const Computadora& c, const Nat i) const ; //listo
 
-        const Interfaz& IntefazUsada(const Computadora& c1, const Computadora& c2) const;
+        const Interfaz& IntefazUsada(const Computadora& c1, const Computadora& c2) const; //listo
 
-        bool conectadas(const Computadora& c1, const Computadora& c2) const;
+        bool conectadas(const Computadora& c1, const Computadora& c2) const; //listo
 
         /// Armado Red ////////////////////////////////////////////////////////////////
 
-        void AgregarComputadora(const Computadora& ip, const Conj<Interfaz>& ci);
+        void AgregarComputadora(const Computadora& ip, const Conj<Interfaz>& ci); //listo
         
-        void Conectar(const Computadora& c1, Interfaz& i1, const Computadora& c2, Interfaz& i2);
+        void Conectar(const Computadora& c1, Interfaz& i1, const Computadora& c2, Interfaz& i2); //listo
     
 
        /// Observadores DCNet //////////////////////////////////////////////////////////////
     
-        Nat CantidadNodosRecorridosPor(const Paquete& p) const;
+        Nat CantidadNodosRecorridosPor(const Paquete& p) const; //listo
         
         const Computadora& IesimoNodoRecorridoPor(const Paquete& p, const Nat i) const;
 
-        Nat CantidadEnviadosPor(const Computadora& c) const;
+        Nat CantidadEnviadosPor(const Computadora& c);
     
-        Nat CantidadEnEsperaEn(const Computadora& c) const;
+        Nat CantidadEnEsperaEn(const Computadora& c);
         
-        const Paquete& IesimoEnEsperaEn(const Computadora& c, const Nat i) const;
+        const Paquete IesimoEnEsperaEn(const Computadora& c, const Nat i);
 
         /// Acciones DCNet ////////////////////////////////////////////////////////////
 
-        void CrearPaquete(const Computadora& origen, const Computadora& destino, Nat prioridad);
+        void CrearPaquete(const Computadora& origen, const Computadora& destino, Nat prioridad); //listo
         
         void AvanzarSegundo();
         
-        const Computadora& laQueMasEnvio() const;
+        const Computadora& laQueMasEnvio() const; //listo
         
         // Auxiliares para ver los paquetes
         const Computadora& origen(const Paquete& p) const; 
@@ -70,6 +70,8 @@ class Driver
         Red* red;
         
         DCNet* dcnet;
+
+        Nat _id;
 
         const Compu dameCompu(const Computadora& c) const;
 
