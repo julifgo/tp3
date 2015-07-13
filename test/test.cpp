@@ -88,7 +88,7 @@ bool Comparar(const T& t, const S& s)
  
 void test_dcnet_ejemplo() {
 	
-	/** /
+	/**/
 
 	Conj<Interfaz> conjIc1;
 	Conj<Interfaz> conjIc2;
@@ -210,7 +210,6 @@ void test_dcnet_paquetes() {
 	ASSERT_EQ(dr.CantidadComputadoras(), 2);
 	ASSERT_EQ(dr.CantidadInterfacesDe(c), 3);
 
-	cout << "llegon" << endl;
 	ASSERT_EQ(dr.IesimaComputadora(0), c);
 	ASSERT_EQ(dr.IesimaComputadora(1), c1);
 	ASSERT_EQ(dr.IesimaInterfazDe(c, 0), 0);
