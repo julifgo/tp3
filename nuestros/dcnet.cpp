@@ -155,7 +155,8 @@ namespace dcnet{
 						estr.laQueMasEnvio = new Compu(estr.red->Computadoras()[i]);
 					}
 					else{
-						*estr.laQueMasEnvio = estr.red->Computadoras()[i];
+						delete estr.laQueMasEnvio;
+						estr.laQueMasEnvio = new Compu(estr.red->Computadoras()[i]);
 					}
 				}
 			}
