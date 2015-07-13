@@ -260,14 +260,14 @@ void test_findPaquetes() {
 	dcnet.Conectar(c3, _i2, c2, _i0);
 
 	dcnet.CrearPaquete(c1, c3, 3);
-	dcnet.CrearPaquete(c2, c3, 3);
-	dcnet.CrearPaquete(c0, c2, 1);
-
+	dcnet.CrearPaquete(c2, c3, 10);
+	//dcnet.CrearPaquete(c2, c3, 12);
+	dcnet.CrearPaquete(c0, c2, 15);
 
 	//tests
 	ASSERT_EQ(dcnet.prioridad(0), 3);
-	ASSERT_EQ(dcnet.prioridad(1), 3);
-	ASSERT_EQ(dcnet.prioridad(2), 1);
+	ASSERT_EQ(dcnet.prioridad(1), 10);
+	ASSERT_EQ(dcnet.prioridad(2), 15);
 	ASSERT_EQ(dcnet.origen(0), c1);
 	ASSERT_EQ(dcnet.origen(1), c2);
 	ASSERT_EQ(dcnet.origen(2), c0);
@@ -299,7 +299,8 @@ void test_dcnet_paquetes() {
 	dr.AgregarComputadora(c1, i2);
 
 	dr.CrearPaquete(c,c1,1);
-	dr.CrearPaquete(c,c1,1);
+	//dr.CrearPaquete(c,c1,5);
+	dr.CrearPaquete(c,c1,6);
 	ASSERT_EQ(dr.prioridad(0),1);
 	ASSERT_EQ(dr.origen(0),c);
 
@@ -371,7 +372,8 @@ void test_integral() {
 	aed2::Paquete p1 = 1;
 
 	dcnet.CrearPaquete(c1, c3, 3);
-	dcnet.CrearPaquete(c2, c3, 3);
+	//dcnet.CrearPaquete(c1, c3, 8);
+	dcnet.CrearPaquete(c2, c3, 17);
 
 	//test
 	ASSERT_EQ(dcnet.CantidadComputadoras(), 5);
