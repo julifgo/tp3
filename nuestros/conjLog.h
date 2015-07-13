@@ -41,6 +41,7 @@ namespace dcnet {
 		}
 
 		T& Minimo() const{
+			assert(Cardinal()>0);
 			return conj.MinimoSignificado();
 		}
 
