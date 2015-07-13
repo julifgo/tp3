@@ -212,7 +212,9 @@ void test_dcnet_paquetes() {
 	dr.AgregarComputadora(c1, i2);
 
 	dr.CrearPaquete(c,c1,1);
+	dr.CrearPaquete(c,c1,1);
 	ASSERT_EQ(dr.prioridad(0),1);
+	ASSERT_EQ(dr.origen(0),c);
 
 
 	ASSERT_EQ(dr.CantidadComputadoras(), 2);
@@ -228,8 +230,8 @@ void test_dcnet_paquetes() {
 
 int main(int argc, char **argv)
 {
-    RUN_TEST(test_dcnet_ejemplo);
-    //RUN_TEST(test_dcnet_paquetes);
+  //  RUN_TEST(test_dcnet_ejemplo);
+    RUN_TEST(test_dcnet_paquetes);
     RUN_TEST(test_red);
 	/******************************************************************
 	 * TODO: escribir casos de test exhaustivos para todas            *
