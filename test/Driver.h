@@ -73,6 +73,8 @@ class Driver
 
         const Compu dameCompu(const Computadora& c) const;
 
+        Lista<Computadora*> aBorrar;
+
 }; // class Driver
 
 
