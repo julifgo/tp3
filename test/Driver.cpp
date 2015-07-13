@@ -73,22 +73,26 @@ Nat Driver::CantidadEnEsperaEn(const Computadora& c){
 }
 
 const Paquete Driver::IesimoEnEsperaEn(const Computadora& c, const Nat i){
-       const ConjLog<dcnet::Paquete*>* paquetesEnEspera = dcnet->EnEspera(c);
+       ConjLog<dcnet::Paquete*>* paquetesEnEspera = dcnet->EnEspera(c);
        assert(i < paquetesEnEspera->Cardinal());
-       ConjLog<dcnet::Paquete*>* paquetes = new ConjLog<dcnet::Paquete*>(*paquetesEnEspera); //TODO. Asegurarse que esto este haciendo una copia.
+     //  ConjLog<dcnet::Paquete*>* paquetes = new ConjLog<dcnet::Paquete*>(*paquetesEnEspera); //TODO. Asegurarse que esto este haciendo una copia.
        Nat j = 0;
        Lista<dcnet::Paquete*> listaPaq;
+       cout<<"arrancamos.."<<endl;
        while(j<i){
-            dcnet::Paquete* paq = paquetes->Minimo();
+            dcnet::Paquete* paq = paquetesEnEspera->Minimo();
+            cout<<paq->Id()<<endl;
             listaPaq.AgregarAtras(paq);
-            paquetes->Borrar(paq);
+            paquetesEnEspera->Borrar(paq);
             j++;
        }
-
-       dcnet::Paquete paqReturn = *paquetes->Minimo();
+       cout<<"listoo........."<<endl;
+       dcnet::Paquete paqReturn = *paquetesEnEspera->Minimo();
        for (Nat i = 0; i < listaPaq.Longitud(); i++){
-    	   paquetes->Definir(listaPaq.operator [](i));
+        cout<<listaPaq.operator [](i)->Id()<<endl;
+    	   paquetesEnEspera->Definir(listaPaq.operator [](i));
        }
+       cout<<"Nos vamos"<<endl;
        return paqReturn.Id();
 }
 
