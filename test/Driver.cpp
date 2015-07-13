@@ -82,6 +82,7 @@ const Paquete Driver::IesimoEnEsperaEn(const Computadora& c, const Nat i){
             paquetes.Borrar(paq);
             j++;
        }
+       cout<<"TODO BIEN"<<endl;
        dcnet::Paquete paqReturn = *paquetes.Minimo();
        return paqReturn.Id();
 }
