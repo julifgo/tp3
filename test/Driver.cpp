@@ -40,7 +40,7 @@ const Interfaz& Driver::IesimaInterfazDe(const Computadora& c, Nat i) const {
     return it.Siguiente();
 }
 
-const Interfaz& Driver::IntefazUsada(const Computadora& c1, const Computadora& c2) const {
+const Interfaz& Driver::InterfazUsada(const Computadora& c1, const Computadora& c2) const {
     return this->red->InterfazUsada(dameCompu(c1), dameCompu(c2));
 }
 

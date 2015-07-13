@@ -27,7 +27,7 @@ class Driver
         
         const Interfaz& IesimaInterfazDe(const Computadora& c, const Nat i) const ; //listo
 
-        const Interfaz& IntefazUsada(const Computadora& c1, const Computadora& c2) const; //listo
+        const Interfaz& InterfazUsada(const Computadora& c1, const Computadora& c2) const; //listo
 
         bool conectadas(const Computadora& c1, const Computadora& c2) const; //listo
 
