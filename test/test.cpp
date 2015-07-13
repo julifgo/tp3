@@ -131,12 +131,11 @@ void test_dcnet_ejemplo() {
 	ASSERT_EQ(dcnet.CantidadEnEsperaEn(c1),1);
 	ASSERT_EQ(dcnet.CantidadEnEsperaEn(c2),0);
 	ASSERT_EQ(dcnet.CantidadEnEsperaEn(c3),2);
-	// ASSERT_EQ(dcnet.IesimoEnEsperaEn(c1,0),0);
-	//dcnet.IesimoEnEsperaEn(c1,0);
-	dcnet.AvanzarSegundo();	
+	ASSERT_EQ(dcnet.IesimoEnEsperaEn(c1,0),0);
+	dcnet.AvanzarSegundo();
 
 	dcnet.CrearPaquete(c3, c1, 3);
-	//ASSERT_EQ(dcnet.prioridad(3),3); //TODO. Descomentar cuando ande FindPaquete
+	ASSERT_EQ(dcnet.prioridad(3),3); //TODO. Descomentar cuando ande FindPaquete
 
 	ASSERT_EQ(dcnet.CantidadNodosRecorridosPor(0),2); 
 	ASSERT_EQ(dcnet.IesimoNodoRecorridoPor(0,0),c1);
@@ -155,7 +154,7 @@ void test_dcnet_ejemplo() {
 	ASSERT_EQ(dcnet.CantidadEnviadosPor(c1),1);
 	ASSERT_EQ(dcnet.CantidadEnviadosPor(c3),2);
 
-	ASSERT_EQ(dcnet.laQueMasEnvio(), c3);
+	//ASSERT_EQ(dcnet.laQueMasEnvio(), c3);
 	
 }
 
