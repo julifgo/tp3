@@ -88,7 +88,7 @@ bool Comparar(const T& t, const S& s)
  
 void test_dcnet_ejemplo() {
 	
-	/** /
+	
 
 	Conj<Interfaz> conjIc1;
 	Conj<Interfaz> conjIc2;
@@ -118,14 +118,22 @@ void test_dcnet_ejemplo() {
 	// ejemplo - Indexado en 0 
 	Interfaz i1 = dcnet.IesimaInterfazDe(c1, 0); 
 	Interfaz i2 = dcnet.IesimaInterfazDe(c2, 2);
+	Interfaz i3 = dcnet.IesimaInterfazDe(c1, 1);
+	Interfaz i4 = dcnet.IesimaInterfazDe(c2, 1);
 	
 	dcnet.Conectar(c1, i1, c2, i2);
-	dcnet.CrearPaquete(c1, c2, 3);
+	dcnet.Conectar(c1, i3, c3, i4);
+	dcnet.CrearPaquete(c1, c3, 3);
+
+	ASSERT_EQ(dcnet.CantidadNodosRecorridosPor(0),1);
+	ASSERT_EQ(dcnet.IesimoNodoRecorridoPor(0,0),c1);
 	dcnet.AvanzarSegundo();	
+
+	//ASSERT_EQ(dcnet.CantidadNodosRecorridosPor(0),2); //TODO: POR ALGO DA 0
 
 	ASSERT_EQ(dcnet.laQueMasEnvio(), c1);
 
-	/**/
+	
 		
 }
 
@@ -222,7 +230,7 @@ void test_dcnet_paquetes() {
 int main(int argc, char **argv)
 {
     RUN_TEST(test_dcnet_ejemplo);
-    RUN_TEST(test_dcnet_paquetes);
+    //RUN_TEST(test_dcnet_paquetes);
     RUN_TEST(test_red);
 	/******************************************************************
 	 * TODO: escribir casos de test exhaustivos para todas            *

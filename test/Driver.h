@@ -42,7 +42,7 @@ class Driver
     
         Nat CantidadNodosRecorridosPor(const Paquete& p) const; //listo
         
-        const Computadora& IesimoNodoRecorridoPor(const Paquete& p, const Nat i) const;
+        const Computadora IesimoNodoRecorridoPor(const Paquete& p, const Nat i) const; //listo
 
         Nat CantidadEnviadosPor(const Computadora& c); //listo
     
@@ -54,16 +54,16 @@ class Driver
 
         void CrearPaquete(const Computadora& origen, const Computadora& destino, Nat prioridad); //listo
         
-        void AvanzarSegundo();
+        void AvanzarSegundo(); //listo
         
         const Computadora& laQueMasEnvio() const; //listo
         
         // Auxiliares para ver los paquetes
-        const Computadora& origen(const Paquete& p) const; 
+        const Computadora& origen(const Paquete& p) const; //listo
         
-        const Computadora& destino(const Paquete& p) const; 
+        const Computadora& destino(const Paquete& p) const; //listo
         
-        Nat prioridad(const Paquete& p) const; 
+        Nat prioridad(const Paquete& p) const; //listo
         
     private:
 

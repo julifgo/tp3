@@ -24,6 +24,7 @@ const Computadora Driver::IesimaComputadora(const Nat i) const {
      
 Nat Driver::CantidadInterfacesDe(const Computadora& c) const {
     return dameCompu(c).Interfaces().Cardinal();
+
 }
 
 const Interfaz Driver::IesimaInterfazDe(const Computadora& c, Nat i) const {
@@ -94,6 +95,16 @@ Nat Driver::CantidadNodosRecorridosPor(const Paquete& p) const {
     return this->dcnet->CaminoRecorrido(p).Longitud();
 }
 
+const Computadora Driver::IesimoNodoRecorridoPor(const Paquete& p, const Nat i) const{
+    assert(i<CantidadNodosRecorridosPor(p));
+    Lista<Compu> recorrido = this->dcnet->CaminoRecorrido(p);
+    Lista<Compu>::Iterador it = recorrido.CrearIt();
+    Nat j = i;
+    while(j-- > 0) {
+        it.Avanzar();
+    }
+    return it.Siguiente().Ip();
+}
 void Driver::CrearPaquete(const Computadora& origen, const Computadora& destino, Nat prioridad) {
     if (this->dcnet == NULL) {
         this->dcnet = new DCNet(*red);
@@ -128,7 +139,7 @@ const Compu& Driver::dameCompu(const Computadora& c) const {
 
     while(i < red->Computadoras().Longitud() && red->Computadoras()[i].Ip() != c) { i++; }
     Compu* c1 = new Compu(red->Computadoras()[i]);
-
+    
     return *c1;
 }
 
