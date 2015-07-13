@@ -106,6 +106,7 @@ namespace dcnet{
 		DiccLog<Nat,Lista<Compu>* > *dicc = *estr.CaminoRecorrido.obtener(p->Origen().Ip());
 		Lista<Compu>* camino = new Lista<Compu>();
 		colasRecorridos.AgregarAtras(camino);
+		todos.AgregarAtras(p);
 		camino->AgregarAdelante(p->Origen());
 		dicc->Definir(p->Id(),camino); //TODO. Me juego la cabeza que esto va a leakear//LEAK: ES FIX Sacar el NEW? TODO:TESTEAR
 		//delete dicc;
@@ -188,5 +189,9 @@ namespace dcnet{
 
 	const Compu DCNet::LaQueMasEnvio() const{
 		return *estr.laQueMasEnvio;
+	}
+
+	Lista<Paquete*> DCNet::TodosLosPaquetes(){
+		return todos;
 	}
 }
